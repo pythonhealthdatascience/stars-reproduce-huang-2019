@@ -1,0 +1,53 @@
+---
+title: "Day 1"
+author: "Amy Heather"
+date: "2024-07-03"
+categories: [setup]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+TBC. Total time used: TBCh TBCm (TBC%)
+
+:::
+
+## 11.53-12.20, 12.27-: Set-up and update repository
+
+I have previously (Friday 21st June 2024) sent an email to the corresponding author (Dr. Shiwei Huang) to inform about the study, using the template email from our protocol.
+
+Today, used template repository to create this repository and updated it to be relevant to Huang et al. 2019 - updated..
+
+* `README`
+* Home page (`index.qmd`)
+* Logbook
+* `CITATION.cff`
+* `_quarto.yml`
+
+From a quick look at their code repository, can see they use a GNU General Public License version 3. The [requirements of this license](https://fossa.com/blog/open-source-software-licenses-101-gpl-v3/) are to:
+
+* Include a copy of the full license
+* State all significant changes made to the software
+* Make the original source code availble when distributing binaries based on that work
+* Include a copy of the original copyright notice
+
+It allows the code to be changed and distributed to others (as long as release under GPL v3 also). Hence, updated license (and references to it) to GNU GPL 3.0 accordingly.
+
+Created environment for book.
+
+## Timings
+
+```{python}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 0
+
+# Times from today
+times = [
+    ('11.53', '12.20')]
+
+calculate_times(used_to_date, times)
+```
