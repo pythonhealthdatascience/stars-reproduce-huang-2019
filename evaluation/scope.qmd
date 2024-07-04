@@ -3,24 +3,73 @@ title: "Scope"
 bibliography: ../quarto_site/references.bib
 ---
 
-<!-- TODO: Remove this warning once filled out page -->
-**Please note: This is a template page and has not yet been completed**
+This page outlines the parts of the journal article which we will attempt to reproduce.
 
-<!-- TODO: Use skeleton to create page describing scope -->
-
-<!-- NOTE: If you do not have a license allowing you to upload and reuse images from the article, then you should describe them below, and direct the reader to a link to the article -->
-
-This page outlines that parts of the journal article which we will attempt to reproduce.
+All images and quotes on this page are sourced from @huang_optimizing_2019
 
 ## Within scope
 
 ::: {.callout-note appearance="minimal" collapse=true}
 
-## Figure X
+## Figure 2
 
-[Figure with full legend from paper]
-<!-- e.g.
-![Figure 2. "Patient state over time by unit. The patient population progresses through infection over three months (with 80% infected). The bold line shows the median results of 30 trials, and the fainter lines show the minimum and maximum from the 30 trials." @allen_simulation_2020](../original_study/article_fig2.png){width=80%}-->
+![FIGURE 2 | Patient wait time under various simulation scenarios (A). Baseline scenario simulated using inputs from Table 1 (B). Exclusive-use scenario: IR patients can only utilize angioIR (C). Two angioINRs scenario: 2 angioINRs, no angioIRs. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. @huang_optimizing_2019](../original_study/fig2.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## Figure 3
+
+![FIGURE 3 | The effect of increasing working hours on ECR patient wait time at angioINR (A). Baseline scenario (B). Exclusive-use scenario (C). Two angioINRs scenario. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. @huang_optimizing_2019](../original_study/fig3.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## Figure 4
+
+![FIGURE 4 | Disability-free life gained under various scenarios. @huang_optimizing_2019](../original_study/fig4.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## Figure 5
+
+![FIGURE 5 | A comparison of the utilization of angioINR by ECR patients under various scenarios. @huang_optimizing_2019](../original_study/fig5.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## Supplementary figure
+
+![Supplementary Figure | Increasing ECR patient volume on service bottleneck. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. (A) Baseline scenario. (B) Doubling ECR patients in baseline scenario. (C) Tripping ECR patients in baseline scenario. @huang_optimizing_2019](../original_study/supp.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## In-text result 1
+
+"Exclusive-Use Scenario. In this scenario, the overall wait time probability at angioINR was reduced compared to baseline (red line in Figure 2B compared to Figure 2A). This represents a **decrease in ECR patient wait time for angioINR by an average of 6 min**." @huang_optimizing_2019
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## In-text result 2
+
+"Two angioINRs Scenario. This scenario simulates the effect a facility upgrade to two biplane angiographic suites, but without additional staff changes. The wait time probability at angioINR was reduced compared to baseline (Figure 2C). The reduction represents an **average of 4 min less in queue for angioINR**." @huang_optimizing_2019
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## In-text result 3
+
+"Extended Schedule Scenario. The wait time probability at angioINR in the exclusive- use scenario was further reduced by extended work hours (Figure 3B). In contrast, work extension did not affect baseline or the 2 angioINRs scenario (Figures 3A,C). For the baseline scenario, 1 and 2 h of extra work resulted in an **average wait time of 1.7 and 0.9 min reduction, respectively**. For the 2 angioINRs scenario, 1 and 2 h of extra work resulted in an **average wait time gain of 1 and 0.3 min, respectively**." @huang_optimizing_2019
 
 :::
 
@@ -28,10 +77,20 @@ This page outlines that parts of the journal article which we will attempt to re
 
 ::: {.callout-note appearance="minimal" collapse=true}
 
-## Table X
+## Figure 1
 
-[Explanation of why it is outside scope]
+Diagram of patient flow through the model.
 
-[Display table, including full legend from paper]
+![FIGURE 1 | A schematic diagram of our discrete event model of an ECR service from Emergency to angiography suite. CT, Computed Tomography; AIS, Acute Ischemic Stroke; LVO, Large Vessel Occlusion; ECR, Endovascular Clot Retrieval; IR, Interventional Radiology; INR, Interventional Neuroradiology. @huang_optimizing_2019](../original_study/fig1.jpg){width=80% .lightbox}
+
+:::
+
+::: {.callout-note appearance="minimal" collapse=true}
+
+## Table 1
+
+Parameters for the model.
+
+![TABLE 1 | DES model inputs. (A) Human and physical resources. (B) Patient statistics. @huang_optimizing_2019](../original_study/tab1.jpg){width=80% .lightbox}
 
 :::

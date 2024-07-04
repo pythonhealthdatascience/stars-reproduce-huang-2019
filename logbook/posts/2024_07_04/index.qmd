@@ -12,13 +12,13 @@ TBC. Total time used: TBCh TBCm (TBC%)
 
 :::
 
-### Untimed: Set up RStudio and test quarto site with R
+## Untimed: Set up RStudio and test quarto site with R
 
 I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).
 
 This involved installing/updating RStudio, learning how to run and work with a quarto book on that platform, and and troubleshooting any issues in getting the quarto book up and running.
 
-#### Environment
+### Environment
 
 * Updating to the latest version of RStudio, as suggested in the [Quarto docs](https://quarto.org/docs/computations/r.html)
 * Installing renv: `install.packages("renv")`
@@ -88,7 +88,7 @@ Now, returning to what started this - trying to get the `.TIFF` supplementary fi
 * Add `tiff` to `DESCRIPTION`
 * `renv::status()` showed that the package was used but not installed, and `renv::snapshot()` with option `2` installed the package
 
-#### Using specific versions
+### Using specific versions
 
 * Add explict versions of R and packages to `DESCRIPTION`
 * Attempted to downgrade tiff. `renv::status()` and `renv::snapshot()` did not noticed. From [this issue](https://github.com/rstudio/renv/issues/233), it appears that this should work for `renv::install()` and, indeed, that recognises it although get issue:
@@ -107,7 +107,7 @@ Error: failed to retrieve package 'tiff@0.1.11'
 
 Having finished with this experiment, I deleted and rebuilt with latest versions - but found it had errors installing them where defined like `tiff@0.1-12`. Hence, returned to `tiff (==0.1-11)`, and just had to make sure to do `renv::install()` before `renv::snapshot()` (rather than rely on snapshot to install the packages).
 
-#### Fixing GitHub action to render and publish the book
+### Fixing GitHub action to render and publish the book
 
 With no changes to GitHub action, had an error of:
 
@@ -163,3 +163,31 @@ Error: Process completed with exit code 1.
 
 * Based on [this forum post](https://forum.posit.co/t/r-cmd-check-on-github-actions-failing-suddenly-with-missing-renv-version/169670/8), I tried removing the .Rprofile from git
 * This seemed to improve slightly, although `setup-r-dependencies` then failed with an error in a pak subprocess seemingly for a package called ".". Tried switching to `setup-renv` (which bases on renv.lock) which was then successful! (although takes 4 minutes to install R dependencies, so 6m 55s total)
+
+## 14.14-14.31: Reading the article
+
+Read throughout and highlighted a copy of the article.
+
+## 14.33-14.50: Define scope of article
+
+Went through figures and tables to define scope (and convert and crop the .TIFF supplementary to .JPG so easier to display). From looking through text of article, identified a few extra results not in the figures: the quoted decrease in wait times. Although these are very related to the figures, as it wouldn't be able to look at the figure and deduce the average wait time reduction, these represent additional results.
+
+There was one line in the discussion that caught my attention - "*The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists*" - but I feel the interpretation of this is quite ambiguous (as to whether it is a model result or interpretation from other results), and doesn't have anything specific to action, so will not include in scope.
+
+## Timings
+
+```{python}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 45
+
+# Times from today
+times = [
+    ('14.14', '14.31'),
+    ('14.33', '14.50')]
+
+calculate_times(used_to_date, times)
+```
