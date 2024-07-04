@@ -243,6 +243,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#reading-the-article" id="toc-reading-the-article" class="nav-link" data-scroll-target="#reading-the-article">14.14-14.31: Reading the article</a></li>
   <li><a href="#define-scope-of-article" id="toc-define-scope-of-article" class="nav-link" data-scroll-target="#define-scope-of-article">14.33-14.50: Define scope of article</a></li>
+  <li><a href="#consensus-on-scope-with-tom" id="toc-consensus-on-scope-with-tom" class="nav-link" data-scroll-target="#consensus-on-scope-with-tom">15.05-15.10: Consensus on scope with Tom</a></li>
+  <li><a href="#exploring-app-and-simulation-visualisation" id="toc-exploring-app-and-simulation-visualisation" class="nav-link" data-scroll-target="#exploring-app-and-simulation-visualisation">15.35-15.43: Exploring app and simulation visualisation</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -420,9 +422,18 @@ Error: Process completed with exit code 1.</code></pre>
 <p>Went through figures and tables to define scope (and convert and crop the .TIFF supplementary to .JPG so easier to display). From looking through text of article, identified a few extra results not in the figures: the quoted decrease in wait times. Although these are very related to the figures, as it wouldn’t be able to look at the figure and deduce the average wait time reduction, these represent additional results.</p>
 <p>There was one line in the discussion that caught my attention - “<em>The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists</em>” - but I feel the interpretation of this is quite ambiguous (as to whether it is a model result or interpretation from other results), and doesn’t have anything specific to action, so will not include in scope.</p>
 </section>
+<section id="consensus-on-scope-with-tom" class="level2">
+<h2 class="anchored" data-anchor-id="consensus-on-scope-with-tom">15.05-15.10: Consensus on scope with Tom</h2>
+<p>Discussed with Tom (and he also had another look over afterwards). Happy with scope choices, and agree that the line from the discussion is simply too ambiguous to action.</p>
+</section>
+<section id="exploring-app-and-simulation-visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-app-and-simulation-visualisation">15.35-15.43: Exploring app and simulation visualisation</h2>
+<p>As an addendum to the reading, explored the <a href="https://compneuro.shinyapps.io/desECR11/">app</a> and linked <a href="https://beta.cloudes.me/loadShare?simId=17588">simulation configuration visualisation</a>.</p>
+<p>For the configuration, it just opened to the CLOUDES homepage, so I tried creating an account then going to the link (turns out you need an account to access). The link still did not work nor the ID, but when I search for “Huang”, I was able to find a diagram: <a href="https://beta.cloudes.me/loadSim?simId=17482&amp;pageId=rTbqE" class="uri">https://beta.cloudes.me/loadSim?simId=17482&amp;pageId=rTbqE</a> (ID 17482). When run, this played through the simulation showing arrivals and queues etc.</p>
+</section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="6c1c05b0" class="cell" data-execution_count="1">
+<div id="b12f81be" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -433,14 +444,16 @@ Error: Process completed with exit code 1.</code></pre>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.14'</span>, <span class="st">'14.31'</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.33'</span>, <span class="st">'14.50'</span>)]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.33'</span>, <span class="st">'14.50'</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.05'</span>, <span class="st">'15.10'</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.35'</span>, <span class="st">'15.43'</span>)]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 34m, or 0h 34m
-Total used to date: 79m, or 1h 19m
-Time remaining: 2321m, or 38h 41m
-Used 3.3% of 40 hours max</code></pre>
+<pre><code>Time spent today: 47m, or 0h 47m
+Total used to date: 92m, or 1h 32m
+Time remaining: 2308m, or 38h 28m
+Used 3.8% of 40 hours max</code></pre>
 </div>
 </div>
 

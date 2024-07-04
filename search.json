@@ -11,28 +11,14 @@
     "href": "CHANGELOG.html",
     "title": "Changelog",
     "section": "",
-    "text": "All notable changes to this project will be documented in this file.\nThe format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Dates formatted as YYYY-MM-DD as per ISO standard.\n\n\n\nRelease date: 3rd July 2024\nContributors: Amy Heather\nMinor improvements following the first reproducibility assessment (Shoaib and Ramamohan 2022).\n\n\n\nTemplate page (reflections.qmd) for reflections on facilitators and barriers to reproduction, and for full list of troubleshooting steps\n\n\n\n\n\nAdd .vscode/ to .gitignore\nAdd citation to protocol on quarto site home page\nOrder of criteria in badges.qmd (so it is a consistent order between the dictionary of criteria names and results, making it easier when conducting the assessment to look between the two)\nAmended TODO: comments in CHANGELOG and GHCR GitHub action\nAdd missing &lt;!--- --&gt; marker in artefacts.qmd\nImproved the “succesfully reproduced” template sentence in reproduction_report.qmd\n\n\n\n\n\nRelease date: 19th June 2024\nContributors: Amy Heather\nFix to citation file to prevent error on Zenodo.\n\n\n\nCompleted CITATION.cff to reflect this repository (rather than to be a blank example), to prevent error when syncing with Zenodo\n\n\n\n\n\nRelease date: 19th June 2024\nContributors: Amy Heather, with review of the protocol and associated artefacts (such as this template) from Tom Monks, Alison Harper and Nav Mustafee\nInitial release of template repository. 🌱"
+    "text": "All notable changes to this project will be documented in this file.\nThe format is based on Keep a Changelog, and this project adheres to Semantic Versioning. Dates formatted as YYYY-MM-DD as per ISO standard.\n\n\nFirst release with defined scope for reproduction.\n\n\n\nCode from original study\nArticle\nPlanned scope for reproduction\n\n\n\n\n\nModified template to be relevant to Huang et al. 2019"
   },
   {
-    "objectID": "CHANGELOG.html#v1.0.2",
-    "href": "CHANGELOG.html#v1.0.2",
+    "objectID": "CHANGELOG.html#v0.1.0---2024-07-04",
+    "href": "CHANGELOG.html#v0.1.0---2024-07-04",
     "title": "Changelog",
     "section": "",
-    "text": "Release date: 3rd July 2024\nContributors: Amy Heather\nMinor improvements following the first reproducibility assessment (Shoaib and Ramamohan 2022).\n\n\n\nTemplate page (reflections.qmd) for reflections on facilitators and barriers to reproduction, and for full list of troubleshooting steps\n\n\n\n\n\nAdd .vscode/ to .gitignore\nAdd citation to protocol on quarto site home page\nOrder of criteria in badges.qmd (so it is a consistent order between the dictionary of criteria names and results, making it easier when conducting the assessment to look between the two)\nAmended TODO: comments in CHANGELOG and GHCR GitHub action\nAdd missing &lt;!--- --&gt; marker in artefacts.qmd\nImproved the “succesfully reproduced” template sentence in reproduction_report.qmd"
-  },
-  {
-    "objectID": "CHANGELOG.html#v1.0.1",
-    "href": "CHANGELOG.html#v1.0.1",
-    "title": "Changelog",
-    "section": "",
-    "text": "Release date: 19th June 2024\nContributors: Amy Heather\nFix to citation file to prevent error on Zenodo.\n\n\n\nCompleted CITATION.cff to reflect this repository (rather than to be a blank example), to prevent error when syncing with Zenodo"
-  },
-  {
-    "objectID": "CHANGELOG.html#v1.0.0",
-    "href": "CHANGELOG.html#v1.0.0",
-    "title": "Changelog",
-    "section": "",
-    "text": "Release date: 19th June 2024\nContributors: Amy Heather, with review of the protocol and associated artefacts (such as this template) from Tom Monks, Alison Harper and Nav Mustafee\nInitial release of template repository. 🌱"
+    "text": "First release with defined scope for reproduction.\n\n\n\nCode from original study\nArticle\nPlanned scope for reproduction\n\n\n\n\n\nModified template to be relevant to Huang et al. 2019"
   },
   {
     "objectID": "quarto_site/study_publication.html",
@@ -61,6 +47,13 @@
     "title": "Publication",
     "section": "Supplementary materials",
     "text": "Supplementary materials\nThe supplementary material is an additional image saved as a .TIFF file:\n\n\n\nSupplementary figure"
+  },
+  {
+    "objectID": "quarto_site/study_publication.html#interactive-web-app",
+    "href": "quarto_site/study_publication.html#interactive-web-app",
+    "title": "Publication",
+    "section": "Interactive web app",
+    "text": "Interactive web app\nThe paper also links to an interactive web app for the model which can be found at: https://rebrand.ly/desECR11 (which redirects to https://compneuro.shinyapps.io/desECR11/).\nThe simulation also links to https://beta.cloudes.me/loadShare?simId=17588, stating that it can provide the details of the simulation (although this link does not work, if you login to CLOUDES, you can identify what appears to be a copy of that model under the ID 17482 or by searching “Huang”)."
   },
   {
     "objectID": "index.html",
@@ -315,11 +308,25 @@
     "text": "14.33-14.50: Define scope of article\nWent through figures and tables to define scope (and convert and crop the .TIFF supplementary to .JPG so easier to display). From looking through text of article, identified a few extra results not in the figures: the quoted decrease in wait times. Although these are very related to the figures, as it wouldn’t be able to look at the figure and deduce the average wait time reduction, these represent additional results.\nThere was one line in the discussion that caught my attention - “The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists” - but I feel the interpretation of this is quite ambiguous (as to whether it is a model result or interpretation from other results), and doesn’t have anything specific to action, so will not include in scope."
   },
   {
+    "objectID": "logbook/posts/2024_07_04/index.html#consensus-on-scope-with-tom",
+    "href": "logbook/posts/2024_07_04/index.html#consensus-on-scope-with-tom",
+    "title": "Day 2",
+    "section": "15.05-15.10: Consensus on scope with Tom",
+    "text": "15.05-15.10: Consensus on scope with Tom\nDiscussed with Tom (and he also had another look over afterwards). Happy with scope choices, and agree that the line from the discussion is simply too ambiguous to action."
+  },
+  {
+    "objectID": "logbook/posts/2024_07_04/index.html#exploring-app-and-simulation-visualisation",
+    "href": "logbook/posts/2024_07_04/index.html#exploring-app-and-simulation-visualisation",
+    "title": "Day 2",
+    "section": "15.35-15.43: Exploring app and simulation visualisation",
+    "text": "15.35-15.43: Exploring app and simulation visualisation\nAs an addendum to the reading, explored the app and linked simulation configuration visualisation.\nFor the configuration, it just opened to the CLOUDES homepage, so I tried creating an account then going to the link (turns out you need an account to access). The link still did not work nor the ID, but when I search for “Huang”, I was able to find a diagram: https://beta.cloudes.me/loadSim?simId=17482&pageId=rTbqE (ID 17482). When run, this played through the simulation showing arrivals and queues etc."
+  },
+  {
     "objectID": "logbook/posts/2024_07_04/index.html#timings",
     "href": "logbook/posts/2024_07_04/index.html#timings",
     "title": "Day 2",
     "section": "Timings",
-    "text": "Timings\n\nimport sys\nsys.path.append('../')\nfrom timings import calculate_times\n\n# Minutes used prior to today\nused_to_date = 45\n\n# Times from today\ntimes = [\n    ('14.14', '14.31'),\n    ('14.33', '14.50')]\n\ncalculate_times(used_to_date, times)\n\nTime spent today: 34m, or 0h 34m\nTotal used to date: 79m, or 1h 19m\nTime remaining: 2321m, or 38h 41m\nUsed 3.3% of 40 hours max"
+    "text": "Timings\n\nimport sys\nsys.path.append('../')\nfrom timings import calculate_times\n\n# Minutes used prior to today\nused_to_date = 45\n\n# Times from today\ntimes = [\n    ('14.14', '14.31'),\n    ('14.33', '14.50'),\n    ('15.05', '15.10'),\n    ('15.35', '15.43')]\n\ncalculate_times(used_to_date, times)\n\nTime spent today: 47m, or 0h 47m\nTotal used to date: 92m, or 1h 32m\nTime remaining: 2308m, or 38h 28m\nUsed 3.8% of 40 hours max"
   },
   {
     "objectID": "CONTRIBUTING.html",
