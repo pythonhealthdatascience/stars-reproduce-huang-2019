@@ -3,9 +3,6 @@ project:
   preview:
     browser: true
 
-execute:
-  freeze: true # never re-render during project render, even if source changes
-
 website:
   # Name of site in navbar
   title: "Reproducing Huang et al. 2019"
