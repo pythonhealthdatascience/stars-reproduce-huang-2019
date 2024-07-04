@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-TBC. Total time used: TBCh TBCm (TBC%)
+Set-up repository and add article and code. Total time used: 0h 45m (1.9%)
 
 :::
 
@@ -64,7 +64,8 @@ times = [
     ('11.53', '12.20'),
     ('12.27', '12.33'),
     ('12.34', '12.36'),
-    ('12.43', '12.47')]
+    ('12.43', '12.47'),
+    ('14.53', '14.59')]
 
 calculate_times(used_to_date, times)
 ```

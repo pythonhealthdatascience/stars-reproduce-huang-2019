@@ -6,13 +6,19 @@ categories: [setup]
 bibliography: ../../../quarto_site/references.bib
 ---
 
+::: {.callout-note}
+
+TBC. Total time used: TBCh TBCm (TBC%)
+
+:::
+
 ### Untimed: Set up RStudio and test quarto site with R
 
 I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).
 
 This involved installing/updating RStudio, learning how to run and work with a quarto book on that platform, and and troubleshooting any issues in getting the quarto book up and running.
 
-This included:
+#### Environment
 
 * Updating to the latest version of RStudio, as suggested in the [Quarto docs](https://quarto.org/docs/computations/r.html)
 * Installing renv: `install.packages("renv")`
@@ -81,6 +87,9 @@ Now, returning to what started this - trying to get the `.TIFF` supplementary fi
 
 * Add `tiff` to `DESCRIPTION`
 * `renv::status()` showed that the package was used but not installed, and `renv::snapshot()` with option `2` installed the package
+
+#### Using specific versions
+
 * Add explict versions of R and packages to `DESCRIPTION`
 * Attempted to downgrade tiff. `renv::status()` and `renv::snapshot()` did not noticed. From [this issue](https://github.com/rstudio/renv/issues/233), it appears that this should work for `renv::install()` and, indeed, that recognises it although get issue:
 
@@ -97,3 +106,60 @@ Error: failed to retrieve package 'tiff@0.1.11'
 * I then found that `renv::snapshot()` ignores the version if it's `tiff (==0.1-11)` but adheres if it is `tiff@0.1-11` - yay!
 
 Having finished with this experiment, I deleted and rebuilt with latest versions - but found it had errors installing them where defined like `tiff@0.1-12`. Hence, returned to `tiff (==0.1-11)`, and just had to make sure to do `renv::install()` before `renv::snapshot()` (rather than rely on snapshot to install the packages).
+
+#### Fixing GitHub action to render and publish the book
+
+With no changes to GitHub action, had an error of:
+
+```
+[14/18] quarto_site/study_publication.qmd
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -> file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -> file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Problem with running R found at /usr/bin/Rscript to check environment configurations.
+Please check your installation of R.
+
+ERROR: Error
+    at renderFiles (file:///opt/quarto/bin/quarto.js:78079:29)
+    at eventLoopTick (ext:core/01_core.js:153:7)
+    at async renderProject (file:///opt/quarto/bin/quarto.js:78477:25)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:109332:33)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:104864:24)
+    at async Object.publish1 [as publish] (file:///opt/quarto/bin/quarto.js:105349:26)
+    at async publishSite (file:///opt/quarto/bin/quarto.js:109369:38)
+    at async publish7 (file:///opt/quarto/bin/quarto.js:109588:61)
+    at async doPublish (file:///opt/quarto/bin/quarto.js:109548:13)
+    at async publishAction (file:///opt/quarto/bin/quarto.js:109559:9)
+Error: Process completed with exit code 1
+```
+
+Attempting to solve this...
+
+* Add installation of R and set up of R environment with actions from `r-lib` (trying `setup-renv` and `setup-r-dependencies`) for environment. However, it fails for installation of R dependencies with the error message:
+
+```
+Run r-lib/actions/setup-r-dependencies@v2
+Run # Set site library path
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -> file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Error: Process completed with exit code 1.
+```
+
+* Based on [this forum post](https://forum.posit.co/t/r-cmd-check-on-github-actions-failing-suddenly-with-missing-renv-version/169670/8), I tried removing the .Rprofile from git
+* This seemed to improve slightly, although `setup-r-dependencies` then failed with an error in a pak subprocess seemingly for a package called ".". Tried switching to `setup-renv` (which bases on renv.lock) which was then successful! (although takes 4 minutes to install R dependencies, so 6m 55s total)
