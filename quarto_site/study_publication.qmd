@@ -20,3 +20,9 @@ Article from: <https://doi.org/10.3389/fneur.2019.00653>
 The supplementary material is an additional image saved as a .TIFF file:
 
 ![Supplementary figure](../original_study/supp.jpg)
+
+## Interactive web app
+
+The paper also links to an interactive web app for the model which can be found at: <https://rebrand.ly/desECR11> (which redirects to <https://compneuro.shinyapps.io/desECR11/>).
+
+The simulation also links to <https://beta.cloudes.me/loadShare?simId=17588>, stating that it can provide the details of the simulation (although this link does not work, if you login to CLOUDES, you can identify what appears to be a copy of that model under the ID 17482 or by searching "Huang").
