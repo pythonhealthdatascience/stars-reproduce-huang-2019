@@ -1,26 +1,24 @@
 ---
 title: "Publication"
+echo: False
 ---
-
-<!-- TODO: Remove this warning once filled out page -->
-**Please note: This is a template page and has not yet been completed**
 
 ## Code and data
 
-<!-- TODO: Add link to folder in repository -->
-View at: <[Link]>
+View at: <https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/tree/main/original_study/desECR>
+
+Code from: <https://github.com/shiweih/desECR>
 
 ## Journal article
 
-<!-- TODO: Embed article PDF - e.g.
-<iframe width="100%" height="800" src="../original_study/article.pdf"></iframe>
+Article from: <https://doi.org/10.3389/fneur.2019.00653>
 
-Unless the article is behind the paywall and no open-access version is available - in which case, just provide link to it -->
+<iframe width="100%" height="800" src="../original_study/article.pdf"></iframe>
 
 ## Supplementary materials
 
-<!-- TODO: Embed supplementary PDF (if relevant) -->
+The supplementary material is an additional image saved as a .TIFF file:
 
-## Sources
-
-<!-- TODO: Add links for where the above were sourced from -->
+```{r}
+grid::grid.raster( tiff::readTIFF('../original_study/supplementary_material.TIFF') )
+```
