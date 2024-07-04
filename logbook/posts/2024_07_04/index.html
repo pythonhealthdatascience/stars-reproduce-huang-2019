@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -201,7 +235,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#untimed-set-up-rstudio-and-test-quarto-site-with-r" id="toc-untimed-set-up-rstudio-and-test-quarto-site-with-r" class="nav-link active" data-scroll-target="#untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</a></li>
+  <li><a href="#untimed-set-up-rstudio-and-test-quarto-site-with-r" id="toc-untimed-set-up-rstudio-and-test-quarto-site-with-r" class="nav-link active" data-scroll-target="#untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</a>
+  <ul class="collapse">
+  <li><a href="#environment" id="toc-environment" class="nav-link" data-scroll-target="#environment">Environment</a></li>
+  <li><a href="#using-specific-versions" id="toc-using-specific-versions" class="nav-link" data-scroll-target="#using-specific-versions">Using specific versions</a></li>
+  <li><a href="#fixing-github-action-to-render-and-publish-the-book" id="toc-fixing-github-action-to-render-and-publish-the-book" class="nav-link" data-scroll-target="#fixing-github-action-to-render-and-publish-the-book">Fixing GitHub action to render and publish the book</a></li>
+  </ul></li>
+  <li><a href="#reading-the-article" id="toc-reading-the-article" class="nav-link" data-scroll-target="#reading-the-article">14.14-14.31: Reading the article</a></li>
+  <li><a href="#define-scope-of-article" id="toc-define-scope-of-article" class="nav-link" data-scroll-target="#define-scope-of-article">14.33-14.50: Define scope of article</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -212,11 +254,25 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="untimed-set-up-rstudio-and-test-quarto-site-with-r" class="level3">
-<h3 class="anchored" data-anchor-id="untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>TBC. Total time used: TBCh TBCm (TBC%)</p>
+</div>
+</div>
+<section id="untimed-set-up-rstudio-and-test-quarto-site-with-r" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</h2>
 <p>I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).</p>
 <p>This involved installing/updating RStudio, learning how to run and work with a quarto book on that platform, and and troubleshooting any issues in getting the quarto book up and running.</p>
-<p>This included:</p>
+<section id="environment" class="level3">
+<h3 class="anchored" data-anchor-id="environment">Environment</h3>
 <ul>
 <li>Updating to the latest version of RStudio, as suggested in the <a href="https://quarto.org/docs/computations/r.html">Quarto docs</a></li>
 <li>Installing renv: <code>install.packages("renv")</code></li>
@@ -282,6 +338,11 @@ Lockfile:
 <ul>
 <li>Add <code>tiff</code> to <code>DESCRIPTION</code></li>
 <li><code>renv::status()</code> showed that the package was used but not installed, and <code>renv::snapshot()</code> with option <code>2</code> installed the package</li>
+</ul>
+</section>
+<section id="using-specific-versions" class="level3">
+<h3 class="anchored" data-anchor-id="using-specific-versions">Using specific versions</h3>
+<ul>
 <li>Add explict versions of R and packages to <code>DESCRIPTION</code></li>
 <li>Attempted to downgrade tiff. <code>renv::status()</code> and <code>renv::snapshot()</code> did not noticed. From <a href="https://github.com/rstudio/renv/issues/233">this issue</a>, it appears that this should work for <code>renv::install()</code> and, indeed, that recognises it although get issue:</li>
 </ul>
@@ -296,6 +357,92 @@ Error: failed to retrieve package 'tiff@0.1.11'</code></pre>
 <li>I then found that <code>renv::snapshot()</code> ignores the version if it’s <code>tiff (==0.1-11)</code> but adheres if it is <code>tiff@0.1-11</code> - yay!</li>
 </ul>
 <p>Having finished with this experiment, I deleted and rebuilt with latest versions - but found it had errors installing them where defined like <code>tiff@0.1-12</code>. Hence, returned to <code>tiff (==0.1-11)</code>, and just had to make sure to do <code>renv::install()</code> before <code>renv::snapshot()</code> (rather than rely on snapshot to install the packages).</p>
+</section>
+<section id="fixing-github-action-to-render-and-publish-the-book" class="level3">
+<h3 class="anchored" data-anchor-id="fixing-github-action-to-render-and-publish-the-book">Fixing GitHub action to render and publish the book</h3>
+<p>With no changes to GitHub action, had an error of:</p>
+<pre><code>[14/18] quarto_site/study_publication.qmd
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -&gt; file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -&gt; file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Problem with running R found at /usr/bin/Rscript to check environment configurations.
+Please check your installation of R.
+
+ERROR: Error
+    at renderFiles (file:///opt/quarto/bin/quarto.js:78079:29)
+    at eventLoopTick (ext:core/01_core.js:153:7)
+    at async renderProject (file:///opt/quarto/bin/quarto.js:78477:25)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:109332:33)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:104864:24)
+    at async Object.publish1 [as publish] (file:///opt/quarto/bin/quarto.js:105349:26)
+    at async publishSite (file:///opt/quarto/bin/quarto.js:109369:38)
+    at async publish7 (file:///opt/quarto/bin/quarto.js:109588:61)
+    at async doPublish (file:///opt/quarto/bin/quarto.js:109548:13)
+    at async publishAction (file:///opt/quarto/bin/quarto.js:109559:9)
+Error: Process completed with exit code 1</code></pre>
+<p>Attempting to solve this…</p>
+<ul>
+<li>Add installation of R and set up of R environment with actions from <code>r-lib</code> (trying <code>setup-renv</code> and <code>setup-r-dependencies</code>) for environment. However, it fails for installation of R dependencies with the error message:</li>
+</ul>
+<pre><code>Run r-lib/actions/setup-r-dependencies@v2
+Run # Set site library path
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+Calls: source -&gt; file
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'renv/activate.R': No such file or directory
+Execution halted
+Error: Process completed with exit code 1.</code></pre>
+<ul>
+<li>Based on <a href="https://forum.posit.co/t/r-cmd-check-on-github-actions-failing-suddenly-with-missing-renv-version/169670/8">this forum post</a>, I tried removing the .Rprofile from git</li>
+<li>This seemed to improve slightly, although <code>setup-r-dependencies</code> then failed with an error in a pak subprocess seemingly for a package called “.”. Tried switching to <code>setup-renv</code> (which bases on renv.lock) which was then successful! (although takes 4 minutes to install R dependencies, so 6m 55s total)</li>
+</ul>
+</section>
+</section>
+<section id="reading-the-article" class="level2">
+<h2 class="anchored" data-anchor-id="reading-the-article">14.14-14.31: Reading the article</h2>
+<p>Read throughout and highlighted a copy of the article.</p>
+</section>
+<section id="define-scope-of-article" class="level2">
+<h2 class="anchored" data-anchor-id="define-scope-of-article">14.33-14.50: Define scope of article</h2>
+<p>Went through figures and tables to define scope (and convert and crop the .TIFF supplementary to .JPG so easier to display). From looking through text of article, identified a few extra results not in the figures: the quoted decrease in wait times. Although these are very related to the figures, as it wouldn’t be able to look at the figure and deduce the average wait time reduction, these represent additional results.</p>
+<p>There was one line in the discussion that caught my attention - “<em>The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists</em>” - but I feel the interpretation of this is quite ambiguous (as to whether it is a model result or interpretation from other results), and doesn’t have anything specific to action, so will not include in scope.</p>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div id="6c1c05b0" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.14'</span>, <span class="st">'14.31'</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.33'</span>, <span class="st">'14.50'</span>)]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 34m, or 0h 34m
+Total used to date: 79m, or 1h 19m
+Time remaining: 2321m, or 38h 41m
+Used 3.3% of 40 hours max</code></pre>
+</div>
+</div>
 
 
 </section>

@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -40,6 +60,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -195,11 +218,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- TODO: Remove this warning once filled out page -->
-<p><strong>Please note: This is a template page and has not yet been completed</strong></p>
-<!-- TODO: Use skeleton to create page describing scope -->
-<!-- NOTE: If you do not have a license allowing you to upload and reuse images from the article, then you should describe them below, and direct the reader to a link to the article -->
-<p>This page outlines that parts of the journal article which we will attempt to reproduce.</p>
+<p>This page outlines the parts of the journal article which we will attempt to reproduce.</p>
+<p>All images and quotes on this page are sourced from <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
 <section id="within-scope" class="level2">
 <h2 class="anchored" data-anchor-id="within-scope">Within scope</h2>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
@@ -208,14 +228,150 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Figure X
+Figure 2
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>[Figure with full legend from paper] <!-- e.g.
-![Figure 2. "Patient state over time by unit. The patient population progresses through infection over three months (with 80% infected). The bold line shows the median results of 30 trials, and the fainter lines show the minimum and maximum from the 30 trials." @allen_simulation_2020](../original_study/article_fig2.png){width=80%}--></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig2.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="FIGURE 2 | Patient wait time under various simulation scenarios (A). Baseline scenario simulated using inputs from Table 1 (B). Exclusive-use scenario: IR patients can only utilize angioIR (C). Two angioINRs scenario: 2 angioINRs, no angioIRs. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. @huang_optimizing_2019"><img src="../original_study/fig2.jpg" class="img-fluid figure-img" style="width:80.0%" alt="FIGURE 2 | Patient wait time under various simulation scenarios (A). Baseline scenario simulated using inputs from Table 1 (B). Exclusive-use scenario: IR patients can only utilize angioIR (C). Two angioINRs scenario: 2 angioINRs, no angioIRs. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. Huang et al. (2019)"></a></p>
+<figcaption>FIGURE 2 | Patient wait time under various simulation scenarios (A). Baseline scenario simulated using inputs from Table 1 (B). Exclusive-use scenario: IR patients can only utilize angioIR (C). Two angioINRs scenario: 2 angioINRs, no angioIRs. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Figure 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig3.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="FIGURE 3 | The effect of increasing working hours on ECR patient wait time at angioINR (A). Baseline scenario (B). Exclusive-use scenario (C). Two angioINRs scenario. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. @huang_optimizing_2019"><img src="../original_study/fig3.jpg" class="img-fluid figure-img" style="width:80.0%" alt="FIGURE 3 | The effect of increasing working hours on ECR patient wait time at angioINR (A). Baseline scenario (B). Exclusive-use scenario (C). Two angioINRs scenario. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. Huang et al. (2019)"></a></p>
+<figcaption>FIGURE 3 | The effect of increasing working hours on ECR patient wait time at angioINR (A). Baseline scenario (B). Exclusive-use scenario (C). Two angioINRs scenario. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Figure 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig4.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="FIGURE 4 | Disability-free life gained under various scenarios. @huang_optimizing_2019"><img src="../original_study/fig4.jpg" class="img-fluid figure-img" style="width:80.0%" alt="FIGURE 4 | Disability-free life gained under various scenarios. Huang et al. (2019)"></a></p>
+<figcaption>FIGURE 4 | Disability-free life gained under various scenarios. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Figure 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig5.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="FIGURE 5 | A comparison of the utilization of angioINR by ECR patients under various scenarios. @huang_optimizing_2019"><img src="../original_study/fig5.jpg" class="img-fluid figure-img" style="width:80.0%" alt="FIGURE 5 | A comparison of the utilization of angioINR by ECR patients under various scenarios. Huang et al. (2019)"></a></p>
+<figcaption>FIGURE 5 | A comparison of the utilization of angioINR by ECR patients under various scenarios. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Supplementary figure
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/supp.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Supplementary Figure | Increasing ECR patient volume on service bottleneck. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. (A) Baseline scenario. (B) Doubling ECR patients in baseline scenario. (C) Tripping ECR patients in baseline scenario. @huang_optimizing_2019"><img src="../original_study/supp.jpg" class="img-fluid figure-img" style="width:80.0%" alt="Supplementary Figure | Increasing ECR patient volume on service bottleneck. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. (A) Baseline scenario. (B) Doubling ECR patients in baseline scenario. (C) Tripping ECR patients in baseline scenario. Huang et al. (2019)"></a></p>
+<figcaption>Supplementary Figure | Increasing ECR patient volume on service bottleneck. Standardized density of patients in queue: the probability density of patients who are waiting standardized to patients who are not waiting. (A) Baseline scenario. (B) Doubling ECR patients in baseline scenario. (C) Tripping ECR patients in baseline scenario. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In-text result 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>“Exclusive-Use Scenario. In this scenario, the overall wait time probability at angioINR was reduced compared to baseline (red line in Figure 2B compared to Figure 2A). This represents a <strong>decrease in ECR patient wait time for angioINR by an average of 6 min</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In-text result 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>“Two angioINRs Scenario. This scenario simulates the effect a facility upgrade to two biplane angiographic suites, but without additional staff changes. The wait time probability at angioINR was reduced compared to baseline (Figure 2C). The reduction represents an <strong>average of 4 min less in queue for angioINR</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+In-text result 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>“Extended Schedule Scenario. The wait time probability at angioINR in the exclusive- use scenario was further reduced by extended work hours (Figure 3B). In contrast, work extension did not affect baseline or the 2 angioINRs scenario (Figures 3A,C). For the baseline scenario, 1 and 2 h of extra work resulted in an <strong>average wait time of 1.7 and 0.9 min reduction, respectively</strong>. For the 2 angioINRs scenario, 1 and 2 h of extra work resulted in an <strong>average wait time gain of 1 and 0.3 min, respectively</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
 </div>
 </div>
 </div>
@@ -223,27 +379,59 @@ Figure X
 <section id="outside-scope" class="level2">
 <h2 class="anchored" data-anchor-id="outside-scope">Outside scope</h2>
 <div class="callout callout-style-simple callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Table X
+Figure 1
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>[Explanation of why it is outside scope]</p>
-<p>[Display table, including full legend from paper]</p>
+<p>Diagram of patient flow through the model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig1.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="FIGURE 1 | A schematic diagram of our discrete event model of an ECR service from Emergency to angiography suite. CT, Computed Tomography; AIS, Acute Ischemic Stroke; LVO, Large Vessel Occlusion; ECR, Endovascular Clot Retrieval; IR, Interventional Radiology; INR, Interventional Neuroradiology. @huang_optimizing_2019"><img src="../original_study/fig1.jpg" class="img-fluid figure-img" style="width:80.0%" alt="FIGURE 1 | A schematic diagram of our discrete event model of an ECR service from Emergency to angiography suite. CT, Computed Tomography; AIS, Acute Ischemic Stroke; LVO, Large Vessel Occlusion; ECR, Endovascular Clot Retrieval; IR, Interventional Radiology; INR, Interventional Neuroradiology. Huang et al. (2019)"></a></p>
+<figcaption>FIGURE 1 | A schematic diagram of our discrete event model of an ECR service from Emergency to angiography suite. CT, Computed Tomography; AIS, Acute Ischemic Stroke; LVO, Large Vessel Occlusion; ECR, Endovascular Clot Retrieval; IR, Interventional Radiology; INR, Interventional Neuroradiology. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
 </div>
 </div>
 </div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Table 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Parameters for the model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/tab1.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="TABLE 1 | DES model inputs. (A) Human and physical resources. (B) Patient statistics. @huang_optimizing_2019"><img src="../original_study/tab1.jpg" class="img-fluid figure-img" style="width:80.0%" alt="TABLE 1 | DES model inputs. (A) Human and physical resources. (B) Patient statistics. Huang et al. (2019)"></a></p>
+<figcaption>TABLE 1 | DES model inputs. (A) Human and physical resources. (B) Patient statistics. <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
+Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -701,6 +889,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
