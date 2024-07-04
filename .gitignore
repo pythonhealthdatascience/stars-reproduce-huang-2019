@@ -3,3 +3,5 @@ _freeze/
 /.quarto/
 __pycache__/
 .vscode/
+.Rproj.user
+.Rhistory
