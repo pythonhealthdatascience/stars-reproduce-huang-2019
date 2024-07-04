@@ -75,5 +75,9 @@ I looked through issues and couldn't spot anything, and then realised this was a
 * `renv::init(bare=TRUE)` with explicit snapshot
 * `renv::snapshot()` (and realised it didn't update with change to `DESCRIPTION` before simply because I hadn't put a comma after each package!)
 
-* Installing rmarkdown (and knitr), as in the [Quarto docs](https://quarto.org/docs/computations/r.html) (which took a while)
-* Creating an renv for the book
+To render the Quarto book (in a similar to way to how we did in VSCode), just click the `Render` button.
+
+Now, returning to what started this - trying to get the `.TIFF` supplementary file to display...
+
+* Add `tiff` to `DESCRIPTION`
+* `renv::status()` showed that the package was used but not installed, and `renv::snapshot()` with option `2` installed the package
