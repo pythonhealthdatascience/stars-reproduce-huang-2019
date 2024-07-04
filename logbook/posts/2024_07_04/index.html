@@ -245,6 +245,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#define-scope-of-article" id="toc-define-scope-of-article" class="nav-link" data-scroll-target="#define-scope-of-article">14.33-14.50: Define scope of article</a></li>
   <li><a href="#consensus-on-scope-with-tom" id="toc-consensus-on-scope-with-tom" class="nav-link" data-scroll-target="#consensus-on-scope-with-tom">15.05-15.10: Consensus on scope with Tom</a></li>
   <li><a href="#exploring-app-and-simulation-visualisation" id="toc-exploring-app-and-simulation-visualisation" class="nav-link" data-scroll-target="#exploring-app-and-simulation-visualisation">15.35-15.43: Exploring app and simulation visualisation</a></li>
+  <li><a href="#prepare-release" id="toc-prepare-release" class="nav-link" data-scroll-target="#prepare-release">15.44-15.47: Prepare release</a></li>
+  <li><a href="#archived-on-zenodo" id="toc-archived-on-zenodo" class="nav-link" data-scroll-target="#archived-on-zenodo">15.55-15.58: Archived on Zenodo</a></li>
+  <li><a href="#look-over-code-and-set-up-environment" id="toc-look-over-code-and-set-up-environment" class="nav-link" data-scroll-target="#look-over-code-and-set-up-environment">16.04-16.58: Look over code and set up environment</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -431,29 +434,133 @@ Error: Process completed with exit code 1.</code></pre>
 <p>As an addendum to the reading, explored the <a href="https://compneuro.shinyapps.io/desECR11/">app</a> and linked <a href="https://beta.cloudes.me/loadShare?simId=17588">simulation configuration visualisation</a>.</p>
 <p>For the configuration, it just opened to the CLOUDES homepage, so I tried creating an account then going to the link (turns out you need an account to access). The link still did not work nor the ID, but when I search for “Huang”, I was able to find a diagram: <a href="https://beta.cloudes.me/loadSim?simId=17482&amp;pageId=rTbqE" class="uri">https://beta.cloudes.me/loadSim?simId=17482&amp;pageId=rTbqE</a> (ID 17482). When run, this played through the simulation showing arrivals and queues etc.</p>
 </section>
+<section id="prepare-release" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-release">15.44-15.47: Prepare release</h2>
+<p>Modified CHANGELOG and CITATION ahead of release.</p>
+</section>
+<section id="archived-on-zenodo" class="level2">
+<h2 class="anchored" data-anchor-id="archived-on-zenodo">15.55-15.58: Archived on Zenodo</h2>
+<p>Created GitHub release with archiving activated on Zenodo.</p>
+</section>
+<section id="look-over-code-and-set-up-environment" class="level2">
+<h2 class="anchored" data-anchor-id="look-over-code-and-set-up-environment">16.04-16.58: Look over code and set up environment</h2>
+<p>No dependency management, so will create renv based on the imports and the dates of the repository - with exception that article mentions:</p>
+<ul>
+<li>Simmer (version 4.1.0)</li>
+</ul>
+<p>The article dates areL</p>
+<ul>
+<li>Received - 31 March 2019</li>
+<li>Accepted - 4 June 2019</li>
+<li>Published - 27 June 2019</li>
+</ul>
+<p>The GitHub repository has two commits, both on 27 May 2019. As per protocol, will go with earliest of published and code, which is <strong>27 May 2019</strong>.</p>
+<p>It looks likely that all the relevant code will be in <code>server.R</code> (with <code>ui.R</code> just being for the ShinyApp, which is not in scope to reproduce, as it is not presented as a key result within the paper). As such, looking at the imports from that R script, and identifying versions on or prior to 27 May 2019…</p>
+<ul>
+<li>simmer - <a href="https://cran.r-project.org/src/contrib/Archive/simmer/" class="uri">https://cran.r-project.org/src/contrib/Archive/simmer/</a> - 4.2.2 (14 March 2019)</li>
+<li>simmer.plot - <a href="https://cran.r-project.org/src/contrib/Archive/simmer.plot/" class="uri">https://cran.r-project.org/src/contrib/Archive/simmer.plot/</a> - 0.1.15 (10th March 2019)</li>
+<li>parallel - part of the core R distribution (so will come with version of R used)</li>
+<li>dplyr - <a href="https://cran.r-project.org/src/contrib/Archive/dplyr/" class="uri">https://cran.r-project.org/src/contrib/Archive/dplyr/</a> - 0.8.1 (14th May 2019)</li>
+<li>plotly - <a href="https://cran.r-project.org/src/contrib/Archive/plotly/" class="uri">https://cran.r-project.org/src/contrib/Archive/plotly/</a> - 4.9.0 (10th April 2019)</li>
+<li>gridExtra - <a href="https://cran.r-project.org/src/contrib/Archive/gridExtra/" class="uri">https://cran.r-project.org/src/contrib/Archive/gridExtra/</a> - 2.2.1 (29th February 2016, latest release)</li>
+<li>R - <a href="https://github.com/r-hub/rversions" class="uri">https://github.com/r-hub/rversions</a> - 3.6.0 Planting of a Tree (26th April 2019)</li>
+</ul>
+<p>I’ll set each of these to be max these versions, to help with dependency conflicts when set-up environment, but then convert to fixed versions once know what worked.</p>
+<p>Created a DESCRIPTION file in <code>reproduction/</code>:</p>
+<pre><code>Title: huang2019
+Depends: 
+    R (&lt;= 3.6)
+Imports:
+    simmer (&lt;=4.2.2),
+    simmer.plot (&lt;=0.1.15),
+    dplyr (&lt;=0.8.1),
+    plotly (&lt;=4.9.0),
+    gridExtra (&lt;=2.2.1)</code></pre>
+<p>Want to create another renv for that sub-folder (seperate to the renv in our main folder). To do so I ran the following commands in the console:</p>
+<ol type="1">
+<li><code>setwd("~/Documents/stars/stars-reproduce-huang-2019/reproduction")</code> (to move to reproduction/)</li>
+<li><code>renv::deactivate()</code></li>
+<li><code>renv::status()</code> to confirm none were active</li>
+<li><code>renv::init(bare=TRUE)</code> and selected 1 for using the explicit dependencies from DESCRIPTION. This then restarted the R session and created and opened a new project: <code>reproduction</code>. It made the following new files and folders:</li>
+</ol>
+<ul>
+<li><code>.Rprofile</code> (with just <code>source("renv/activate.R")</code>)</li>
+<li><code>reproduction.Rproj</code></li>
+<li><code>renv/</code> with the environment</li>
+</ul>
+<ol start="5" type="1">
+<li><code>renv::install()</code> to install the packages and their specified versions. However, looking over the versions it planned to install, we had:</li>
+</ol>
+<ul>
+<li>simmer [4.4.6.3]</li>
+<li>simmer.plot [0.1.18]</li>
+<li>dplyr [1.1.4]</li>
+<li>plotly [4.10.4]</li>
+<li>gridExtra [2.3]</li>
+</ul>
+<p>I cancelled it and tried changing everything to explicit versions (==). This then matched up to what I wanted in the planned installs -</p>
+<ul>
+<li>simmer [4.2.2]</li>
+<li>simmer.plot [0.1.15]</li>
+<li>dplyr [1.1.4]</li>
+<li>plotly [4.9.0]</li>
+<li>gridExtra [2.2.1]</li>
+</ul>
+<p>However, there was an error with simmer: <code>ERROR: compilation failed for package ‘simmer’</code>, and so still just have <code>renv</code> in environment. I tried installing this specific version manually with remotes:</p>
+<ul>
+<li><code>renv::install("remotes")</code></li>
+<li><code>remotes::install_version("simmer", "4.2.2")</code></li>
+</ul>
+<p>Unfortunately, the same error appeared. I then tried installing from GitHub instead of CRAN:</p>
+<ul>
+<li><code>remotes::install_github("r-simmer/simmer@v4.2.2")</code></li>
+</ul>
+<p>But this failed again as before.</p>
+<p>I tried focusing just on R to begin with, as I realised I have to install and change that manually. I followed <a href="https://support.bioconductor.org/p/9157825/">this tutorial</a> and ran in terminal:</p>
+<ul>
+<li><code>sudo snap install curl</code></li>
+<li><code>sudo apt-get update</code></li>
+<li><code>sudo apt-get install gdebi-core</code></li>
+<li><code>export R_VERSION=3.6</code></li>
+<li><code>curl -O https://cdn.rstudio.com/r/ubuntu-2204/pkgs/r-${R_VERSION}_1_amd64.deb</code></li>
+<li><code>sudo gdebi r-${R_VERSION}_1_amd64.deb</code></li>
+</ul>
+<p>However, I then got an error: <code>Failed to open the software package. The package might be corrupted or you are not allowed to open the file. Check the permissions of the file.</code></p>
+<p>I switched over to the <a href="https://cloud.r-project.org/">R documentation</a> and clicked on Ubuntu and then “For older R releases, see the corresponding README.” This said:</p>
+<pre><code>To obtain the latest R 3.6 packages, use:
+
+deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/
+or
+
+deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/
+or
+
+deb https://cloud.r-project.org/bin/linux/ubuntu trusty-cran35/</code></pre>
+</section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="b12f81be" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">45</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.14'</span>, <span class="st">'14.31'</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.33'</span>, <span class="st">'14.50'</span>),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.05'</span>, <span class="st">'15.10'</span>),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.35'</span>, <span class="st">'15.43'</span>)]</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e28c723d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">45</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.14'</span>, <span class="st">'14.31'</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.33'</span>, <span class="st">'14.50'</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.05'</span>, <span class="st">'15.10'</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.35'</span>, <span class="st">'15.43'</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.55'</span>, <span class="st">'15.58'</span>)]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 47m, or 0h 47m
-Total used to date: 92m, or 1h 32m
-Time remaining: 2308m, or 38h 28m
-Used 3.8% of 40 hours max</code></pre>
+<pre><code>Time spent today: 50m, or 0h 50m
+Total used to date: 95m, or 1h 35m
+Time remaining: 2305m, or 38h 25m
+Used 4.0% of 40 hours max</code></pre>
 </div>
 </div>
 
