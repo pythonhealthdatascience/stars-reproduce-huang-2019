@@ -184,6 +184,117 @@ As an addendum to the reading, explored the [app](https://compneuro.shinyapps.io
 
 For the configuration, it just opened to the CLOUDES homepage, so I tried creating an account then going to the link (turns out you need an account to access). The link still did not work nor the ID, but when I search for "Huang", I was able to find a diagram: <https://beta.cloudes.me/loadSim?simId=17482&pageId=rTbqE> (ID 17482). When run, this played through the simulation showing arrivals and queues etc.
 
+## 15.44-15.47: Prepare release
+
+Modified CHANGELOG and CITATION ahead of release.
+
+## 15.55-15.58: Archived on Zenodo
+
+Created GitHub release with archiving activated on Zenodo.
+
+## 16.04-16.58: Look over code and set up environment
+
+No dependency management, so will create renv based on the imports and the dates of the repository - with exception that article mentions:
+
+* Simmer (version 4.1.0)
+
+The article dates areL
+
+* Received - 31 March 2019
+* Accepted - 4 June 2019
+* Published - 27 June 2019
+
+The GitHub repository has two commits, both on 27 May 2019. As per protocol, will go with earliest of published and code, which is **27 May 2019**.
+
+It looks likely that all the relevant code will be in `server.R` (with `ui.R` just being for the ShinyApp, which is not in scope to reproduce, as it is not presented as a key result within the paper). As such, looking at the imports from that R script, and identifying versions on or prior to 27 May 2019...
+
+* simmer - <https://cran.r-project.org/src/contrib/Archive/simmer/> - 4.2.2 (14 March 2019)
+* simmer.plot - <https://cran.r-project.org/src/contrib/Archive/simmer.plot/> - 0.1.15 (10th March 2019)
+* parallel - part of the core R distribution (so will come with version of R used)
+* dplyr - <https://cran.r-project.org/src/contrib/Archive/dplyr/> - 0.8.1 (14th May 2019)
+* plotly - <https://cran.r-project.org/src/contrib/Archive/plotly/> - 4.9.0 (10th April 2019)
+* gridExtra - <https://cran.r-project.org/src/contrib/Archive/gridExtra/> - 2.2.1 (29th February 2016, latest release)
+* R - <https://github.com/r-hub/rversions> - 3.6.0 Planting of a Tree (26th April 2019)
+
+I'll set each of these to be max these versions, to help with dependency conflicts when set-up environment, but then convert to fixed versions once know what worked.
+
+Created a DESCRIPTION file in `reproduction/`:
+
+```
+Title: huang2019
+Depends: 
+    R (<= 3.6)
+Imports:
+    simmer (<=4.2.2),
+    simmer.plot (<=0.1.15),
+    dplyr (<=0.8.1),
+    plotly (<=4.9.0),
+    gridExtra (<=2.2.1)
+```
+
+Want to create another renv for that sub-folder (seperate to the renv in our main folder). To do so I ran the following commands in the console: 
+
+1. `setwd("~/Documents/stars/stars-reproduce-huang-2019/reproduction")` (to move to reproduction/)
+2. `renv::deactivate()`
+3. `renv::status()` to confirm none were active
+4. `renv::init(bare=TRUE)` and selected 1 for using the explicit dependencies from DESCRIPTION. This then restarted the R session and created and opened a new project: `reproduction`. It made the following new files and folders:
+
+  * `.Rprofile` (with just `source("renv/activate.R")`)
+  * `reproduction.Rproj`
+  * `renv/` with the environment
+
+5. `renv::install()` to install the packages and their specified versions. However, looking over the versions it planned to install, we had:
+
+* simmer       [4.4.6.3]
+* simmer.plot  [0.1.18]
+* dplyr        [1.1.4]
+* plotly       [4.10.4]
+* gridExtra    [2.3]
+
+I cancelled it and tried changing everything to explicit versions (==). This then matched up to what I wanted in the planned installs - 
+
+* simmer       [4.2.2]
+* simmer.plot  [0.1.15]
+* dplyr        [1.1.4]
+* plotly       [4.9.0]
+* gridExtra    [2.2.1]
+
+However, there was an error with simmer: `ERROR: compilation failed for package ‘simmer’`, and so still just have `renv` in environment. I tried installing this specific version manually with remotes:
+
+* `renv::install("remotes")`
+* `remotes::install_version("simmer", "4.2.2")`
+
+Unfortunately, the same error appeared. I then tried installing from GitHub instead of CRAN:
+
+* `remotes::install_github("r-simmer/simmer@v4.2.2")`
+
+But this failed again as before.
+
+I tried focusing just on R to begin with, as I realised I have to install and change that manually. I followed [this tutorial](https://support.bioconductor.org/p/9157825/) and ran in terminal:
+
+* `sudo snap install curl`
+* `sudo apt-get update`
+* `sudo apt-get install gdebi-core`
+* `export R_VERSION=3.6`
+* `curl -O https://cdn.rstudio.com/r/ubuntu-2204/pkgs/r-${R_VERSION}_1_amd64.deb`
+* `sudo gdebi r-${R_VERSION}_1_amd64.deb`
+
+However, I then got an error: `Failed to open the software package. The package might be corrupted or you are not allowed to open the file. Check the permissions of the file.`
+
+I switched over to the [R documentation](https://cloud.r-project.org/) and clicked on Ubuntu and then "For older R releases, see the corresponding README." This said:
+
+```
+To obtain the latest R 3.6 packages, use:
+
+deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/
+or
+
+deb https://cloud.r-project.org/bin/linux/ubuntu xenial-cran35/
+or
+
+deb https://cloud.r-project.org/bin/linux/ubuntu trusty-cran35/
+```
+
 ## Timings
 
 ```{python}
@@ -199,7 +310,8 @@ times = [
     ('14.14', '14.31'),
     ('14.33', '14.50'),
     ('15.05', '15.10'),
-    ('15.35', '15.43')]
+    ('15.35', '15.43'),
+    ('15.55', '15.58')]
 
 calculate_times(used_to_date, times)
 ```
