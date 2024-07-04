@@ -1,0 +1,28 @@
+---
+title: "Day 2"
+author: "Amy Heather"
+date: "2024-07-04"
+categories: [setup]
+bibliography: ../../../quarto_site/references.bib
+---
+
+### Untimed: Set up RStudio and test quarto site with R
+
+I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).
+
+This involved installing/updating RStudio, learning how to run and work with a quarto book on that platform, and and troubleshooting any issues in getting the quarto book up and running.
+
+This included:
+
+* Updating to the latest version of RStudio, as suggested in the [Quarto docs](https://quarto.org/docs/computations/r.html)
+* Installing renv: `install.packages("renv")`
+* Setting the working directory: `setwd("~/Documents/stars/stars-reproduce-huang-2019")`
+* Initialised an empty R environment: `renv::init(bare=TRUE)`
+* Set renv to use explicit dependencies: `renv::settings$snapshot.type("explicit")`
+* Created a `DESCRIPTION` file
+* Ran `renv::snapshot()` which returned that project is not activated yet, so I selected option to `Activate the project and use the project library`. This generated an `.Rprofile` file.
+* I then tried to open the project (`File > Open Project`) but this failed. So I tried `File > New Project > Existing Directory` (which created an `.Rproj` file), then reran `renv::init(bare=TRUE)`, then `renv::snapshot()`, and selected to install packages and then snapshot.
+* Synced with GitHub (excluding .Rhistory, which is just a history of executed commands), using Git panel in top right corner
+
+* Installing rmarkdown (and knitr), as in the [Quarto docs](https://quarto.org/docs/computations/r.html) (which took a while)
+* Creating an renv for the book

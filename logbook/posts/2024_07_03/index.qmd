@@ -12,7 +12,7 @@ TBC. Total time used: TBCh TBCm (TBC%)
 
 :::
 
-## 11.53-12.20, 12.27-: Set-up and update repository
+## 11.53-12.20, 12.27-12.33: Set-up and update repository
 
 I have previously (Friday 21st June 2024) sent an email to the corresponding author (Dr. Shiwei Huang) to inform about the study, using the template email from our protocol.
 
@@ -28,12 +28,26 @@ From a quick look at their code repository, can see they use a GNU General Publi
 
 * Include a copy of the full license
 * State all significant changes made to the software
-* Make the original source code availble when distributing binaries based on that work
+* Make the original source code available when distributing binaries based on that work
 * Include a copy of the original copyright notice
 
 It allows the code to be changed and distributed to others (as long as release under GPL v3 also). Hence, updated license (and references to it) to GNU GPL 3.0 accordingly.
 
 Created environment for book.
+
+## 12.34-12.36: Upload model code
+
+Uploaded copy of <https://github.com/shiweih/desECR> to `original_study/`.
+
+## 12.43-12.47, 14.53-14.59: Check journal article license and upload
+
+The journal article was published in Frontiers in Neurology and is available at <https://doi.org/10.3389/fneur.2019.00653>. It has the following copyright statement:
+
+> "© 2019 Huang, Maingard, Kok, Barras, Thijs, Chandra, Brooks and Asadi. This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY). The use, distribution or reproduction in other forums is permitted, provided the original author(s) and the copyright owner(s) are credited and that the original publication in this journal is cited, in accordance with accepted academic practice. No use, distribution or reproduction is permitted which does not comply with these terms."
+
+Hence, we are free to upload this article and images to the repository (ensuring we cite throughout whenever using them), as well as the supplementary material.
+
+I set this up to be displayed within the quarto site.
 
 ## Timings
 
@@ -47,7 +61,10 @@ used_to_date = 0
 
 # Times from today
 times = [
-    ('11.53', '12.20')]
+    ('11.53', '12.20'),
+    ('12.27', '12.33'),
+    ('12.34', '12.36'),
+    ('12.43', '12.47')]
 
 calculate_times(used_to_date, times)
 ```
