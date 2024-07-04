@@ -274,11 +274,28 @@ Lockfile:
 </ul>
 <p>I looked through issues and couldn’t spot anything, and then realised this was a fairly small package which hadn’t had any changes in half a year, so on reflection, probably not a reliable option to choose. So went back to set up similar to before of:</p>
 <ul>
-<li><p><code>renv::init(bare=TRUE)</code> with explicit snapshot</p></li>
-<li><p><code>renv::snapshot()</code> (and realised it didn’t update with change to <code>DESCRIPTION</code> before simply because I hadn’t put a comma after each package!)</p></li>
-<li><p>Installing rmarkdown (and knitr), as in the <a href="https://quarto.org/docs/computations/r.html">Quarto docs</a> (which took a while)</p></li>
-<li><p>Creating an renv for the book</p></li>
+<li><code>renv::init(bare=TRUE)</code> with explicit snapshot</li>
+<li><code>renv::snapshot()</code> (and realised it didn’t update with change to <code>DESCRIPTION</code> before simply because I hadn’t put a comma after each package!)</li>
 </ul>
+<p>To render the Quarto book (in a similar to way to how we did in VSCode), just click the <code>Render</code> button.</p>
+<p>Now, returning to what started this - trying to get the <code>.TIFF</code> supplementary file to display…</p>
+<ul>
+<li>Add <code>tiff</code> to <code>DESCRIPTION</code></li>
+<li><code>renv::status()</code> showed that the package was used but not installed, and <code>renv::snapshot()</code> with option <code>2</code> installed the package</li>
+<li>Add explict versions of R and packages to <code>DESCRIPTION</code></li>
+<li>Attempted to downgrade tiff. <code>renv::status()</code> and <code>renv::snapshot()</code> did not noticed. From <a href="https://github.com/rstudio/renv/issues/233">this issue</a>, it appears that this should work for <code>renv::install()</code> and, indeed, that recognises it although get issue:</li>
+</ul>
+<pre><code>Warning: failed to find source for 'tiff 0.1.11' in package repositories
+Error: failed to retrieve package 'tiff@0.1.11'</code></pre>
+<ul>
+<li>I checked the <a href="https://cran.r-project.org/src/contrib/Archive/tiff/">archive for tiff on CRAN</a> and found there is a 0.1-11 (prior to the current 0.1-12)</li>
+<li>If I deleted it (<code>remove.packages("tiff")</code>) and then redid <code>renv::snapshot()</code>, it again would not notice the versions</li>
+<li>I tried to do it manually with remotes (rather than devtools as devtools has so many dependencies) - I installed <code>remotes</code> and then ran <code>remotes::install_version("tiff", "0.1.11")</code>. This seemed successful, except <code>packageVersion("tiff")</code> still returned 0.1.12? Although actually, on inspection, you can see it if 0.1.11. However, it wasn’t able to do that from DESCRIPTION.</li>
+<li>I removed it and tried again with a direct <code>renv::install("tiff@0.1-11")</code> which was successful</li>
+<li>I then tried again with DESCRIPTION, but instead set it to <code>tiff@0.1-11</code>, which was successful likewise! And if it was <code>tiff (==0.1-11)</code>! So it appears its a bit fussy about matching up to the format in the <a href="https://cloud.r-project.org/src/contrib/Archive/tiff/">CRAN archive .tar.gz</a> files.</li>
+<li>I then found that <code>renv::snapshot()</code> ignores the version if it’s <code>tiff (==0.1-11)</code> but adheres if it is <code>tiff@0.1-11</code> - yay!</li>
+</ul>
+<p>Having finished with this experiment, I deleted and rebuilt with latest versions - but found it had errors installing them where defined like <code>tiff@0.1-12</code>. Hence, returned to <code>tiff (==0.1-11)</code>, and just had to make sure to do <code>renv::install()</code> before <code>renv::snapshot()</code> (rather than rely on snapshot to install the packages).</p>
 
 
 </section>
