@@ -23,6 +23,57 @@ This included:
 * Ran `renv::snapshot()` which returned that project is not activated yet, so I selected option to `Activate the project and use the project library`. This generated an `.Rprofile` file.
 * I then tried to open the project (`File > Open Project`) but this failed. So I tried `File > New Project > Existing Directory` (which created an `.Rproj` file), then reran `renv::init(bare=TRUE)`, then `renv::snapshot()`, and selected to install packages and then snapshot.
 * Synced with GitHub (excluding .Rhistory, which is just a history of executed commands), using Git panel in top right corner
+* Add `rmarkdown` to `DESCRIPTION` and rebuilt environment (via `renv::snapshot()` and selecting to install)
+
+Then came across pkgr, and decided to give that a go, following [their tutorial](https://kb.metworx.com/Users/Managing_R_Packages/pkgr-for-development/)...
+
+* Deleted renv and associated files (`.Rprofile` and `renv.lock`) with `renv::deactivate(clean=TRUE)`
+* Installed `pkgr` following the instructions on their [latest release](https://github.com/metrumresearchgroup/pkgr/releases/tag/v3.1.1):
+
+```
+sudo wget https://github.com/metrumresearchgroup/pkgr/releases/download/v3.1.1/pkgr_3.1.1_linux_amd64.tar.gz -O /tmp/pkgr.tar.gz
+sudo tar xzf /tmp/pkgr.tar.gz pkgr
+sudo mv pkgr /usr/local/bin/pkgr
+sudo chmod +x /usr/local/bin/pkgr
+```
+
+* Created a `pkgr.yml` file
+
+```
+# Version of pkgr.yml and, at this point, should always say Version: 1
+Version: 1
+
+# pkgr will pull dependencies listed in DESCRIPTION
+Descriptions:
+- DESCRIPTION
+
+# If DESCRIPTION is provided, then this section only needs to include packages
+# that you would like to use for development purposes that are not in your
+# DESCRIPTION file (i.e. not formal dependencies of your package) - e.g. devtools
+# Packages:
+
+# Specify where to pull packages from
+# If list CRAN and MPN, will look on CRAN first, then MPN (which is useful for
+# dependencies no on CRAN). Can list a location for specific packages in Packages:
+Repos:
+  - CRAN: https://cran.rstudio.com
+  - MPN: https://mpn.metworx.com/snapshots/stable/2022-02-11 # used for mrgval
+
+# Specify Lockfile or Library to tell pkgr where to install packages
+# We are using renv to isolate our package environment - renv will tell pkgr where to install them
+Lockfile:
+  Type: renv
+```
+
+* In terminal, ran `pkgr plan`, but get error `ARN[0000] error getting library path from renv: Error in loadNamespace(x) : there is no package called ‘renv’`
+  * If I start a new R session and run `packageVersion("renv")`, it returns that it is installed
+  * Trying to reinstall with `install.packages("renv")` makes no difference.
+  * Tried restarting R and opening a new terminal
+
+I looked through issues and couldn't spot anything, and then realised this was a fairly small package which hadn't had any changes in half a year, so on reflection, probably not a reliable option to choose. So went back to set up similar to before of:
+
+* `renv::init(bare=TRUE)` with explicit snapshot
+* `renv::snapshot()` (and realised it didn't update with change to `DESCRIPTION` before simply because I hadn't put a comma after each package!)
 
 * Installing rmarkdown (and knitr), as in the [Quarto docs](https://quarto.org/docs/computations/r.html) (which took a while)
 * Creating an renv for the book

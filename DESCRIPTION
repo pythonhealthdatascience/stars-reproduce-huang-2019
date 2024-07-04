@@ -1,11 +1,6 @@
-Title: STARS Reproduce Huang et al. 2019
-Version: 0.1.0
-Authors@R: person("Amy", "Heather", email = "a.heather2@exeter.ac.uk",
-                  role = c("aut", "cre"))
-Description: This package is an example R package.
-Encoding: UTF-8
-LazyData: true
+Title: quarto_huang_2019
 Depends: 
     R (>= 3.1)
 Imports:
-    knitr
+    knitr,
+    rmarkdown
