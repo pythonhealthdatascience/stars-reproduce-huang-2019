@@ -235,7 +235,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#set-up-and-update-repository" id="toc-set-up-and-update-repository" class="nav-link active" data-scroll-target="#set-up-and-update-repository">11.53-12.20, 12.27-: Set-up and update repository</a></li>
+  <li><a href="#set-up-and-update-repository" id="toc-set-up-and-update-repository" class="nav-link active" data-scroll-target="#set-up-and-update-repository">11.53-12.20, 12.27-12.33: Set-up and update repository</a></li>
+  <li><a href="#upload-model-code" id="toc-upload-model-code" class="nav-link" data-scroll-target="#upload-model-code">12.34-12.36: Upload model code</a></li>
+  <li><a href="#check-journal-article-license-and-upload" id="toc-check-journal-article-license-and-upload" class="nav-link" data-scroll-target="#check-journal-article-license-and-upload">12.43-12.47, 14.53-14.59: Check journal article license and upload</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_03/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -261,7 +263,7 @@ Note
 </div>
 </div>
 <section id="set-up-and-update-repository" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-and-update-repository">11.53-12.20, 12.27-: Set-up and update repository</h2>
+<h2 class="anchored" data-anchor-id="set-up-and-update-repository">11.53-12.20, 12.27-12.33: Set-up and update repository</h2>
 <p>I have previously (Friday 21st June 2024) sent an email to the corresponding author (Dr.&nbsp;Shiwei Huang) to inform about the study, using the template email from our protocol.</p>
 <p>Today, used template repository to create this repository and updated it to be relevant to Huang et al.&nbsp;2019 - updated..</p>
 <ul>
@@ -275,15 +277,28 @@ Note
 <ul>
 <li>Include a copy of the full license</li>
 <li>State all significant changes made to the software</li>
-<li>Make the original source code availble when distributing binaries based on that work</li>
+<li>Make the original source code available when distributing binaries based on that work</li>
 <li>Include a copy of the original copyright notice</li>
 </ul>
 <p>It allows the code to be changed and distributed to others (as long as release under GPL v3 also). Hence, updated license (and references to it) to GNU GPL 3.0 accordingly.</p>
 <p>Created environment for book.</p>
 </section>
+<section id="upload-model-code" class="level2">
+<h2 class="anchored" data-anchor-id="upload-model-code">12.34-12.36: Upload model code</h2>
+<p>Uploaded copy of <a href="https://github.com/shiweih/desECR" class="uri">https://github.com/shiweih/desECR</a> to <code>original_study/</code>.</p>
+</section>
+<section id="check-journal-article-license-and-upload" class="level2">
+<h2 class="anchored" data-anchor-id="check-journal-article-license-and-upload">12.43-12.47, 14.53-14.59: Check journal article license and upload</h2>
+<p>The journal article was published in Frontiers in Neurology and is available at <a href="https://doi.org/10.3389/fneur.2019.00653" class="uri">https://doi.org/10.3389/fneur.2019.00653</a>. It has the following copyright statement:</p>
+<blockquote class="blockquote">
+<p>“© 2019 Huang, Maingard, Kok, Barras, Thijs, Chandra, Brooks and Asadi. This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY). The use, distribution or reproduction in other forums is permitted, provided the original author(s) and the copyright owner(s) are credited and that the original publication in this journal is cited, in accordance with accepted academic practice. No use, distribution or reproduction is permitted which does not comply with these terms.”</p>
+</blockquote>
+<p>Hence, we are free to upload this article and images to the repository (ensuring we cite throughout whenever using them), as well as the supplementary material.</p>
+<p>I set this up to be displayed within the quarto site.</p>
+</section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="ae41bb82" class="cell" data-execution_count="1">
+<div id="64739e32" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -293,14 +308,17 @@ Note
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.53'</span>, <span class="st">'12.20'</span>)]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.53'</span>, <span class="st">'12.20'</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.27'</span>, <span class="st">'12.33'</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.34'</span>, <span class="st">'12.36'</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.43'</span>, <span class="st">'12.47'</span>)]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 27m, or 0h 27m
-Total used to date: 27m, or 0h 27m
-Time remaining: 2373m, or 39h 33m
-Used 1.1% of 40 hours max</code></pre>
+<pre><code>Time spent today: 39m, or 0h 39m
+Total used to date: 39m, or 0h 39m
+Time remaining: 2361m, or 39h 21m
+Used 1.6% of 40 hours max</code></pre>
 </div>
 </div>
 

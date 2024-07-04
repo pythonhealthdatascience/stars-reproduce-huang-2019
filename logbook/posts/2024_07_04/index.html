@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Amy Heather">
+<meta name="dcterms.date" content="2024-07-04">
 
-<title>Logbook – Reproducing Huang et al.&nbsp;2019</title>
+<title>Day 2 – Reproducing Huang et al.&nbsp;2019</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +25,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,65 +69,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -138,10 +80,10 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Reproducing Huang et al.&nbsp;2019</span>
     </a>
   </div>
@@ -152,7 +94,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/study_publication.html"> 
+    <a class="nav-link" href="../../../quarto_site/study_publication.html"> 
 <span class="menu-text">Original study</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -161,7 +103,7 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-reproduction">    
         <li>
-    <a class="dropdown-item" href="../quarto_site/reproduction_readme.html">
+    <a class="dropdown-item" href="../../../quarto_site/reproduction_readme.html">
  <span class="dropdown-text">README</span></a>
   </li>  
     </ul>
@@ -172,37 +114,37 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-evaluation">    
         <li>
-    <a class="dropdown-item" href="../evaluation/scope.html">
+    <a class="dropdown-item" href="../../../evaluation/scope.html">
  <span class="dropdown-text">Scope</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reproduction_success.html">
+    <a class="dropdown-item" href="../../../evaluation/reproduction_success.html">
  <span class="dropdown-text">Reproduction success</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/badges.html">
+    <a class="dropdown-item" href="../../../evaluation/badges.html">
  <span class="dropdown-text">Journal badges</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/artefacts.html">
+    <a class="dropdown-item" href="../../../evaluation/artefacts.html">
  <span class="dropdown-text">STARS framework</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reporting.html">
+    <a class="dropdown-item" href="../../../evaluation/reporting.html">
  <span class="dropdown-text">Reporting guidelines</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../logbook/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../../logbook/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reproduction_report.html"> 
+    <a class="nav-link" href="../../../evaluation/reproduction_report.html"> 
 <span class="menu-text">Summary</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reflections.html"> 
+    <a class="nav-link" href="../../../evaluation/reflections.html"> 
 <span class="menu-text">Reflections</span></a>
   </li>  
 </ul>
@@ -222,111 +164,126 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Logbook</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Day 2</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">setup</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Amy Heather </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 4, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="setup">setup <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#untimed-set-up-rstudio-and-test-quarto-site-with-r" id="toc-untimed-set-up-rstudio-and-test-quarto-site-with-r" class="nav-link active" data-scroll-target="#untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-<p>These diary entries record daily progress in reproduction of the study, providing a transparent and detailed record of work.</p>
+<section id="untimed-set-up-rstudio-and-test-quarto-site-with-r" class="level3">
+<h3 class="anchored" data-anchor-id="untimed-set-up-rstudio-and-test-quarto-site-with-r">Untimed: Set up RStudio and test quarto site with R</h3>
+<p>I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).</p>
+<p>This involved installing/updating RStudio, learning how to run and work with a quarto book on that platform, and and troubleshooting any issues in getting the quarto book up and running.</p>
+<p>This included:</p>
+<ul>
+<li>Updating to the latest version of RStudio, as suggested in the <a href="https://quarto.org/docs/computations/r.html">Quarto docs</a></li>
+<li>Installing renv: <code>install.packages("renv")</code></li>
+<li>Setting the working directory: <code>setwd("~/Documents/stars/stars-reproduce-huang-2019")</code></li>
+<li>Initialised an empty R environment: <code>renv::init(bare=TRUE)</code></li>
+<li>Set renv to use explicit dependencies: <code>renv::settings$snapshot.type("explicit")</code></li>
+<li>Created a <code>DESCRIPTION</code> file</li>
+<li>Ran <code>renv::snapshot()</code> which returned that project is not activated yet, so I selected option to <code>Activate the project and use the project library</code>. This generated an <code>.Rprofile</code> file.</li>
+<li>I then tried to open the project (<code>File &gt; Open Project</code>) but this failed. So I tried <code>File &gt; New Project &gt; Existing Directory</code> (which created an <code>.Rproj</code> file), then reran <code>renv::init(bare=TRUE)</code>, then <code>renv::snapshot()</code>, and selected to install packages and then snapshot.</li>
+<li>Synced with GitHub (excluding .Rhistory, which is just a history of executed commands), using Git panel in top right corner</li>
+<li>Add <code>rmarkdown</code> to <code>DESCRIPTION</code> and rebuilt environment (via <code>renv::snapshot()</code> and selecting to install)</li>
+</ul>
+<p>Then came across pkgr, and decided to give that a go, following <a href="https://kb.metworx.com/Users/Managing_R_Packages/pkgr-for-development/">their tutorial</a>…</p>
+<ul>
+<li>Deleted renv and associated files (<code>.Rprofile</code> and <code>renv.lock</code>) with <code>renv::deactivate(clean=TRUE)</code></li>
+<li>Installed <code>pkgr</code> following the instructions on their <a href="https://github.com/metrumresearchgroup/pkgr/releases/tag/v3.1.1">latest release</a>:</li>
+</ul>
+<pre><code>sudo wget https://github.com/metrumresearchgroup/pkgr/releases/download/v3.1.1/pkgr_3.1.1_linux_amd64.tar.gz -O /tmp/pkgr.tar.gz
+sudo tar xzf /tmp/pkgr.tar.gz pkgr
+sudo mv pkgr /usr/local/bin/pkgr
+sudo chmod +x /usr/local/bin/pkgr</code></pre>
+<ul>
+<li>Created a <code>pkgr.yml</code> file</li>
+</ul>
+<pre><code># Version of pkgr.yml and, at this point, should always say Version: 1
+Version: 1
+
+# pkgr will pull dependencies listed in DESCRIPTION
+Descriptions:
+- DESCRIPTION
+
+# If DESCRIPTION is provided, then this section only needs to include packages
+# that you would like to use for development purposes that are not in your
+# DESCRIPTION file (i.e. not formal dependencies of your package) - e.g. devtools
+# Packages:
+
+# Specify where to pull packages from
+# If list CRAN and MPN, will look on CRAN first, then MPN (which is useful for
+# dependencies no on CRAN). Can list a location for specific packages in Packages:
+Repos:
+  - CRAN: https://cran.rstudio.com
+  - MPN: https://mpn.metworx.com/snapshots/stable/2022-02-11 # used for mrgval
+
+# Specify Lockfile or Library to tell pkgr where to install packages
+# We are using renv to isolate our package environment - renv will tell pkgr where to install them
+Lockfile:
+  Type: renv</code></pre>
+<ul>
+<li>In terminal, ran <code>pkgr plan</code>, but get error <code>ARN[0000] error getting library path from renv: Error in loadNamespace(x) : there is no package called ‘renv’</code>
+<ul>
+<li>If I start a new R session and run <code>packageVersion("renv")</code>, it returns that it is installed</li>
+<li>Trying to reinstall with <code>install.packages("renv")</code> makes no difference.</li>
+<li>Tried restarting R and opening a new terminal</li>
+</ul></li>
+</ul>
+<p>I looked through issues and couldn’t spot anything, and then realised this was a fairly small package which hadn’t had any changes in half a year, so on reflection, probably not a reliable option to choose. So went back to set up similar to before of:</p>
+<ul>
+<li><p><code>renv::init(bare=TRUE)</code> with explicit snapshot</p></li>
+<li><p><code>renv::snapshot()</code> (and realised it didn’t update with change to <code>DESCRIPTION</code> before simply because I hadn’t put a comma after each package!)</p></li>
+<li><p>Installing rmarkdown (and knitr), as in the <a href="https://quarto.org/docs/computations/r.html">Quarto docs</a> (which took a while)</p></li>
+<li><p>Creating an renv for the book</p></li>
+</ul>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="setup" data-listing-date-sort="1720051200000" data-listing-file-modified-sort="1720089686662" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="542">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_04/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">Day 2</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('setup'); return false;">
-setup
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">I did not time this as it is not specific to this reproduction, but additional set-up as not done reproduction in R yet (since the test-run was conducted in Python).</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">
-<div class="listing-date">
-Jul 4, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="setup" data-listing-date-sort="1719964800000" data-listing-file-modified-sort="1720089686662" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="344">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_03/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">Day 1</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('setup'); return false;">
-setup
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">TBC. Total time used: TBCh TBCm (TBC%)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">
-<div class="listing-date">
-Jul 3, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -756,22 +713,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="../CHANGELOG.html">
+    <a class="nav-link" href="../../../CHANGELOG.html">
 <p>Changelog</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/license.html">
+    <a class="nav-link" href="../../../quarto_site/license.html">
 <p>License</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../CONTRIBUTING.html">
+    <a class="nav-link" href="../../../CONTRIBUTING.html">
 <p>Contributing</p>
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_04/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
