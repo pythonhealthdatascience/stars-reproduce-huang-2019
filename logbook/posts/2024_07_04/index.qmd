@@ -174,6 +174,16 @@ Went through figures and tables to define scope (and convert and crop the .TIFF 
 
 There was one line in the discussion that caught my attention - "*The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists*" - but I feel the interpretation of this is quite ambiguous (as to whether it is a model result or interpretation from other results), and doesn't have anything specific to action, so will not include in scope.
 
+## 15.05-15.10: Consensus on scope with Tom
+
+Discussed with Tom (and he also had another look over afterwards). Happy with scope choices, and agree that the line from the discussion is simply too ambiguous to action.
+
+## 15.35-15.43: Exploring app and simulation visualisation
+
+As an addendum to the reading, explored the [app](https://compneuro.shinyapps.io/desECR11/) and linked [simulation configuration visualisation](https://beta.cloudes.me/loadShare?simId=17588).
+
+For the configuration, it just opened to the CLOUDES homepage, so I tried creating an account then going to the link (turns out you need an account to access). The link still did not work nor the ID, but when I search for "Huang", I was able to find a diagram: <https://beta.cloudes.me/loadSim?simId=17482&pageId=rTbqE> (ID 17482). When run, this played through the simulation showing arrivals and queues etc.
+
 ## Timings
 
 ```{python}
@@ -187,7 +197,9 @@ used_to_date = 45
 # Times from today
 times = [
     ('14.14', '14.31'),
-    ('14.33', '14.50')]
+    ('14.33', '14.50'),
+    ('15.05', '15.10'),
+    ('15.35', '15.43')]
 
 calculate_times(used_to_date, times)
 ```
