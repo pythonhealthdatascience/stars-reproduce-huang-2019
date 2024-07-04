@@ -19,6 +19,4 @@ Article from: <https://doi.org/10.3389/fneur.2019.00653>
 
 The supplementary material is an additional image saved as a .TIFF file:
 
-```{r}
-grid::grid.raster( tiff::readTIFF('../original_study/supplementary_material.TIFF') )
-```
+![Supplementary figure](../original_study/supp.jpg)
