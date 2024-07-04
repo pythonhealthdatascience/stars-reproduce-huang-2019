@@ -81,3 +81,19 @@ Now, returning to what started this - trying to get the `.TIFF` supplementary fi
 
 * Add `tiff` to `DESCRIPTION`
 * `renv::status()` showed that the package was used but not installed, and `renv::snapshot()` with option `2` installed the package
+* Add explict versions of R and packages to `DESCRIPTION`
+* Attempted to downgrade tiff. `renv::status()` and `renv::snapshot()` did not noticed. From [this issue](https://github.com/rstudio/renv/issues/233), it appears that this should work for `renv::install()` and, indeed, that recognises it although get issue:
+
+```
+Warning: failed to find source for 'tiff 0.1.11' in package repositories
+Error: failed to retrieve package 'tiff@0.1.11'
+```
+
+* I checked the [archive for tiff on CRAN](https://cran.r-project.org/src/contrib/Archive/tiff/) and found there is a 0.1-11 (prior to the current 0.1-12)
+* If I deleted it (`remove.packages("tiff")`) and then redid `renv::snapshot()`, it again would not notice the versions
+* I tried to do it manually with remotes (rather than devtools as devtools has so many dependencies) - I installed `remotes` and then ran `remotes::install_version("tiff", "0.1.11")`. This seemed successful, except `packageVersion("tiff")` still returned 0.1.12? Although actually, on inspection, you can see it if 0.1.11. However, it wasn't able to do that from DESCRIPTION.
+* I removed it and tried again with a direct `renv::install("tiff@0.1-11")` which was successful
+* I then tried again with DESCRIPTION, but instead set it to `tiff@0.1-11`, which was successful likewise! And if it was `tiff (==0.1-11)`! So it appears its a bit fussy about matching up to the format in the [CRAN archive .tar.gz](https://cloud.r-project.org/src/contrib/Archive/tiff/) files.
+* I then found that `renv::snapshot()` ignores the version if it's `tiff (==0.1-11)` but adheres if it is `tiff@0.1-11` - yay!
+
+Having finished with this experiment, I deleted and rebuilt with latest versions - but found it had errors installing them where defined like `tiff@0.1-12`. Hence, returned to `tiff (==0.1-11)`, and just had to make sure to do `renv::install()` before `renv::snapshot()` (rather than rely on snapshot to install the packages).
