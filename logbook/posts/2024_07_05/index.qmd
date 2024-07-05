@@ -1,0 +1,99 @@
+---
+title: "Day 3"
+author: "Amy Heather"
+date: "2024-07-05"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+TBC. Total time used: TBC (TBC%)
+
+:::
+
+## 09.46-09.47: Set Python interpreter
+
+Set Python interpreter (e.g. to render these from RStudio) by clicking on the project in the top right of RStudio, then selecting Project Options > Python, and selecting the quarto_huang_2019 virtual environment I'd set up.
+
+## 09.48-10.21: Returning to troubleshooting R version
+
+Continuing to look at the [instructions for old R releases](https://cloud.r-project.org/bin/linux/ubuntu/olderreleasesREADME.html) from yesterday:
+
+> "As of July 2023, packages for R versions below 4.0 are no longer being updated. R 3.6 packages for Ubuntu on i386 and amd64 are available for most stable Desktop releases of Ubuntu until their official end of life date. However, only the latest Long Term Support (LTS) release is fully supported. As of November 18, 2018 the supported releases are Bionic Beaver (18.04;LTS), Xenial Xerus (16.04; LTS), and Trusty Tahr (14.04; LTS)."
+
+By running `lsb_release -a`, I can see that my linux version is jammy (22.04.4 LTS). Looking at the instructions from [this Stackoverflow post](https://stackoverflow.com/questions/33652219/installing-older-version-of-r), I'm a bit unclear as to whether I can use any of these if they're for older versions of linux.
+
+From [this help post](https://github.com/rstudio/renv/issues/254), I then stumbled across [RStudio r-builds](https://github.com/rstudio/r-builds) which has R builds that say they should install fast on Ubuntu from a .deb file and are designed to easily switch between multiple versions of R. These say they support Ubunutu 22.04. I ran:
+
+```
+R_VERSION=3.6.0
+curl -O https://cdn.posit.co/r/ubuntu-2204/pkgs/r-${R_VERSION}_1_amd64.deb
+sudo apt-get install gdebi-core
+sudo gdebi r-${R_VERSION}_1_amd64.deb
+```
+
+I confirmed this was installed by running `/opt/R/${R_VERSION}/bin/R --version`.
+
+I then followed their instructions to add R to the system path:
+
+```
+sudo ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R 
+sudo ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
+```
+
+I restarted RStudio and found I was now in R 3.6.0. I delete the renv (which was built with 4.4.1) and remade it.
+
+```
+renv::deactivate(clean=TRUE)
+install.packages("renv")
+renv::init(bare=TRUE)
+renv::snapshot()
+```
+
+The lock file now had R 3.6.0 (previously 4.4.1) and renv 1.0.7.
+
+## 10.40-X: Installing the packages
+
+I ran `renv::install()` but it failed with: `Warning: failed to find source for 'simmer.plot 0.1.15' in package repositories. Error: failed to retrieve package 'simmer.plot@0.1.15'.`
+
+I then tried with remotes:
+
+```
+install.packages("remotes")
+remotes::install_version("simmer", "4.2.2")
+```
+
+However, this failed like before. Instead, I decided a different tactic - to just download them without the specified versions. I removed the versions from DESCRIPTION and ran `renv::install()`. However, this stopped with an error: `Error: package 'evaluate' is not available`.
+
+I then tried working through each package one by one.
+
+`renv::install("simmer")` was successful.
+
+`renv::install("simmer.plot")` failed with the issue of 'evaluate' is not available. Based on [this StackOverflow post](https://github.com/r-lib/evaluate/issues/52), I tried installing 'stringi' - but that didn't end up helping. I tried install evaluate before and after restarting the R session but still stated as not available.
+
+Uncertain on what else might fix this, I decided to actually just start again from the latest version of R and try installing the packages there and see if I could get it to work without backdating the packages. I closed RStudio and ran the commands as above but changed R_VERSION to 4.4.1. I also couldn't run the commands for symbolic link as it said the files already exist. I restarted R but still 3.6.0. Looking in `/opt/R/`, I can see I now have 3.6.0 and 4.4.1.
+
+Based on the [prior tutorial](https://support.bioconductor.org/p/9157825/) I'd found, I tried:
+
+```
+export RSTUDIO_WHICH_R=/opt/R/3.6.0/bin/R
+rstudio
+```
+
+## Timings
+
+```{python}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 149
+
+# Times from today
+times = [
+    ('09.47', '09.48')]
+
+calculate_times(used_to_date, times)
+```

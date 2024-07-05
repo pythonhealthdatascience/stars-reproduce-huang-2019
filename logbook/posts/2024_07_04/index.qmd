@@ -2,13 +2,13 @@
 title: "Day 2"
 author: "Amy Heather"
 date: "2024-07-04"
-categories: [setup]
+categories: [setup, scope, reproduce]
 bibliography: ../../../quarto_site/references.bib
 ---
 
 ::: {.callout-note}
 
-TBC. Total time used: TBCh TBCm (TBC%)
+Defined scope and problem-solving renv. Total time used: 2h 29m (6.2%)
 
 :::
 
@@ -311,7 +311,8 @@ times = [
     ('14.33', '14.50'),
     ('15.05', '15.10'),
     ('15.35', '15.43'),
-    ('15.55', '15.58')]
+    ('15.55', '15.58'),
+    ('16.04', '16.58')]
 
 calculate_times(used_to_date, times)
 ```
