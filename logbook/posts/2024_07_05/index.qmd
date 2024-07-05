@@ -121,13 +121,91 @@ This ran the app successfully.
 
 However, from having looked at the app online, I knew that the figures it produced are not what I need to reproduce the results presented in the paper.
 
-## 12.07-12.21, 13.00-: Getting the raw model results
+## 12.07-12.21, 13.00-13.21, 13.28-13.41: Getting the raw model results
 
 I copied the function `simulate_nav` from `server.R`. Looking through it, there was only one part still using shiny - the progress bar - and I removed those lines of code, then add a call for the function at the end of the script (`simulate_nav()`), and ran it. This ran for a while, which was a little odd given how quick the app was.
 
 I tried running it with a very short run time (`simulate_nav(run_t=60)`) and this returned results!
 
 I borrowed from the `plot_nav()` function in `server.R` to help process the results.
+
+I add the `reproduction.Rmd` to the Quarto site, but this had issues since the Quarto book renv is seperate to the analysis renv. Based on [this forum post](https://forum.posit.co/t/possibility-to-specify-renv-for-quarto-render/161423/8), there are two possible solutions:
+
+* Integrate the `.html` file produced from the `.Rmd` into the book, so it is pre-rendered, and set the `.Rmd` to `Render on Save`.
+* Add the packages needed for the book to the analysis renv.
+
+However, it appears you'd have to copy the `.html` code into the Quarto document. So, decided on the simpler solution of adding the required packages for the book to the analysis environment. I deleted the environment in the main folder.
+
+## 13.42-14.13: Checking model parameters
+
+### Comparing parameters
+
+Table 1 provides the parameters for the model. I compared these against the function inputs (as the model have no comments/docstrings, it took a little while to make sure I was matching up the right things).
+
+Physical and human resources:
+
+| Parameter | Paper | Script |
+| --- | --- | --- |
+| Angiography machine for INR and IR | 1 | `angio_inr = 1` |
+| Angiography machine for IR only | 1 | `angio_ir = 1` |
+| CT | 2 | `ct = 2` |
+| Interventional neuroradiologist | 1 24h | `inr = 1` and `inr_night = 1` |
+| Interventional radiologist | 2 8am-5pm 1 5pm-8am | `ir = 1` and `ir_night = 1` |
+| Angiography staff | 6 8am-5pm 3 5pm-8am | `angio_staff = 10` and `angio_staff_night = 3` |
+| ED team | 10 24h | `ed_staff = 10` |
+| Stroke team | 1 24h | `stroke_staff = 1` |
+
+For the shifts parameter: `shifts = c(8,17)`
+
+Patients:
+
+| Parameter | Paper N | Paper IAT | Script |
+| --- | --- | --- | --- |
+| ED | 107,700 | 5 | `ed_pt = 107000` |
+| Suspected stroke | 750 | 701 | `st_pt = 750` |
+| AIS | 450 | 1168 | `ais_pt = 450` |
+| ECR | 58 | 9062 | `ecr_pt = 58` |
+| Elective INR | 104 | 5054 | `inr_pt = 300` |
+| Emergency IR | 468 | 1123 | `eir_pt= 1000` |
+| Elective IR | 3805 | 138 | `ir_pt = 4000` |
+
+I also compared some other parameters mentioned in the paper:
+
+* Simulated each scenario 30 times - `nsim = 1`
+* Runtime 365 days - `run_t = 10000`
+
+### Correcting differences
+
+* Interventional neuroradiologist: `inr_night = 0`
+* Interventional radiologist: `ir = 2`
+* Angiography staff: `angio_staff = 6`
+* ED: `ed_pt = 107700`
+* Elective INR: `inr_pt = 104`
+* Emergency INR: `eir_pt= 468`
+* Elective IR: `ir_pt = 3805`
+* Replications: `nsim=30`
+* Run time...
+  * In the paper, run time is 365 days
+  * In the script, `run_t = 10000` and `RUN_T = run_t * 40320`
+  * Deduced that time unit is minutes
+  * This is set up for the app, where user inputs the run time in months, and 40320 minutes = 28 days
+  * To more easily reproduce paper (with run time 365 days), modified script so input is in days (which are then converted to minutes for `RUN_T`)
+
+## 14.22-14.27: Fixing environment
+
+The build of the book on GitHub failed:
+
+```
+Configuration failed because libcurl was not found. Try installing:
+ * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
+ * rpm: libcurl-devel (Fedora, CentOS, RHEL)
+If libcurl is already installed, check that 'pkg-config' is in your
+PATH and PKG_CONFIG_PATH contains a libcurl.pc file. If pkg-config
+is unavailable you can set INCLUDE_DIR and LIB_DIR manually via:
+R CMD INSTALL --configure-vars='INCLUDE_DIR=... LIB_DIR=...'
+```
+
+Based on [this GitHub issue](https://github.com/actions/runner-images/issues/37), add installation of this to the action.
 
 ## Timings
 

@@ -18,7 +18,10 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
                          stroke_staff = 1, ed_staff = 10, angio_staff = 10, ir = 1, inr = 1, angio_staff_night = 3, ir_night = 1, inr_night = 1,
                          ed_pt = 107000, st_pt = 750, ais_pt = 450, ecr_pt = 58, inr_pt = 300, eir_pt= 1000, ir_pt = 4000,
                          shifts = c(8,17),
-                         nsim = 1, run_t = 10000) {
+                         nsim = 1, run_t = 365) {
+  #' Discrete-event simulation model
+  #'
+  #' @param run_t model run time in days
 
   ###################
   #Model variables ##
@@ -58,7 +61,7 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   T_END = shifts[2] * 60
 
   #sim setup
-  RUN_T = run_t * 40320
+  RUN_T = run_t * 1440
   N_SIM = nsim
 
   #######################

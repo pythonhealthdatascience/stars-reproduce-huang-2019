@@ -17,7 +17,16 @@ Run the model...
 
 ```{r}
 # Run the model
-list_containing_output <- simulate_nav(run_t=30)
+list_containing_output <- simulate_nav(
+  inr_night = 0,
+  ir = 2,
+  angio_staff = 6,
+  ed_pt = 107700,
+  inr_pt = 104,
+  eir_pt= 468,
+  ir_pt = 3805,
+  run_t = 365,
+  nsim = 30)
 arrivals <- data.frame(list_containing_output[[1]])
 resources <- list_containing_output[[2]]
 ```
