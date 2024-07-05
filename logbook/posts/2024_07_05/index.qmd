@@ -207,7 +207,7 @@ R CMD INSTALL --configure-vars='INCLUDE_DIR=... LIB_DIR=...'
 
 Based on [this GitHub issue](https://github.com/actions/runner-images/issues/37), add installation of this to the action.
 
-## 14.29-15.11, 15.32-X: In-text results 1 and 2
+## 14.29-15.11, 15.32-16.23: In-text results 1 and 2
 
 The provided processing scripts may be able to help guide us, but not provided will create the Figures in the paper, so we do need to write that from scratch.
 
@@ -263,6 +263,38 @@ Median wait times for the AngioINR are:
 * Two AngioINR: 244.27 minutes
 
 By the median times, we're fairly close to the paper (comparing the averages, it 7 minutes quicker). However, two angioINR is very different, and I'm a little sceptical as to whether I've got it quite right.
+
+::: {.callout-tip}
+## Reflections
+
+Disregarding my attempts to backdate R and the packages, the provided code was actually quite simple to get up and running as a shiny app.
+
+However, it was provided with the article more for that purpose, than to be producing the items in the article, as the base parameters of the model differ, and as there is no code to process and generate the figures and results.
+
+I'll keep working in latest R and packages, as current focus of this stage is just to try and reproduce the items. However, it would be good to try and figure out how to successfully backdate R and the packages, as that feels like an essential thing to be able to do, that I just hadn't managed to get to the bottom of yet.
+:::
+
+## 16.30-16.37, 16.43-16.48, 16.55-16.57: Continuing to troubleshoot in-text results 1 and 2
+
+I realised that perhaps my issue as in incorrectly assuming that I should set `inr_night` to 0. There should be one INR person 24h, but because all the staff get put on a schedule, by removing the "night" person I technically only have someone during day time hours.
+
+I changed this and re-ran (with timer - can see it took 6.3 minutes).
+
+This was definitely a fix - the waiting times now look far closer to what I expected (around 10 minutes rather than 200!). The median results are very small, but looking at the mean results:
+
+* Baseline: 13.33 minutes
+* Exclusive: 8.58 minutes
+* Two AngioINR: 14.86 minutes
+
+However, still not quite right... 4.7 minute reduction for exclusive (should be 6 minutes) and 1.5 minute increase for two machines (should be 4 minute reduction). The exclusive is pretty close, although its not yet clear to me how much it varies between runs, and whether that could be reasonably attributed to be stochasticity or not. Given we're comparing fairly small numbers, it is a bit on the fence for me, and wouldn't yet say I feel confident in it being successfully reproduced.
+
+I tried re-running it all to see how much the results differed - and it was by a fair bit actually! Up to about a minute:
+
+* Baseline: 13.65 minutes
+* Exclusive: 9.20 minutes
+* Two AngioINR: 13.61 minutes
+
+However, differences are still off the reported - 4.45 minute reduction and 0.01 minute reduction.
 
 ## Timings
 
