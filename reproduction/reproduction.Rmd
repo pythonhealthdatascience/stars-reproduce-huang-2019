@@ -5,48 +5,103 @@ output: html_document
 
 # Reproduction
 
+## Set up
+
 ```{r}
 # Clear environment
 rm(list=ls())
+
+# Disable scientific notation
+options(scipen=999)
 
 # Get the model function
 source("model.R")
 ```
 
-Run the model...
-
+This function was created to reduce code duplication, with the baseline model parameters as inputs...
+  
 ```{r}
-# Run the model
-list_containing_output <- simulate_nav(
-  inr_night = 0,
-  ir = 2,
-  angio_staff = 6,
-  ed_pt = 107700,
-  inr_pt = 104,
-  eir_pt= 468,
-  ir_pt = 3805,
-  run_t = 365,
-  nsim = 30)
-arrivals <- data.frame(list_containing_output[[1]])
-resources <- list_containing_output[[2]]
+run_model <- function(angio_inr = 1,
+                      inr_night = 0,
+                      ir = 2,
+                      angio_staff = 6,
+                      ed_pt = 107700,
+                      inr_pt = 104,
+                      eir_pt= 468,
+                      ir_pt = 3805,
+                      run_t = 365,
+                      nsim = 30,
+                      exclusive_use = FALSE) {
+  #' Run model and get results
+  #' 
+  #' @param angio_inr number of AngioINR machines
+  #' @param inr_night number of interventional neuroradiologists on night shift
+  #' @param ir number of interventional radiologists on day shift
+  #' @param angio_staff number of angiography staff on day shift
+  #' @param ed_pt number of ED patients
+  #' @param inr_pt number of elective INR patients
+  #' @param eir_pt number of emergency IR patients
+  #' @param ir_pt number of elective IR patients
+  #' @param run_t simulation runtime in days
+  #' @param nsim number of replications
+  #' @param exclusive_use whether angioINR has exclusive use (i.e. no elective
+  #' IR patients allowed to use the machine)
+
+  # Run the model
+  list_containing_output <- simulate_nav(
+    angio_inr = angio_inr,
+    inr_night = inr_night,
+    ir = ir,
+    angio_staff = angio_staff,
+    ed_pt = ed_pt,
+    inr_pt = inr_pt,
+    eir_pt = eir_pt,
+    ir_pt = ir_pt,
+    run_t = run_t,
+    nsim = nsim,
+    exclusive_use = exclusive_use
+  )
+  # Get arrivals and resources
+  arrivals <- data.frame(list_containing_output[[1]])
+  resources <- list_containing_output[[2]]
+
+  # Return list with two dataframes
+  return(list(arrivals, resources))
+}
 ```
 
-Display some of the results...
+## Run model
+
+Run through each of the scenarios
 
 ```{r}
-print(head(arrivals, 5))
-print(head(resources, 5))
+baseline <- run_model()
 ```
 
 ```{r}
-s1<- subset(arrivals, resource == "angio_inr") %>%
-    group_by(replication, category) %>%
-    summarize("fast <20 min" = sum(wait_time < 20), "medium 20-40 min" = sum(wait_time >= 20 & wait_time <= 40), "slow >40 min" = sum(wait_time > 40)) %>%
-    ungroup %>%
-    dplyr::select(replication, category, "fast <20 min", "slow >40 min", "medium 20-40 min") %>%
-    tidyr::gather(key=statistic, value = count, -replication, -category) %>% 
-    filter(category != "inr" & category != "ir" & category != "eir") %>%
-    ggplot(aes(factor(0),count))+geom_boxplot()+facet_wrap(category~statistic)+ylab("Patient count")+ggtitle("Stroke patient wait time at angio INR")+theme(plot.title = element_text(size=18, face = "bold"), axis.text = element_text(size=12), axis.title = element_text(size=14), strip.text = element_text(size=14, face = "bold"),  axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
-
-s1
+exclusive <- run_model(exclusive_use = TRUE)
 ```
+
+```{r}
+twoangio <- run_model(angio_inr = 2)
+```
+
+### Results
+
+```{r}
+print(head(baseline[[1]], 5))
+print(head(exclusive[[1]], 5))
+print(head(twoangio[[1]], 5))
+```
+
+```{r}
+# Loop through the dataframes and present the mean wait time for each resource
+# (across all replications)
+df_list <- list(baseline[[1]], exclusive[[1]], twoangio[[1]])
+for (i in 1:length(df_list)) {
+  print(df_list[[i]] %>%
+    group_by(resource) %>%
+    summarize(mean(wait_time)))
+}
+```
+
