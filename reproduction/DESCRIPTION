@@ -1,9 +1,12 @@
 Title: huang2019
 Depends: 
-    R (== 3.6.0)
+    R
 Imports:
     simmer,
     simmer.plot,
     dplyr,
     plotly,
-    gridExtra
+    gridExtra,
+    plyr,
+    shiny,
+    markdown
