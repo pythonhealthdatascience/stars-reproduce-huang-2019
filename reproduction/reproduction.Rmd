@@ -11,6 +11,9 @@ output: html_document
 # Clear environment
 rm(list=ls())
 
+# Start timer
+start.time <- Sys.time()
+
 # Disable scientific notation
 options(scipen=999)
 
@@ -22,7 +25,6 @@ This function was created to reduce code duplication, with the baseline model pa
   
 ```{r}
 run_model <- function(angio_inr = 1,
-                      inr_night = 0,
                       ir = 2,
                       angio_staff = 6,
                       ed_pt = 107700,
@@ -35,7 +37,6 @@ run_model <- function(angio_inr = 1,
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
-  #' @param inr_night number of interventional neuroradiologists on night shift
   #' @param ir number of interventional radiologists on day shift
   #' @param angio_staff number of angiography staff on day shift
   #' @param ed_pt number of ED patients
@@ -50,7 +51,6 @@ run_model <- function(angio_inr = 1,
   # Run the model
   list_containing_output <- simulate_nav(
     angio_inr = angio_inr,
-    inr_night = inr_night,
     ir = ir,
     angio_staff = angio_staff,
     ed_pt = ed_pt,
@@ -112,3 +112,10 @@ for (i in 1:length(df_list)) {
 }
 ```
 
+## Time elapsed
+
+```{r}
+end.time <- Sys.time()
+elapsed.time <- round((end.time - start.time), 3)
+elapsed.time
+```
