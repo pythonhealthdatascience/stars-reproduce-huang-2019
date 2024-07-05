@@ -53,7 +53,7 @@ renv::snapshot()
 
 The lock file now had R 3.6.0 (previously 4.4.1) and renv 1.0.7.
 
-## 10.40-X: Installing the packages
+## 10.40-11.30, 11.35-11.41: Installing the packages
 
 I ran `renv::install()` but it failed with: `Warning: failed to find source for 'simmer.plot 0.1.15' in package repositories. Error: failed to retrieve package 'simmer.plot@0.1.15'.`
 
@@ -77,10 +77,53 @@ Uncertain on what else might fix this, I decided to actually just start again fr
 Based on the [prior tutorial](https://support.bioconductor.org/p/9157825/) I'd found, I tried:
 
 ```
-export RSTUDIO_WHICH_R=/opt/R/3.6.0/bin/R
+export RSTUDIO_WHICH_R=/opt/R/4.4.1/bin/R
 rstudio
 ```
 
+This worked, although default when open from application bar was still set to 3.6.0. I tried changing the .profile file (`nano .profile`) to add `export RSTUDIO_WHICH_R=/opt/R/4.4.1/bin/R` but made no difference.
+
+I tried forcing replacement of the symbolic links then reopening RStudio:
+
+```
+R_VERSION=4.4.1
+sudo ln -snf /opt/R/${R_VERSION}/bin/R /usr/local/bin/R 
+sudo ln -snf /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
+```
+
+This worked! So, trying again (with DESCRIPTION file still containing no versions)...
+
+```
+renv::deactivate(clean=TRUE)
+install.packages("renv")
+renv::init(bare=TRUE)
+renv::snapshot()
+renv::install()
+renv::snapshot()
+```
+
+## 11.41-11.46, 11.52-12.00: Try running the code
+
+I copied over `server.R` and, on opening, it said that plyr and shiny were required but not installed, so I add these to the environment as well.
+
+On reflection, I realised that the settings to only store dependencies from DESCRIPTION in renv.lock probably wouldn't be great, in case hidden things were also installed, so changed this setting to "implicit" (which is default).
+
+I ran the file and it did the command shiny, but said `Error: object 'shiny' not found`. I copied over all the files and tried again. It ran the script but nothing happened. Based on the [Shiny documentation](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html), I moved the files into a folder called app and run the following in R console:
+
+```
+library(shiny)
+runApp("app")
+```
+
+This opened up a shiny app, but got an error "there is no package called ‘markdown’". I add this to the environment and tried again.
+
+This ran the app successfully.
+
+However, from having looked at the app online, I knew that the figures it produced are not what I need to reproduce the results presented in the paper.
+
+## 12.07-
+
+I copied the function `simulate_nav` from `server.R`. Looking through it, there was only one part still using shiny: the Progress bar.
 ## Timings
 
 ```{python}
