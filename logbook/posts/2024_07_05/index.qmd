@@ -121,9 +121,14 @@ This ran the app successfully.
 
 However, from having looked at the app online, I knew that the figures it produced are not what I need to reproduce the results presented in the paper.
 
-## 12.07-
+## 12.07-12.21, 13.00-: Getting the raw model results
 
-I copied the function `simulate_nav` from `server.R`. Looking through it, there was only one part still using shiny: the Progress bar.
+I copied the function `simulate_nav` from `server.R`. Looking through it, there was only one part still using shiny - the progress bar - and I removed those lines of code, then add a call for the function at the end of the script (`simulate_nav()`), and ran it. This ran for a while, which was a little odd given how quick the app was.
+
+I tried running it with a very short run time (`simulate_nav(run_t=60)`) and this returned results!
+
+I borrowed from the `plot_nav()` function in `server.R` to help process the results.
+
 ## Timings
 
 ```{python}
