@@ -1,8 +1,0 @@
-Title: quarto_huang_2019
-Depends: 
-    R (>= 3.7)
-Imports:
-    knitr (==1.47),
-    rmarkdown (==2.27),
-    remotes (==2.5.0),
-    tiff (==0.1-12)

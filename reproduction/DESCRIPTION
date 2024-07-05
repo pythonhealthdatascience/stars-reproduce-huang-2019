@@ -9,4 +9,6 @@ Imports:
     gridExtra,
     plyr,
     shiny,
-    markdown
+    markdown,
+    knitr,
+    rmarkdown
