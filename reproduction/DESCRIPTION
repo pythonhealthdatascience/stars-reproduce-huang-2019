@@ -1,9 +1,9 @@
 Title: huang2019
 Depends: 
-    R (== 3.6)
+    R (== 3.6.0)
 Imports:
-    simmer (==4.2.2),
-    simmer.plot (==0.1.15),
-    dplyr (==0.8.1),
-    plotly (==4.9.0),
-    gridExtra (==2.2.1)
+    simmer,
+    simmer.plot,
+    dplyr,
+    plotly,
+    gridExtra
