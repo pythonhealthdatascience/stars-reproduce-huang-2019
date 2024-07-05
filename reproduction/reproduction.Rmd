@@ -1,0 +1,43 @@
+---
+title: Reproduction
+output: html_document
+---
+
+# Reproduction
+
+```{r}
+# Clear environment
+rm(list=ls())
+
+# Get the model function
+source("model.R")
+```
+
+Run the model...
+
+```{r}
+# Run the model
+list_containing_output <- simulate_nav(run_t=30)
+arrivals <- data.frame(list_containing_output[[1]])
+resources <- list_containing_output[[2]]
+```
+
+Display some of the results...
+
+```{r}
+print(head(arrivals, 5))
+print(head(resources, 5))
+```
+
+```{r}
+s1<- subset(arrivals, resource == "angio_inr") %>%
+    group_by(replication, category) %>%
+    summarize("fast <20 min" = sum(wait_time < 20), "medium 20-40 min" = sum(wait_time >= 20 & wait_time <= 40), "slow >40 min" = sum(wait_time > 40)) %>%
+    ungroup %>%
+    dplyr::select(replication, category, "fast <20 min", "slow >40 min", "medium 20-40 min") %>%
+    tidyr::gather(key=statistic, value = count, -replication, -category) %>% 
+    filter(category != "inr" & category != "ir" & category != "eir") %>%
+    ggplot(aes(factor(0),count))+geom_boxplot()+facet_wrap(category~statistic)+ylab("Patient count")+ggtitle("Stroke patient wait time at angio INR")+theme(plot.title = element_text(size=18, face = "bold"), axis.text = element_text(size=12), axis.title = element_text(size=14), strip.text = element_text(size=14, face = "bold"),  axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
+
+s1
+```
