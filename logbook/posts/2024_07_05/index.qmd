@@ -207,6 +207,63 @@ R CMD INSTALL --configure-vars='INCLUDE_DIR=... LIB_DIR=...'
 
 Based on [this GitHub issue](https://github.com/actions/runner-images/issues/37), add installation of this to the action.
 
+## 14.29-15.11, 15.32-X: In-text results 1 and 2
+
+The provided processing scripts may be able to help guide us, but not provided will create the Figures in the paper, so we do need to write that from scratch.
+
+Although the article focuses on the AngioINR, the plot includes 6 resources. The resources are provided by simmer's `get_mon_resources()`.
+
+We'll start with Figure 2 and its scenarios - with the related in-text results 1 and 2 probbaly being the easiest to initially check.
+
+The plot the angio INR wait times, which can be obtained from the `arrivals` dataframe.
+
+I created a function that runs the model with the baseline parameters identified above, then looked to the Figure 2 model variants.
+
+### Exclusive use
+
+In this scenario, AngioINR not available to elective IR patients. It is available to stroke, selective INR and emergency IR patients.
+
+Looking at the model code, use of the angioINR is controlled by a `seize("angio_inr", 1)` statement in the `trajectory()` for each patient. Can see that it is seized in:
+
+* ecr_traj (ECR)
+* ir_traj (Elective IR)
+* inr_traj (Elective INR)
+* eir_traj (Emergency INR)
+
+Hence, add an `exclusive_use` statement and conditional section to remove `angio_inr` as an option to choose from when the scenario is active for the `ir_traj` trajectory.
+
+### Two angioINRs scenario
+
+This was super easy to change with the `angio_inr` parameter.
+
+### Check in-text results 1 and 2
+
+Ran each of the scenarios and found the mean waiting time for each resource across all replications. Results for AngioINR were:
+
+* Baseline: 86.99 minutes
+* Exclusive use: 63.33 minutes
+* Two AngioINR: 52.78 minutes
+
+This is markedly more than in the paper (**exclusive reduces by 6 min**, and **two angioINRs reduces by 4 min**). The median was even more different.
+
+This was looking at the waiting time for all patient types though. And the interest of the paper is in stroke ("The elective INR, elective IR and emergency IR pathways are modeled because they utilize resources shared with the stroke pathway." @huang_optimizing_2019)
+
+The results have 4 categories: ed, ir, eir, and inr. Hence, it appears ED should be stroke - and indeed, in paper, the stroke pathway begins with a new patient in the emergency department (ED). When filtered just to those patients...
+
+Mean wait times are:
+
+* Baseline 307.83 minutes
+* Exclusive: 292.18 minutes
+* Two AngioINR: 319.94 minutes
+
+Median wait times for the AngioINR are:
+
+* Baseline: 206.53 minutes
+* Exclusive: 199.03 minutes
+* Two AngioINR: 244.27 minutes
+
+By the median times, we're fairly close to the paper (comparing the averages, it 7 minutes quicker). However, two angioINR is very different, and I'm a little sceptical as to whether I've got it quite right.
+
 ## Timings
 
 ```{python}

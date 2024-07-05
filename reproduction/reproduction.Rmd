@@ -14,8 +14,8 @@ rm(list=ls())
 # Disable scientific notation
 options(scipen=999)
 
-# Get the model function
-source("model.R")
+# Get the model function (but hide loading warnings for each package)
+suppressMessages(source("model.R"))
 ```
 
 This function was created to reduce code duplication, with the baseline model parameters as inputs...
@@ -95,13 +95,20 @@ print(head(twoangio[[1]], 5))
 ```
 
 ```{r}
+base_arrivals <- baseline[[1]]
+unique(base_arrivals$category)
+```
+
+```{r}
 # Loop through the dataframes and present the mean wait time for each resource
 # (across all replications)
 df_list <- list(baseline[[1]], exclusive[[1]], twoangio[[1]])
 for (i in 1:length(df_list)) {
   print(df_list[[i]] %>%
+    filter(category == "ed") %>%
     group_by(resource) %>%
-    summarize(mean(wait_time)))
+    summarize("mean" = mean(wait_time),
+              "median" = median(wait_time)))
 }
 ```
 
