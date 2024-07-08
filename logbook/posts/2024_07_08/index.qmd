@@ -18,7 +18,13 @@ Re-ran twice more to see again how much variation we get between runs, and how l
 
 Based on this, it's reasonable to assume that a 6 minute reduction can be observed within the variation of model runs (in-text result 1), but that the two angioINR scenario is not matching up.
 
-## 09.50-X: Adding seeds
+::: {.callout-tip}
+## Reflections
+
+Environment used does not match up to paper - paper use Simmer version 4.1.0, and otherwise, other versions of packages and of R being used are more recent than publication. It is unlikely that differences in results are due to this (although not impossible). Note trying to revert the environment to older versions as a possible troubleshooting strategy if issues persist, but not yet, due to major challenges found in trying to do so prior.
+:::
+
+## 09.50-10.49, 11.02-11.05, 11.13-11.14: Adding seeds
 
 Based on [this tutorial](https://pythonhealthdatascience.github.io/stars-treat-simmer/02_model/03_r_sampling.html), add seeds to the model. This is because the result was only returned by certain runs of the model and not others, so want to add seeds now so can give a seed for which the result is reproduced. I installed simEd - `renv::install("simEd")` and add to `DESCRIPTION` and `renv::snapshot()` - and then made the following changes to the model:
 
@@ -52,8 +58,29 @@ I looked into changing the `lapply()` in `model.R` to a parallel version:
 * `parLapply` requires you to specify every variable to be included, plus additional lines of code to set up and close clusters
 * `mcapply()` just requires you to change `lapply`
 
-Hence, I tried `mcapply`, but it returned `Error: external pointer is not valid`, which was resolved based on [this post](https://groups.google.com/g/simmer-devel/c/4cQWtS571iQ?pli=1) by adding `wrap()`.
+Hence, I tried `mcapply`, but it returned `Error: external pointer is not valid`, which was resolved based on [this post](https://groups.google.com/g/simmer-devel/c/4cQWtS571iQ?pli=1) by adding `wrap()`. However, learnt that mclapply wouldn't work on Windows. Moreover, it still took a fair while to run (testing with 30 replications, it's still going at 4 minutes).
 
-PLAN:
+As such, removed simEd from `model.R` and environment and returned to `rpois()`, and instead just set a simple seed without controlling streams. The time for this to run was as per usual, which was fab. I ran the baseline model twice with the same seed and compared the results, and it came out looking (by eye, at the processed results) identical.
 
-I ran baseline twice with the same seed to confirm if this had been successfully implemented.
+I therefore ran baseline and exclusive with three different starter seeds, and the seed `200` came out closest to the paper -
+
+* Baseline: 13.96 minutes
+* Exclusive: 8.12 minutes
+* Difference: 5.84 minutes
+
+Hence, I feel we can mark in-text result 1 as reproduced at this time (11.14), with starter seed of 200.
+
+```{python}
+# Add timings for this result
+```
+
+### 11.15-: Figure 2
+
+Figure 2 uses the results from the scenarios above but creates plots where:
+
+* X axis is wait time in minutes (on a non-linear scale)
+* Y axis is standardised density of patients in queue, from 0 to 1 (on a non-linear scale)
+  * i.e. "Probability density of patients who are waiting standardised to patients who are not waiting"
+  * i.e. "To facilitate graphical and descriptive comparison across models, we express waiting times as relative probabilities of waiting a given amount of time, compared to not waiting at all. Since most patients accessed services without waiting, wait time densities could be directly compared across simulations after this normalization."
+
+It's not immediately clear to me what this means, but as a first guess/attempt, I'll try 

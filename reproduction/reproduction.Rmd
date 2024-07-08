@@ -83,17 +83,17 @@ baseline <- run_model(seed=100)
 ```
 
 ```{r}
-baseline <- run_model(nsim=3, seed=100)
+baseline2 <- run_model(seed=200)
 ```
 
 ```{r}
-baseline2 <- run_model(seed=100)
+baseline3 <- run_model(seed=300)
 ```
 
 ```{r}
 # Loop through the dataframes and present the mean wait time for each resource
 # (across all replications)
-df_list <- list(baseline[[1]], baseline2[[1]])
+df_list <- list(baseline[[1]], baseline2[[1]], baseline3[[1]])
 for (i in 1:length(df_list)) {
   print(df_list[[i]] %>%
     filter(category == "ed") %>%
@@ -104,7 +104,28 @@ for (i in 1:length(df_list)) {
 ```
 
 ```{r}
-exclusive <- run_model(exclusive_use = TRUE)
+exclusive <- run_model(exclusive_use = TRUE, seed=100)
+```
+
+```{r}
+exclusive2 <- run_model(exclusive_use = TRUE, seed=200)
+```
+
+```{r}
+exclusive3 <- run_model(exclusive_use = TRUE, seed=300)
+```
+
+```{r}
+# Loop through the dataframes and present the mean wait time for each resource
+# (across all replications)
+df_list <- list(exclusive[[1]], exclusive2[[1]], exclusive3[[1]])
+for (i in 1:length(df_list)) {
+  print(df_list[[i]] %>%
+    filter(category == "ed") %>%
+    group_by(resource) %>%
+    summarize("mean" = mean(wait_time),
+              "median" = median(wait_time)))
+}
 ```
 
 ```{r}

@@ -4,7 +4,6 @@ library(parallel)
 library(dplyr)
 library(plotly)
 library("gridExtra")
-library(simEd)
 
 
 paramNames <- c("ct", "angio_inr", "angio_ir",
@@ -212,7 +211,7 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   INR_SCHEDULE        <- schedule(c(T_START, T_END), c(INR, INR_NIGHT), period =1440)
 
   # Run model for N_SIM replications
-  env <- mclapply(1:N_SIM, function(i) {
+  env <- lapply(1:N_SIM, function(i) {
 
     # Set seed to input seed plus run number (+1, +2, +3, +4...)
     set.seed(SEED+i)
@@ -231,14 +230,10 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
       add_resource("inr", INR_SCHEDULE) %>%
       add_resource("ir", IR_SCHEDULE) %>%
 
-      add_generator("pt_ed", new_patient_traj,
-                    function() vpois(1, I_ED, stream=1) ) %>%
-      add_generator("pt_inr", inr_traj,
-                    function() vpois(1, I_INR, stream=2) ) %>%
-      add_generator("pt_eir", eir_traj, priority = 1,
-                    function() vpois(1, I_EIR, stream=3) ) %>%
-      add_generator("pt_ir", ir_traj,
-                    function() vpois(1, I_IR, stream=4) ) %>%
+      add_generator("pt_ed", new_patient_traj, function() rpois(1, I_ED) ) %>%
+      add_generator("pt_inr", inr_traj, function() rpois(1, I_INR) ) %>%
+      add_generator("pt_eir", eir_traj, priority = 1, function() rpois(1, I_EIR) ) %>%
+      add_generator("pt_ir", ir_traj, function() rpois(1, I_IR) ) %>%
 
       run(RUN_T) %>%
       wrap()
