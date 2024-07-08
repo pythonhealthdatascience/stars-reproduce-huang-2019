@@ -4,6 +4,7 @@ library(parallel)
 library(dplyr)
 library(plotly)
 library("gridExtra")
+library(simEd)
 
 
 paramNames <- c("ct", "angio_inr", "angio_ir",
@@ -11,6 +12,7 @@ paramNames <- c("ct", "angio_inr", "angio_ir",
                 "ed_pt", "st_pt", "ais_pt", "ecr_pt", "inr_pt", "eir_pt", "ir_pt",
                 "shifts",
                 "nsim", "run_t")
+
 ##################
 ## Shiny inputs ##
 ##################
@@ -19,12 +21,14 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
                          ed_pt = 107000, st_pt = 750, ais_pt = 450, ecr_pt = 58, inr_pt = 300, eir_pt= 1000, ir_pt = 4000,
                          shifts = c(8,17),
                          nsim = 1, run_t = 365,
-                         exclusive_use = FALSE) {
+                         exclusive_use = FALSE, seed = 42) {
   #' Discrete-event simulation model
   #'
   #' @param run_t model run time in days
   #' @param exclusive_use whether angioINR has exclusive use (i.e. no elective
   #' IR patients allowed to use the machine)
+  #' @param seed integer that provides seed to be incremented on in each
+  #' replication (e.g. run 1 is seed+=1, run 2 is seed+=2)
 
   ###################
   #Model variables ##
@@ -66,6 +70,7 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   #sim setup
   RUN_T = run_t * 1440
   N_SIM = nsim
+  SEED = seed
 
   #######################
   ##model
@@ -206,7 +211,13 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   IR_SCHEDULE         <- schedule(c(T_START, T_END), c(IR, IR_NIGHT), period =1440)
   INR_SCHEDULE        <- schedule(c(T_START, T_END), c(INR, INR_NIGHT), period =1440)
 
-  env <-lapply(1:N_SIM, function(i) {
+  # Run model for N_SIM replications
+  env <- mclapply(1:N_SIM, function(i) {
+
+    # Set seed to input seed plus run number (+1, +2, +3, +4...)
+    set.seed(SEED+i)
+
+    # Run model
     simmer() %>%
       add_resource("door", DOOR_SCHEDULE) %>%
 
@@ -220,13 +231,17 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
       add_resource("inr", INR_SCHEDULE) %>%
       add_resource("ir", IR_SCHEDULE) %>%
 
-      add_generator("pt_ed", new_patient_traj, function() rpois(1, I_ED) ) %>%
-      add_generator("pt_inr", inr_traj, function() rpois(1, I_INR) ) %>%
-      add_generator("pt_eir", eir_traj, priority = 1, function() rpois(1, I_EIR) ) %>%
-      add_generator("pt_ir", ir_traj, function() rpois(1, I_IR) ) %>%
+      add_generator("pt_ed", new_patient_traj,
+                    function() vpois(1, I_ED, stream=1) ) %>%
+      add_generator("pt_inr", inr_traj,
+                    function() vpois(1, I_INR, stream=2) ) %>%
+      add_generator("pt_eir", eir_traj, priority = 1,
+                    function() vpois(1, I_EIR, stream=3) ) %>%
+      add_generator("pt_ir", ir_traj,
+                    function() vpois(1, I_IR, stream=4) ) %>%
 
-      run(RUN_T) #%>%
-    #wrap()
+      run(RUN_T) %>%
+      wrap()
   })
 
   ########################

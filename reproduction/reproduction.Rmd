@@ -33,7 +33,8 @@ run_model <- function(angio_inr = 1,
                       ir_pt = 3805,
                       run_t = 365,
                       nsim = 30,
-                      exclusive_use = FALSE) {
+                      exclusive_use = FALSE,
+                      seed = 42) {
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
@@ -47,6 +48,8 @@ run_model <- function(angio_inr = 1,
   #' @param nsim number of replications
   #' @param exclusive_use whether angioINR has exclusive use (i.e. no elective
   #' IR patients allowed to use the machine)
+  #' @param seed integer that provides seed to be incremented on in each
+  #' replication (e.g. run 1 is seed+=1, run 2 is seed+=2)
 
   # Run the model
   list_containing_output <- simulate_nav(
@@ -59,7 +62,8 @@ run_model <- function(angio_inr = 1,
     ir_pt = ir_pt,
     run_t = run_t,
     nsim = nsim,
-    exclusive_use = exclusive_use
+    exclusive_use = exclusive_use,
+    seed = seed
   )
   # Get arrivals and resources
   arrivals <- data.frame(list_containing_output[[1]])
@@ -75,7 +79,28 @@ run_model <- function(angio_inr = 1,
 Run through each of the scenarios
 
 ```{r}
-baseline <- run_model()
+baseline <- run_model(seed=100)
+```
+
+```{r}
+baseline <- run_model(nsim=3, seed=100)
+```
+
+```{r}
+baseline2 <- run_model(seed=100)
+```
+
+```{r}
+# Loop through the dataframes and present the mean wait time for each resource
+# (across all replications)
+df_list <- list(baseline[[1]], baseline2[[1]])
+for (i in 1:length(df_list)) {
+  print(df_list[[i]] %>%
+    filter(category == "ed") %>%
+    group_by(resource) %>%
+    summarize("mean" = mean(wait_time),
+              "median" = median(wait_time)))
+}
 ```
 
 ```{r}

@@ -1,0 +1,59 @@
+---
+title: "Day 4"
+author: "Amy Heather"
+date: "2024-07-08"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## 09.14-09.17, 09.22-09.24, 09.30-09.35: Continuing on in-text results 1 and 2
+
+Re-ran twice more to see again how much variation we get between runs, and how likely that could attribute for the difference against the paper. We saw-
+
+| Output | Result 1 (Day 3) | Result 2 (Day 3) | Result 3 (Today) | Result 4 (Today) | Paper |
+| --- | --- | --- | --- | --- | --- |
+| Baseline | 13.33 minutes | 13.65 minutes | 14.15 minutes | 14.09 minutes | - |
+| Exclusive | 8.58 minutes (4.75 reduction) | 9.20 minutes (4.45 reduction) | 8.79 minutes (5.36 reduction) | 8.05 minutes (6.04 reduction) | 6 minute reduction from baseline |
+| Two AngioINR | 14.86 minutes (1.53 increase) | 13.61 minutes (0.04 reduction) | 14.37 minutes (0.22 increase) | 14.04 minutes (0.05 reduction) | 4 minute reduction from baseline |
+
+Based on this, it's reasonable to assume that a 6 minute reduction can be observed within the variation of model runs (in-text result 1), but that the two angioINR scenario is not matching up.
+
+## 09.50-X: Adding seeds
+
+Based on [this tutorial](https://pythonhealthdatascience.github.io/stars-treat-simmer/02_model/03_r_sampling.html), add seeds to the model. This is because the result was only returned by certain runs of the model and not others, so want to add seeds now so can give a seed for which the result is reproduced. I installed simEd - `renv::install("simEd")` and add to `DESCRIPTION` and `renv::snapshot()` - and then made the following changes to the model:
+
+* `library(simEd)`
+* Input `seed` to function which becomes SEED, then `set.seed(SEED+i)` within model replications
+* Sampling functions changed from `r` to `v` - i.e. `rpois()` to `vpois()`, with incremental stream numbers
+
+I tried running baseline, but it took a long time - after 6 minutes, it was still running (which is normally how long the whole script takes). I interrupted it and it returned `Error : object 'shifts' not found`. However, no change has been made to shifts code. I ran a short section of code practicing sampling and this worked fine:
+
+```
+library(simEd)
+
+ed_pt = 107000
+year2min = 525600
+I_ED  = round(year2min/ed_pt)
+
+set.seed(5)
+vpois(10, I_ED, stream=1)
+
+set.seed(3)
+vpois(10, I_ED, stream=1)
+
+set.seed(5)
+vpois(10, I_ED, stream=1)
+```
+
+I then tried running it with 3 replications instead of 30 (`baseline <- run_model(nsim=3, seed=100)`), and that ran fine, so it appears that introducing this library just slowed down the model alot, as 3 replications could complete in 40 seconds.
+
+I looked into changing the `lapply()` in `model.R` to a parallel version:
+
+* `parLapply` requires you to specify every variable to be included, plus additional lines of code to set up and close clusters
+* `mcapply()` just requires you to change `lapply`
+
+Hence, I tried `mcapply`, but it returned `Error: external pointer is not valid`, which was resolved based on [this post](https://groups.google.com/g/simmer-devel/c/4cQWtS571iQ?pli=1) by adding `wrap()`.
+
+PLAN:
+
+I ran baseline twice with the same seed to confirm if this had been successfully implemented.
