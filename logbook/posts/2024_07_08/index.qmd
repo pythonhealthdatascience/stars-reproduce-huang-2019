@@ -74,7 +74,7 @@ Hence, I feel we can mark in-text result 1 as reproduced at this time (11.14), w
 # Add timings for this result
 ```
 
-### 11.15-: Figure 2
+### 11.15-12.30, 13:15-13.50, 13.55-X: Figure 2
 
 Figure 2 uses the results from the scenarios above but creates plots where:
 
@@ -83,4 +83,80 @@ Figure 2 uses the results from the scenarios above but creates plots where:
   * i.e. "Probability density of patients who are waiting standardised to patients who are not waiting"
   * i.e. "To facilitate graphical and descriptive comparison across models, we express waiting times as relative probabilities of waiting a given amount of time, compared to not waiting at all. Since most patients accessed services without waiting, wait time densities could be directly compared across simulations after this normalization."
 
-It's not immediately clear to me what this means, but as a first guess/attempt, I'll try 
+It's not immediately clear exactly what this means, but I'll start with creating a density plot of waiting times for one of the resources. First though, I add some code to save the model results to CSV files so that we don't have to re-run the model each time (since with seeds added, it should now come out the same each time anyway). I initially saved these with `write.csv()` but it was too slow, so then (based on [this tutorial](https://medium.com/r-evolution/how-to-export-100x-faster-csv-files-from-r-for-big-data-1d969a6b9269)), I switched to `data.table::fwrite()` ("fast CSV writer"), which was much much better! Hence, used `fread()` to import (as should also be quicker, based on [this tutorial](https://www.r-bloggers.com/2020/09/the-fastest-way-to-read-and-writes-file-in-r/)).
+
+I then created a basic density plot with ggplot with ED AngioINR untransformed wait times.
+
+```
+base_angio <- res_base %>% filter(category == "ed") %>% filter(resource == "angio_inr")
+p <- ggplot(base_angio, aes(x = wait_time)) +
+  geom_density()
+ggsave(path_fig2a)
+p
+```
+
+![Figure 2A raw wait times](fig2a_example1.png)
+
+### Y axis
+
+I played around with various transformations, as it wasn't immediately clear to me how they had stretched the y axis, including creating custom functions, transforming the data directly, and trying out default transform options. I eventually stumbled across `scale_y_continuous(transform="sqrt")`, which matched up to the axis in the paper.
+
+### Standardising the density
+
+I played around with a few different transformation as I tried to work out what they meant by standardised density of patients in queue. Whilst converting raw wait times to probabilities, I noticed a bunch of ever so slightly negative wait times, but given these are very small (i.e. 0.0000000...), I am not concerned.
+
+One thing I tried was converting each wait time into a probability of that wait time (e.g. rounding each to 2dp, then 0 wait time = probability 0.68).
+
+```
+# Filter to just AngioINR for ED and round wait times to 2dp
+base_angio <- res_base %>%
+  filter(category == "ed", resource == "angio_inr") %>%
+  select(wait_time)
+
+# Round to 2dp
+base_angio$wait_time <- round(base_angio$wait_time, 2)
+
+# Convert raw wait times into probability of waiting that long given all
+# wait times observed
+prob_wait <- base_angio %>%
+  group_by(wait_time) %>%
+  summarise(count = n()) %>%
+  mutate(probability = count / sum(count)) %>%
+  select(wait_time, probability)
+
+ggplot(prob_wait, aes(x=wait_time, y=probability)) + geom_line() + geom_point()
+```
+
+However, that really didn't look quite right.
+
+![Figure 2A wrong transformation](fig2a_example2.png)
+
+Looking at the curve with the raw wait times, the shape of the curve is more similar to the paper, just with different y axis and stretched. Revisiting the paper description, it is the "relative probabilities of waiting a given amount of time, compared to not waiting at all". So, it's not just the relative probability of waiting a given amount of time, compared to any other time.
+
+I created a plot where the waiting times were normalised in such a way that the values range from 0 to 1, which starts to look a bit more similar to the paper -
+
+```
+# Filter to just AngioINR for ED and round wait times to 2dp
+base_angio <- res_base %>%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time < 0] <- 0
+
+# Create the density data
+density_data <- density(base_angio$wait_time)
+
+# Normalize the density values
+normalized_density <- density_data$y / max(density_data$y)
+
+# Create a data frame with the normalized density values
+density_df <- data.frame(x = density_data$x, y = normalized_density)
+
+# Plot using ggplot2
+ggplot(density_df, aes(x = x, y = y)) +
+  geom_line() +
+  scale_y_continuous(transform="sqrt")
+ggsave(path_fig2a)
+```
+
+![Figure 2A scaled to 0 to 1](fig2a_example3.png)
