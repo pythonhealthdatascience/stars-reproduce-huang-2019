@@ -205,6 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="quarto-title column-body">
       <h1 class="title">Day 5</h1>
                                 <div class="quarto-categories">
+                <div class="quarto-category">setup</div>
                 <div class="quarto-category">reproduce</div>
               </div>
                   </div>
@@ -321,10 +322,19 @@ ERROR: Error
     at async doPublish (file:///opt/quarto/bin/quarto.js:109550:13)
     at async publishAction (file:///opt/quarto/bin/quarto.js:109561:9)
 Error: Process completed with exit code 1.</code></pre>
+<p>Tried adding <code>Rscript{0}</code> as shell for running R code but this was incorrect.</p>
+<p>Then tried switching <code>reproduction.Rmd</code> to <code>reproduction.qmd</code>. Re-running the action, it was very very slow (14 minutes) (so seemingly not using the cache). Moreover, it still hit an error as above.</p>
+<p>I decided a simpler solution might be to not require R in the Quarto build, and to instead ensure that any scripts using R are pre-rendered in some way (similar to how <code>.ipynb</code> files behave). For <code>.ipynb</code>, the default behaviour is that <code>execute: enabled: false</code>, as in the <a href="https://quarto.org/docs/computations/caching.html">documentation</a>. However, when run, encountered the error as above.</p>
+<p>Tried a few options, including to manually install knitr and rmarkdown, although returned issue that <code>'lib = "/usr/local/lib/R/site-library"' is not writable</code>.</p>
+<p>Did consider other options could be to clone and build examples that are set up with a GitHub action - e.g.&nbsp;<a href="https://github.com/ddotta/cookbook-rpolars/blob/main/.github/workflows/quarto-render-publish.yml">renv example</a>, <a href="https://github.com/b-rodrigues/quarto_book_nix">nix example</a>. However, for now, have decided to just disable the action and do it manually from the terminal:</p>
+<ul>
+<li><code>quarto render</code> (rebuilds whole site)</li>
+<li><code>quarto publish</code> (pushes to github pages)</li>
+</ul>
 </section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="fb45ffcd" class="cell" data-execution_count="1">
+<div id="8805e061" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
