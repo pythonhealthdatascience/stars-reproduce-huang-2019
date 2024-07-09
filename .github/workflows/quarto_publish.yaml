@@ -40,6 +40,8 @@ jobs:
         with:
           working-directory: './reproduction/'
           cache-version: 2
+          extra-packages: |
+            any::pak
 
       - name: Render and publish to GitHub pages
         uses: quarto-dev/quarto-actions/publish@v2
