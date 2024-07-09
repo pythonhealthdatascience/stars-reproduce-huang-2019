@@ -12,4 +12,5 @@ Imports:
     markdown,
     knitr,
     rmarkdown,
-    ggpubr
+    ggpubr,
+    R.utils
