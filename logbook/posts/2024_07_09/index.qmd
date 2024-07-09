@@ -2,9 +2,15 @@
 title: "Day 5"
 author: "Amy Heather"
 date: "2024-07-09"
-categories: [reproduce]
+categories: [setup, reproduce]
 bibliography: ../../../quarto_site/references.bib
 ---
+
+::: {.callout-note}
+
+Working on figure 2 and (untimed) fixing Quarto book (environment issues). Total time used: X (X%)
+
+:::
 
 ## 09.04-09.06, 09.14-09.15: Continuing on Figure 2
 
@@ -18,6 +24,69 @@ And with seed 500 too:
 
 ## Untimed: Fixing GitHub commits and action for Quarto book
 
+*This is not timed as I feel it is relevant to the Quarto book and not specific to this reproduction, and so reflects an issue I might have ironed out in a test-run, if I had done a second test-run in R (and not just a Python test-run)*.
+
 Had commit the produced .csv files without recognising they were too large. Undid commits with `git reset HEAD^`, and switched reproduction to only save relevant rows and columns, and to save as a compressed `.csv.gz` file. This required adding `R.utils` to the environment.
 
-Also, modified `quarto_publish.yaml` to use `setup-r-dependencies`.
+Also, modified `quarto_publish.yaml` to use `setup-r-dependencies`, but ran into several errors with this. One I could resolve related to having not pushed the `renv/` directory. However, one I have struggled to resolve, which was that `there is no package called ‘pak’`. I've tried switching to ubuntu-22.04, as suggested on [this issue](r-lib/actions#750). Also tried adding pak within the setup action with `extra-packages: | any::pak`. Still, issue persists.
+
+I explored using conda to manage the R environment, and whether that might actually be easier, as I've had alot of challenges with `renv` for this book (but also in general, having just defaulted to using the latest packages, due to facing major issues installing older R and packages). Based on [this tutorial](https://andrewpwheeler.com/2022/04/08/managing-r-environments-using-conda/), I created a requirements.txt file then ran the following:
+
+```
+conda create -n huang2019
+conda activate huang2019
+conda install -c conda-forge r-base==4.4.1 --file reproduction/requirements.txt
+```
+
+However, this was running into several issues, stating that the packages were not compatabile with the chosen r-base.
+
+Finally, I tried switching back to `setup-renv`. However, this took a **long** time to run but it does run (and supposedly future runs can use that cache so it is quicker). However, just like before, it stalls with an error (despite seeing that the renv installation above definitely included rmarkdown):
+
+```
+[19/22] reproduction/reproduction.Rmd
+Error in loadNamespace(x) : there is no package called ‘rmarkdown’
+Calls: loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+R installation:
+  Version: 4.4.1
+  Path: /opt/R/4.4.1/lib/R
+  LibPaths:
+    - /home/runner/work/_temp/Library
+    - /opt/R/4.4.1/lib/R/library
+  knitr: (None)
+  rmarkdown: (None)
+The knitr package is not available in this R installation.
+Install with install.packages("knitr")
+The rmarkdown package is not available in this R installation.
+Install with install.packages("rmarkdown")
+ERROR: Error
+    at renderFiles (file:///opt/quarto/bin/quarto.js:78081:29)
+    at eventLoopTick (ext:core/01_core.js:153:7)
+    at async renderProject (file:///opt/quarto/bin/quarto.js:78479:25)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:109334:33)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:104866:24)
+    at async Object.publish1 [as publish] (file:///opt/quarto/bin/quarto.js:105351:26)
+    at async publishSite (file:///opt/quarto/bin/quarto.js:109371:38)
+    at async publish7 (file:///opt/quarto/bin/quarto.js:109590:61)
+    at async doPublish (file:///opt/quarto/bin/quarto.js:109550:13)
+    at async publishAction (file:///opt/quarto/bin/quarto.js:109561:9)
+Error: Process completed with exit code 1.
+```
+
+## Timings
+
+```{python}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 790
+
+# Times from today
+times = [
+    ('09.04', '09.06'),
+    ('09.14', '09.15')]
+
+calculate_times(used_to_date, times)
+```
