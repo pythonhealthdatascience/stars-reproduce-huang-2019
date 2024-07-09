@@ -73,6 +73,12 @@ ERROR: Error
 Error: Process completed with exit code 1.
 ```
 
+Tried adding `Rscript{0}` as shell for running R code but this was incorrect.
+
+Then tried switching `reproduction.Rmd` to `reproduction.qmd`. Re-running the action, it was very very slow (14 minutes) (so seemingly not using the cache). Moreover, it still hit an error as above.
+
+I decided a simpler solution might be to not require R in the Quarto build, and to instead ensure that any scripts using R are pre-rendered in some way (similar to how `.ipynb` files behave).
+
 ## Timings
 
 ```{python}
