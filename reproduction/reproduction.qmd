@@ -1,5 +1,7 @@
 ---
 title: Reproduction
+execute: 
+  freeze: true
 ---
 
 ## Set up
