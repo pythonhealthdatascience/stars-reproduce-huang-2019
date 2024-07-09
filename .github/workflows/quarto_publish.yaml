@@ -38,7 +38,7 @@ jobs:
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          working-directory: 'reproduction/'
+          working-directory: './reproduction/'
 
       - name: Render and publish to GitHub pages
         uses: quarto-dev/quarto-actions/publish@v2
