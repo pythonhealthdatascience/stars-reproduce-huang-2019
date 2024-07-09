@@ -83,8 +83,7 @@ If you wish to cite this repository, please refer to the citation file `CITATION
 
 This repository is licensed under the [GNU GPL-3.0 license](https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/blob/main/LICENSE).
 
-<!-- TODO: Add license name and link (e.g. "who also licensed their work under the [MIT License](link)") -->
-This is aligned with the original study, who also licensed their work under the [GNU GPL-3.0 license].
+This is aligned with the original study, who also licensed their work under the [GNU GPL-3.0 license](https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/blob/main/original_study/desECR/LICENSE).
 
 ## Funding
 
