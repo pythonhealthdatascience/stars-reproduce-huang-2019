@@ -20,6 +20,3 @@ ignore/
 
 # RStudio files
 .Rproj.user/
-
-# R environment
-renv/
