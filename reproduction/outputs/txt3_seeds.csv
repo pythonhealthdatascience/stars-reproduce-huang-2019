@@ -1,0 +1,4 @@
+scenario,5pm,6pm,7pm
+Baseline,13.96,12.49,12.49
+Baseline (seed 500),13.96,12.15,12.2
+Baseline (seed 700),15.47,13.32,12.3
