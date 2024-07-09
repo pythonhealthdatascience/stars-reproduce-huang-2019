@@ -74,7 +74,7 @@ Hence, I feel we can mark in-text result 1 as reproduced at this time (11.14), w
 # Add timings for this result
 ```
 
-### 11.15-12.30, 13:15-13.50, 13.55-X: Figure 2
+### 11.15-12.30, 13:15-13.50, 13.55-14.55: Working on Figure 2
 
 Figure 2 uses the results from the scenarios above but creates plots where:
 
@@ -160,3 +160,143 @@ ggsave(path_fig2a)
 ```
 
 ![Figure 2A scaled to 0 to 1](fig2a_example3.png)
+
+I then tried creating a dataframe of counts for each wait time, then calculated probability based on number of people with no wait time. However, many were tiny (as count e.g. 1 of wait time 0.00000000000002842171). Tried it with rounding first. However, it is still then the same, as most are just 0, and then e.g. 1 wait time 0.2, 3 wait time 0.5.
+
+```
+# Filter to just AngioINR for ED and round wait times to 2dp
+base_angio <- res_base %>%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time < 0] <- 0
+
+# Round everything to 1dp
+base_angio$wait_time <- round(base_angio$wait_time, 1)
+
+# Get probability of no wait time
+n_zero = length(which(base_angio$wait_time == 0))
+prob_zero = n_zero / nrow(base_angio)
+
+# Convert dataframe to counts of each wait time
+wait_df = base_angio %>%
+  group_by(wait_time) %>%
+  summarise(count=n())
+```
+
+I tried transforming by the density of 0 (`density_data$y[which.min(abs(density_data$x - 0))]`) but that worked out to just be the same as `max(density_data$y)`, since 0 has the max density.
+
+I tried transforming the x axis, which also appears to be a sqrt transformation, although this has an issue of introducing Inf values and losing where x=0 and density=1. I explored a few different ways of doing this transformation to see if anything helps
+
+## 15.10-15.30: Research into transformations
+
+As I'm struggling with these transformations - to the x axis, and to the probability density function. As such, it seems a good idea to do a bit more research into these and what exactly they are doing, to see if that helps.
+
+### Square root axis transformation
+
+I read a few articles and looked at the documentation for the square root transformation, and understand that this simply applying the `sqrt()` function.
+
+You get the same graph if you do this:
+
+```
+density_df %>%
+  mutate(x_sqrt = sqrt(x)) %>%
+  ggplot(aes(x=x_sqrt, y=y)) + geom_line() + xlim(0, sqrt(200)) + scale_y_continuous(transform="sqrt")
+```
+
+The only difference is the x axis labels - when we use the ggplot axis transformation, it keeps the old labels to maintain interpretation of the original data.
+
+### Density functions
+
+A probability density function is used to describe a continuous distribution. It can be used to find the likelihood of values of a continuous random variable.
+
+`ggplot::geom_density()` is described as plotting a smoothed version of the histogram.
+
+## 15.31-16.55: Returning to Figure 2
+
+I add the sqrt x axis transformation to the basic density plot, and suddenly got a result that looked alot like the article! The only differences are the range of each axis, and the min/max values for y (ranges from 0 to 0.2...)
+
+```
+# Filter to just AngioINR for ED and round wait times to 2dp
+base_angio <- res_base %>%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time < 0] <- 0
+
+ggplot(base_angio, aes(x = wait_time)) +
+  geom_density() +
+  scale_y_continuous(transform="sqrt") +
+  scale_x_continuous(transform="sqrt")
+```
+
+![Figure 2A... getting closer!](fig2a_example4).png
+
+I tried out using previous transforms but they didn't look right. Then I came across [this stack Overflow post](https://stackoverflow.com/questions/51385455/geom-density-y-axis-goes-above-1) which suggested you can scale the density estimate to a maximum of one by inputting `..scaled..`. This is the computed `..scaled..` value from `geom_density()` which provides the density estimate scaled to a maximum of 1. From the [documentation](https://ggplot2.tidyverse.org/reference/aes_eval.html), can see that `..scaled..` has been replaced with `after_stat(scaled)`.
+
+This is however assuming that scaling to 1 is the same as scaling by probability of 0 wait time (which is at least true in this case, as we saw above).
+
+```
+# Filter to just AngioINR for ED and round wait times to 2dp
+base_angio <- res_base %>%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time < 0] <- 0
+
+# Create the plot, scaling the density estimate to a maximum of 1
+ggplot(base_angio, aes(x=wait_time, y=after_stat(scaled))) +
+  geom_density() +
+  scale_y_continuous(transform="sqrt") +
+  scale_x_continuous(transform="sqrt")
+```
+
+![Figure 2A example 5](fig2a_example5.png)
+
+I tried adding all the resources in to the plots, and converting it into a function so I can apply it to all three dataframes. To easily show the plots side-by-side with a shared legend, I installed the package ggpubr.
+
+Installation of ggpubr failed with message `ERROR: configuration failed for package ‘nloptr’`. It suggested I install cmake so, as prompted, I ran `sudo apt install cmake`. This then installed fine.
+
+Creating the plots and making various tweaks to the plotting and appearance, we're getting a bit closer to the paper.
+
+```
+create_plot <- function(df, title, xlim=c(0, 200)) {
+  #' Create sub-plots for Figure 2A
+  #' 
+  #' @param df Dataframe with wait times across replications
+  #' @param xlim Tuple with limits for x axis
+
+  # Filter to just ED
+  base_angio <- df %>%
+    filter(category == "ed")
+  
+  # Set negative wait times to 0
+  base_angio$wait_time[base_angio$wait_time < 0] <- 0
+  
+  # Create the plot, scaling the density estimate to a maximum of 1
+  ggplot(base_angio, aes(x = wait_time,
+                         colour = resource,
+                         y = after_stat(scaled))) +
+    geom_density() +
+    # Apply square transformation to each axis, removing x points beyond limits
+    scale_y_continuous(transform = "sqrt") +
+    scale_x_continuous(transform = "sqrt",
+                       breaks = scales::breaks_width(50),
+                       limits = xlim,
+                       oob = scales::censor,
+                       guide = guide_axis(angle=45)) +
+    # Titles and styling
+    ggtitle(title) +
+    xlab("") +
+    ylab("") +
+    theme_bw(base_size=10)
+}
+
+p1 <- create_plot(res_base, title="Baseline")
+p2 <- create_plot(res_exc, title="Exclusive-use", xlim=c(0, 250))
+p3 <- create_plot(res_two, title="Double angio INRs")
+ggarrange(p1, p2, p3, nrow=1, common.legend=TRUE, legend="bottom", labels=c("A", "B", "C"))
+ggsave(path_fig2a)
+```
+
+![Figure 2A example 6](fig2a_example6.png)

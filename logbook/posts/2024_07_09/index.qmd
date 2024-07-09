@@ -1,0 +1,23 @@
+---
+title: "Day 5"
+author: "Amy Heather"
+date: "2024-07-09"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## 09.04-09.06, 09.14-09.15: Continuing on Figure 2
+
+I was curious to see how a different seed would impact the appearance of the figures, and so tried changing the seed from 200 to 300. However, it looks fairly similar.
+
+![Figure 2A Example 1](fig2a_example1.png)
+
+And with seed 500 too:
+
+![Figure 2A Example 2](fig2a_example2.png)
+
+## Untimed: Fixing GitHub commits and action for Quarto book
+
+Had commit the produced .csv files without recognising they were too large. Undid commits with `git reset HEAD^`, and switched reproduction to only save relevant rows and columns, and to save as a compressed `.csv.gz` file. This required adding `R.utils` to the environment.
+
+Also, modified `quarto_publish.yaml` to use `setup-r-dependencies`.

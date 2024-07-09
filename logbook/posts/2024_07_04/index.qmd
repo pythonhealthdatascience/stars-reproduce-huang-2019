@@ -198,7 +198,7 @@ No dependency management, so will create renv based on the imports and the dates
 
 * Simmer (version 4.1.0)
 
-The article dates areL
+The article dates are:
 
 * Received - 31 March 2019
 * Accepted - 4 June 2019
