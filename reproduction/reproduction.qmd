@@ -1,9 +1,6 @@
 ---
 title: Reproduction
-output: html_document
 ---
-
-# Reproduction
 
 ## Set up
 
