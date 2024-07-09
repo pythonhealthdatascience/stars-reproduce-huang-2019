@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
@@ -39,6 +39,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           working-directory: './reproduction/'
+          cache-version: 2
 
       - name: Render and publish to GitHub pages
         uses: quarto-dev/quarto-actions/publish@v2
