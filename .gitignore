@@ -3,9 +3,23 @@ _freeze/
 /.quarto/
 __pycache__/
 .vscode/
-.Rproj.user
-.Rhistory
-renv/
-.Rprofile
 ignore/
-*.Rproj
+
+*.html
+
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.RDataTmp
+
+# User-specific files
+.Ruserdata
+
+# RStudio files
+.Rproj.user/
+
+# R environment
+renv/
