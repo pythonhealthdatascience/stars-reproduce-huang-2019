@@ -1,7 +1,5 @@
 ---
 title: Reproduction
-execute: 
-  enabled: false
 ---
 
 ## Set up
