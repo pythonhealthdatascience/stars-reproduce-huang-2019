@@ -22,8 +22,7 @@ website:
         menu:
           - text: README
             href: quarto_site/reproduction_readme.qmd
-          # Not working (https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/actions/runs/9809111478/job/27086274425)
-          #- href: reproduction/reproduction.Rmd
+          - href: reproduction/reproduction.qmd
       - text: Evaluation
         menu:
           - evaluation/scope.qmd
