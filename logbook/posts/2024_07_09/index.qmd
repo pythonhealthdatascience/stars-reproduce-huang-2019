@@ -77,7 +77,14 @@ Tried adding `Rscript{0}` as shell for running R code but this was incorrect.
 
 Then tried switching `reproduction.Rmd` to `reproduction.qmd`. Re-running the action, it was very very slow (14 minutes) (so seemingly not using the cache). Moreover, it still hit an error as above.
 
-I decided a simpler solution might be to not require R in the Quarto build, and to instead ensure that any scripts using R are pre-rendered in some way (similar to how `.ipynb` files behave).
+I decided a simpler solution might be to not require R in the Quarto build, and to instead ensure that any scripts using R are pre-rendered in some way (similar to how `.ipynb` files behave). For `.ipynb`, the default behaviour is that `execute: enabled: false`, as in the [documentation](https://quarto.org/docs/computations/caching.html). However, when run, encountered the error as above.
+
+Tried a few options, including to manually install knitr and rmarkdown, although returned issue that `'lib = "/usr/local/lib/R/site-library"' is not writable`.
+
+Did consider other options could be to clone and build examples that are set up with a GitHub action - e.g. [renv example](https://github.com/ddotta/cookbook-rpolars/blob/main/.github/workflows/quarto-render-publish.yml), [nix example](https://github.com/b-rodrigues/quarto_book_nix). However, for now, have decided to just disable the action and do it manually from the terminal:
+
+* `quarto render` (rebuilds whole site)
+* `quarto publish` (pushes to github pages)
 
 ## Timings
 
