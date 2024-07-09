@@ -29,6 +29,10 @@ jobs:
       - name: Install python dependencies
         run: pip install -r requirements.txt
 
+      - name: Install knitr and rmarkdown
+        run: |
+          Rscript -e 'install.packages(c("knitr", "rmarkdown"))'
+
       - name: Render and publish to GitHub pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
