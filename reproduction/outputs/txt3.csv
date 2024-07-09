@@ -1,0 +1,10 @@
+scenario,shift,mean,diff_from_5pm
+Baseline,5pm,13.9582690194235,0
+Baseline,6pm,12.4860421958059,-1.47
+Baseline,7pm,12.4914205717338,-1.47
+Exclusive use,5pm,8.11772914509105,0
+Exclusive use,6pm,7.80295416331327,-0.31
+Exclusive use,7pm,6.43264312593053,-1.69
+Two AngioINRs,5pm,13.5115602081546,0
+Two AngioINRs,6pm,11.4088937325407,-2.1
+Two AngioINRs,7pm,11.2568418999921,-2.25

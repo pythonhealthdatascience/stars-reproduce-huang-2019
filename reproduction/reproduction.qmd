@@ -24,15 +24,31 @@ suppressMessages(source("model.R"))
 ```
 
 ```{r}
+# Set the seed
+SEED = 200
+
 # Set file paths to save results
-path_baseline = "outputs/fig2_baseline.csv.gz"
-path_exclusive = "outputs/fig2_exclusive.csv.gz"
-path_twoangio = "outputs/fig2_twoangio.csv.gz"
-path_fig2a = "outputs/fig2a.png"
+
+folder = "outputs"
+
+path_baseline_f2 <- file.path(folder, "fig2_baseline.csv.gz")
+path_exclusive_f2 <- file.path(folder, "fig2_exclusive.csv.gz")
+path_twoangio_f2 <- file.path(folder, "fig2_twoangio.csv.gz")
+
+path_baseline_f3 <- file.path(folder, "fig3_baseline.csv.gz")
+path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
+path_twoangio_f3 <- file.path(folder, "fig3_twoangio.csv.gz")
+path_baseline_f3_seed500 <- file.path(folder, "fig3_baseline_seed500.csv.gz")
+path_baseline_f3_seed700 <- file.path(folder, "fig3_baseline_seed700.csv.gz")
+
+path_txt2 <- file.path(folder, "txt2.csv")
+path_txt3 <- file.path(folder, "txt3.csv")
+path_fig2 <- file.path(folder, "fig2.png")
+path_fig3 <- file.path(folder, "fig3.png")
 ```
 
-This function was created to reduce code duplication, with the baseline model parameters as inputs...
-  
+## Functions
+
 ```{r}
 run_model <- function(angio_inr = 1,
                       ir = 2,
@@ -41,10 +57,12 @@ run_model <- function(angio_inr = 1,
                       inr_pt = 104,
                       eir_pt= 468,
                       ir_pt = 3805,
+                      shifts = c(8,17),
                       run_t = 365,
                       nsim = 30,
                       exclusive_use = FALSE,
-                      seed = 42) {
+                      seed = 42,
+                      figure = FALSE) {
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
@@ -54,6 +72,7 @@ run_model <- function(angio_inr = 1,
   #' @param inr_pt number of elective INR patients
   #' @param eir_pt number of emergency IR patients
   #' @param ir_pt number of elective IR patients
+  #' @param shifts tuple with start and finish time of day shift
   #' @param run_t simulation runtime in days
   #' @param nsim number of replications
   #' @param exclusive_use whether angioINR has exclusive use (i.e. no elective
@@ -70,6 +89,7 @@ run_model <- function(angio_inr = 1,
     inr_pt = inr_pt,
     eir_pt = eir_pt,
     ir_pt = ir_pt,
+    shifts = shifts,
     run_t = run_t,
     nsim = nsim,
     exclusive_use = exclusive_use,
@@ -86,72 +106,64 @@ run_model <- function(angio_inr = 1,
 }
 ```
 
-## Run model
-
-Run through each of the scenarios and save results to compressed CSV files.
-
 ```{r}
-# baseline <- run_model(seed = 500)
-```
+process_f3_data <- function(df5, df6, df7, save_path) {
+  #' Process model results to create data for Figure 3
+  #' 
+  #' @param df5 Dataframe with results from model where shifts end at 5pm
+  #' @param df6 Dataframe with results from model where shifts end at 6pm
+  #' @param df7 Dataframe with results from model where shifts end at 7pm
+  #' @param save_path String with path to save results to
 
-```{r}
-# exclusive <- run_model(exclusive_use = TRUE, seed = 500)
-```
+  # Add shift time
+  df5$shift = "5pm"
+  df6$shift = "6pm"
+  df7$shift = "7pm"
 
-```{r}
-# twoangio <- run_model(angio_inr = 2, seed = 500)
-```
+  # Combine into single dataframe, then filter to just angioINR wait times
+  baseline_hours <- dplyr::bind_rows(df5, df6, df7) %>%
+    filter(resource == "angio_inr")
 
-```{r}
-# data.table::fwrite(baseline, path_baseline)
-# data.table::fwrite(exclusive, path_exclusive)
-# data.table::fwrite(twoangio, path_twoangio)
-```
-
-## Import results
-
-```{r}
-res_base <- data.table::fread(path_baseline)
-res_exc <- data.table::fread(path_exclusive)
-res_two <- data.table::fread(path_twoangio)
-```
-
-## In-text results 1 and 2
-
-```{r}
-# Loop through the dataframes and present the mean wait time for each resource
-# (across all replications)
-df_list <- list(res_base, res_exc, res_two)
-for (i in 1:length(df_list)) {
-  print(df_list[[i]] %>%
-    group_by(resource) %>%
-    summarize("mean" = mean(wait_time),
-              "median" = median(wait_time)))
+  # Save to provided path
+  data.table::fwrite(baseline_hours, save_path)
 }
 ```
 
-## Figure 2
+```{r}
+import_results <- function(path, scenario) {
+  #' Import the file and add a column with the scenario
+  #' 
+  #' @param path path to file to import
+  #' @param scenario string to population "scenario" column with
+  return(data.table::fread(path) %>% mutate(scenario=scenario))
+}
+```
 
 ```{r}
-create_plot <- function(df, title, xlab="", ylab="", xlim=c(0, 200)) {
+create_plot <- function(df, group, title, xlab="", ylab="", xlim=c(0, 200),
+                        breaks_width=50) {
   #' Create sub-plots for Figure 2A
   #' 
   #' @param df Dataframe with wait times across replications
+  #' @param group String indicating which column to group by in plot
   #' @param title String to use as title for plot
+  #' @param xlab String to use as title for X axis
+  #' @param ylab String to use as title for Y axis
   #' @param xlim Tuple with limits for x axis
+  #' @param breaks_width Integer indicating frequency of X ticks
   
   # Set negative wait times to 0
   df$wait_time[df$wait_time < 0] <- 0
   
   # Create the plot, scaling the density estimate to a maximum of 1
   ggplot(df, aes(x = wait_time,
-                 colour = resource,
+                 colour = .data[[group]],
                  y = after_stat(scaled))) +
     geom_density() +
     # Apply square transformation to each axis, removing x points beyond limits
     scale_y_continuous(transform = "sqrt") +
     scale_x_continuous(transform = "sqrt",
-                       breaks = scales::breaks_width(50),
+                       breaks = scales::breaks_width(breaks_width),
                        limits = xlim,
                        oob = scales::censor,
                        guide = guide_axis(angle=45)) +
@@ -166,23 +178,209 @@ create_plot <- function(df, title, xlab="", ylab="", xlim=c(0, 200)) {
           legend.title=element_blank()) +
     guides(colour = guide_legend(nrow = 1))
 }
+```
 
+## Run model
+
+Decide whether to run model or to use saved results.
+
+```{r}
+# Set to FALSE to skip this section and use saved results
+run = FALSE
+```
+
+Run model scenarios.
+
+```{r}
+if (isTRUE(run)) {
+  # Run model
+  baseline <- run_model(seed = SEED)
+  baseline_6pm <- run_model(shifts = c(8,18), seed = SEED)
+  baseline_7pm <- run_model(shifts = c(8,19), seed = SEED)
+
+  exclusive <- run_model(exclusive_use = TRUE, seed = SEED)
+  exclusive_6pm <- run_model(shifts = c(8,18), exclusive_use = TRUE, seed = SEED)
+  exclusive_7pm <- run_model(shifts = c(8,19), exclusive_use = TRUE, seed = SEED)
+
+  twoangio <- run_model(angio_inr = 2, seed = SEED)
+  twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, seed = SEED)
+  twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, seed = SEED)
+}
+```
+
+```{r}
+# (in seperate cell to above as otherwise seemed to crash)
+if (isTRUE(run)) {
+  # Save results for Figure 2
+  data.table::fwrite(baseline, path_baseline_f2)
+  data.table::fwrite(exclusive, path_exclusive_f2)
+  data.table::fwrite(twoangio, path_twoangio_f2)
+
+  # Process and save results for Figure 3
+  process_f3_data(baseline, baseline_6pm, baseline_7pm, path_baseline_f3)
+  process_f3_data(exclusive, exclusive_6pm, exclusive_7pm, path_exclusive_f3)
+  process_f3_data(twoangio, twoangio_6pm, twoangio_7pm, path_twoangio_f3)
+}
+```
+
+Run baseline with varying hours and seeds.
+
+```{r}
+if (isTRUE(run)) {
+  # Baseline with varying hours and seed 500
+  s500_baseline <- run_model(seed = 500)
+  s500_baseline_6pm <- run_model(shifts = c(8,18), seed = 500)
+  s500_baseline_7pm <- run_model(shifts = c(8,19), seed = 500)
+
+  # Baseline with varying hours and seed 700
+  s700_baseline <- run_model(seed = 700)
+  s700_baseline_6pm <- run_model(shifts = c(8,18), seed = 700)
+  s700_baseline_7pm <- run_model(shifts = c(8,19), seed = 700)
+}
+```
+```{r}
+# Save results (in seperate cell to above as otherwise seemed to crash)
+if (isTRUE(run)) {
+  process_f3_data(s500_baseline, s500_baseline_6pm, s500_baseline_7pm,
+                  path_baseline_f3_seed500)
+  process_f3_data(s700_baseline, s700_baseline_6pm, s700_baseline_7pm,
+                  path_baseline_f3_seed700)
+}
+```
+
+## Import results
+
+Import the results, adding a column to each to indicate the scenario.
+
+```{r}
+base_f2 <- import_results(path_baseline_f2, "Baseline")
+exc_f2 <- import_results(path_exclusive_f2, "Exclusive use")
+two_f2 <- import_results(path_twoangio_f2, "Two AngioINRs")
+
+base_f3 <- data.table::fread(path_baseline_f3) %>% mutate(scenario="Baseline")
+exc_f3 <- data.table::fread(path_exclusive_f3) %>% mutate(scenario="Exclusive use")
+two_f3 <- data.table::fread(path_twoangio_f3) %>% mutate(scenario="Two AngioINRs")
+
+base_f3_s500  <- data.table::fread(path_baseline_f3_seed500) %>% mutate(scenario="Baseline (seed 500)")
+base_f3_s700  <- data.table::fread(path_baseline_f3_seed700) %>% mutate(scenario="Baseline (seed 700)")
+```
+
+## In-text results
+
+In-text results 1 and 2
+
+```{r}
+txt2 <- dplyr::bind_rows(base_f2, exc_f2, two_f2) %>%
+  filter(resource=="angio_inr") %>%
+  group_by(scenario) %>%
+  summarize(mean = mean(wait_time)) %>%
+  mutate(diff_from_baseline = round(mean - mean[1], 2))
+
+# Save and display result
+data.table::fwrite(txt2, path_txt2)
+txt2
+```
+
+In-text result 3
+
+```{r}
+txt3 <- dplyr::bind_rows(base_f3, exc_f3, two_f3) %>%
+  filter(resource=="angio_inr") %>%
+  group_by(scenario, shift) %>%
+  summarize(mean = mean(wait_time)) %>%
+  mutate(diff_from_5pm = round(mean - mean[1], 2))
+
+# Save and display result
+data.table::fwrite(txt3, path_txt3)
+txt3
+```
+
+### Demonstrate variation between model runs
+
+```{r}
+#TODO
+```
+
+## Figure 2
+
+```{r}
 # Create sub-plots
-p1 <- create_plot(res_base,
+p1 <- create_plot(base_f2,
+                  group="resource",
                   title="Baseline",
                   ylab="Standardised density of patient in queue")
-p2 <- create_plot(res_exc,
+p2 <- create_plot(exc_f2,
+                  group="resource",
                   title="Exclusive-use",
                   xlab="Patient wait time (min)",
                   xlim=c(0, 250))
-p3 <- create_plot(res_two,
+p3 <- create_plot(two_f2,
+                  group="resource",
                   title="Double angio INRs")
 
 # Arrange in a single figure
 ggarrange(p1, p2, p3, nrow=1,
           common.legend=TRUE, legend="bottom",
           labels=c("A", "B", "C"))
-ggsave(path_fig2a)
+ggsave(path_fig2)
+```
+
+### Demonstrate that geom_density scaled is scaling against density of 0 wait time
+
+```{r}
+# Create figure as usual
+p <- create_plot(base_f2,
+                 group="resource",
+                 title="Baseline",
+                 ylab="Standardised density of patient in queue")
+
+# Get data from the plot
+plot_data <- ggplot_build(p)$data[[1]]
+
+# Create dataframe with the densities for when the waitimes are 0
+no_wait <- plot_data %>% filter(x==0) %>% select(colour, density, scaled)
+
+# Loop through each of the colours (which reflect the resource groups)
+for (c in no_wait$colour) {
+  # Filter the plot data to that resource group, then divide the densities by
+  # the density from wait time 0
+  d <- plot_data %>%
+    filter(colour == c) %>%
+    mutate(scaled2 = density / no_wait[no_wait$colour==c, "density"]) %>%
+    ungroup() %>%
+    select(scaled, scaled2)
+
+  # Find the number of rows where these values match the scaled values
+  n_match <- sum(apply(d, 1, function(x) length(unique(x)) == 1))
+  n_total <- nrow(d)
+  print(sprintf("%s out of %s results match", n_match, n_total))
+}
+```
+
+## Figure 3
+
+```{r}
+# Create sub-plots
+p1 <- create_plot(base_f3,
+                  group="shift",
+                  title="Baseline",
+                  ylab="Standardised density of patient in queue")
+p2 <- create_plot(exc_f3,
+                  group="shift",
+                  title="Exclusive-use",
+                  xlab="Patient wait time (min)",
+                  xlim=c(0, 300),
+                  breaks_width=100)
+p3 <- create_plot(two_f3,
+                  group="shift",
+                  title="Double angio INRs",
+                  xlim=c(0, 250))
+
+# Arrange in a single figure
+ggarrange(p1, p2, p3, nrow=1,
+          common.legend=TRUE, legend="bottom",
+          labels=c("A", "B", "C"))
+ggsave(path_fig3)
 ```
 
 ## Time elapsed
