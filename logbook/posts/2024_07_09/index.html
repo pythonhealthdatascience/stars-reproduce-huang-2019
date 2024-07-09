@@ -242,6 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#continuing-on-figure-2" id="toc-continuing-on-figure-2" class="nav-link active" data-scroll-target="#continuing-on-figure-2">09.04-09.06, 09.14-09.15: Continuing on Figure 2</a></li>
   <li><a href="#untimed-fixing-github-commits-and-action-for-quarto-book" id="toc-untimed-fixing-github-commits-and-action-for-quarto-book" class="nav-link" data-scroll-target="#untimed-fixing-github-commits-and-action-for-quarto-book">Untimed: Fixing GitHub commits and action for Quarto book</a></li>
+  <li><a href="#returning-to-figure-2" id="toc-returning-to-figure-2" class="nav-link" data-scroll-target="#returning-to-figure-2">13.34-14.28: Returning to Figure 2</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_09/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -332,27 +333,59 @@ Error: Process completed with exit code 1.</code></pre>
 <li><code>quarto publish</code> (pushes to github pages)</li>
 </ul>
 </section>
+<section id="returning-to-figure-2" class="level2">
+<h2 class="anchored" data-anchor-id="returning-to-figure-2">13.34-14.28: Returning to Figure 2</h2>
+<p>Comparing my figures to the original, although it is now more visually similar than it was, there is still a lot of mismatch compared with those graphs. I’m suspicious this could be due to scaling, as currently I am just using the built in geom_density() scaling to 1, rather than explicitly scaling to the number not waiting. I spent some time working out how to scale these manually, ensuring I was definitely dividing each density by the density from wait_time 0, and this confirmed that it matched up with the results from geom_density()’s <code>scaled</code>. As such, it seems the issue is not due to the scaling.</p>
+<pre><code># Create figure as usual
+p &lt;- create_plot(res_base,
+                  title="Baseline",
+                  ylab="Standardised density of patient in queue")
+
+# Get data from the plot
+plot_data &lt;- ggplot_build(p)$data[[1]]
+
+# Create dataframe with the densities for when the waitimes are 0
+no_wait &lt;- plot_data %&gt;% filter(x==0) %&gt;% select(colour, density, scaled)
+#print(no_wait)
+
+# Loop through each of the colours (which reflect the resource groups)
+for (c in no_wait$colour) {
+  # Filter the plot data to that resource group, then divide the densities by
+  # the density from wait time 0
+  d &lt;- plot_data %&gt;%
+    filter(colour == c) %&gt;%
+    mutate(scaled2 = density / no_wait[no_wait$colour==c, "density"]) %&gt;%
+    ungroup() %&gt;%
+    select(scaled, scaled2)
+
+  # Find the number of rows where these values match the scaled values
+  n_match &lt;- sum(apply(d, 1, function(x) length(unique(x)) == 1))
+  n_total &lt;- nrow(d)
+  print(sprintf("%s out of %s results match", n_match, n_total))
+}</code></pre>
+</section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="8805e061" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">790</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.04'</span>, <span class="st">'09.06'</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.15'</span>)]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b901077e" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">790</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.04'</span>, <span class="st">'09.06'</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.15'</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.34'</span>, <span class="st">'14.28'</span>)]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 3m, or 0h 3m
-Total used to date: 793m, or 13h 13m
-Time remaining: 1607m, or 26h 47m
-Used 33.0% of 40 hours max</code></pre>
+<pre><code>Time spent today: 57m, or 0h 57m
+Total used to date: 847m, or 14h 7m
+Time remaining: 1553m, or 25h 53m
+Used 35.3% of 40 hours max</code></pre>
 </div>
 </div>
 
