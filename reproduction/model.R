@@ -5,7 +5,6 @@ library(dplyr)
 library(plotly)
 library("gridExtra")
 
-
 paramNames <- c("ct", "angio_inr", "angio_ir",
                 "stroke_staff", "ed_staff", "angio_staff", "ir", "inr", "angio_staff_night", "ir_night", "inr_night",
                 "ed_pt", "st_pt", "ais_pt", "ecr_pt", "inr_pt", "eir_pt", "ir_pt",
@@ -16,7 +15,7 @@ paramNames <- c("ct", "angio_inr", "angio_ir",
 ## Shiny inputs ##
 ##################
 simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
-                         stroke_staff = 1, ed_staff = 10, angio_staff = 10, ir = 1, inr = 1, angio_staff_night = 3, ir_night = 1, inr_night = 1,
+                         stroke_staff = 1, ed_staff = 10, angio_staff = 10, ir = 1, inr = 1, angio_staff_night = 3, ir_night = 1,
                          ed_pt = 107000, st_pt = 750, ais_pt = 450, ecr_pt = 58, inr_pt = 300, eir_pt= 1000, ir_pt = 4000,
                          shifts = c(8,17),
                          nsim = 1, run_t = 365,
@@ -38,14 +37,13 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   ANGIO_IR  = angio_ir
 
   #human resources
-  ED_STAFF  = ed_staff
-  ST_STAFF  = stroke_staff
-  ANGIO_STAFF  = angio_staff
-  INR       = inr
-  IR        = ir
+  ED_STAFF           = ed_staff
+  ST_STAFF           = stroke_staff
+  ANGIO_STAFF        = angio_staff
   ANGIO_STAFF_NIGHT  = angio_staff_night
-  INR_NIGHT       = inr_night
-  IR_NIGHT        = ir_night
+  INR                = inr
+  IR                 = ir
+  IR_NIGHT           = ir_night
 
   #proportions of stroke pt
   PROB_STROKE = st_pt / ed_pt
@@ -208,7 +206,6 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   DOOR_SCHEDULE       <- schedule(c(T_START, T_END), c(Inf, 0), period = 1440)
   STAFF_SCHEDULE      <- schedule(c(T_START, T_END), c(ANGIO_STAFF, ANGIO_STAFF_NIGHT), period =1440)
   IR_SCHEDULE         <- schedule(c(T_START, T_END), c(IR, IR_NIGHT), period =1440)
-  INR_SCHEDULE        <- schedule(c(T_START, T_END), c(INR, INR_NIGHT), period =1440)
 
   # Run model for N_SIM replications
   env <- lapply(1:N_SIM, function(i) {
@@ -227,7 +224,7 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
       add_resource("ed_staff", capacity = ED_STAFF) %>%
       add_resource("stroke_doctor", capacity = ST_STAFF) %>%
       add_resource("angio_staff", STAFF_SCHEDULE) %>%
-      add_resource("inr", INR_SCHEDULE) %>%
+      add_resource("inr", capacity = INR) %>%
       add_resource("ir", IR_SCHEDULE) %>%
 
       add_generator("pt_ed", new_patient_traj, function() rpois(1, I_ED) ) %>%
