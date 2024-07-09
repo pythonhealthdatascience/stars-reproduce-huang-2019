@@ -27,7 +27,7 @@ jobs:
           cache: 'pip'
 
       - name: Install python dependencies
-      - run: pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Install R
         uses: r-lib/actions/setup-r@v2
