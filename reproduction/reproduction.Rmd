@@ -17,8 +17,21 @@ start.time <- Sys.time()
 # Disable scientific notation
 options(scipen=999)
 
+# Import required libraries (if not otherwise import in model.R)
+library(ggplot2)
+library(data.table)
+library(ggpubr)
+
 # Get the model function (but hide loading warnings for each package)
 suppressMessages(source("model.R"))
+```
+
+```{r}
+# Set file paths to save results
+path_baseline = "outputs/fig2_baseline.csv.gz"
+path_exclusive = "outputs/fig2_exclusive.csv.gz"
+path_twoangio = "outputs/fig2_twoangio.csv.gz"
+path_fig2a = "outputs/fig2a.png"
 ```
 
 This function was created to reduce code duplication, with the baseline model parameters as inputs...
@@ -65,103 +78,120 @@ run_model <- function(angio_inr = 1,
     exclusive_use = exclusive_use,
     seed = seed
   )
-  # Get arrivals and resources
-  arrivals <- data.frame(list_containing_output[[1]])
-  resources <- list_containing_output[[2]]
+  # Get arrivals (not interested in resources - list_containing_output[[2]]))
+  # Filter to the relevant results (ED + resource and wait_time)
+  arrivals <- data.frame(list_containing_output[[1]]) %>%
+    filter(category == "ed") %>%
+    select(resource, wait_time)
 
   # Return list with two dataframes
-  return(list(arrivals, resources))
+  return(arrivals)
 }
 ```
 
 ## Run model
 
-Run through each of the scenarios
+Run through each of the scenarios and save results to compressed CSV files.
 
 ```{r}
-baseline <- run_model(seed=100)
+# baseline <- run_model(seed = 500)
 ```
 
 ```{r}
-baseline2 <- run_model(seed=200)
+# exclusive <- run_model(exclusive_use = TRUE, seed = 500)
 ```
 
 ```{r}
-baseline3 <- run_model(seed=300)
+# twoangio <- run_model(angio_inr = 2, seed = 500)
 ```
+
+```{r}
+# data.table::fwrite(baseline, path_baseline)
+# data.table::fwrite(exclusive, path_exclusive)
+# data.table::fwrite(twoangio, path_twoangio)
+```
+
+## Import results
+
+```{r}
+res_base <- data.table::fread(path_baseline)
+res_exc <- data.table::fread(path_exclusive)
+res_two <- data.table::fread(path_twoangio)
+```
+
+## In-text results 1 and 2
 
 ```{r}
 # Loop through the dataframes and present the mean wait time for each resource
 # (across all replications)
-df_list <- list(baseline[[1]], baseline2[[1]], baseline3[[1]])
+df_list <- list(res_base, res_exc, res_two)
 for (i in 1:length(df_list)) {
   print(df_list[[i]] %>%
-    filter(category == "ed") %>%
     group_by(resource) %>%
     summarize("mean" = mean(wait_time),
               "median" = median(wait_time)))
 }
 ```
 
-```{r}
-exclusive <- run_model(exclusive_use = TRUE, seed=100)
-```
+## Figure 2
 
 ```{r}
-exclusive2 <- run_model(exclusive_use = TRUE, seed=200)
-```
-
-```{r}
-exclusive3 <- run_model(exclusive_use = TRUE, seed=300)
-```
-
-```{r}
-# Loop through the dataframes and present the mean wait time for each resource
-# (across all replications)
-df_list <- list(exclusive[[1]], exclusive2[[1]], exclusive3[[1]])
-for (i in 1:length(df_list)) {
-  print(df_list[[i]] %>%
-    filter(category == "ed") %>%
-    group_by(resource) %>%
-    summarize("mean" = mean(wait_time),
-              "median" = median(wait_time)))
+create_plot <- function(df, title, xlab="", ylab="", xlim=c(0, 200)) {
+  #' Create sub-plots for Figure 2A
+  #' 
+  #' @param df Dataframe with wait times across replications
+  #' @param title String to use as title for plot
+  #' @param xlim Tuple with limits for x axis
+  
+  # Set negative wait times to 0
+  df$wait_time[df$wait_time < 0] <- 0
+  
+  # Create the plot, scaling the density estimate to a maximum of 1
+  ggplot(df, aes(x = wait_time,
+                 colour = resource,
+                 y = after_stat(scaled))) +
+    geom_density() +
+    # Apply square transformation to each axis, removing x points beyond limits
+    scale_y_continuous(transform = "sqrt") +
+    scale_x_continuous(transform = "sqrt",
+                       breaks = scales::breaks_width(50),
+                       limits = xlim,
+                       oob = scales::censor,
+                       guide = guide_axis(angle=45)) +
+    # Titles and styling
+    ggtitle(title) +
+    xlab(xlab) +
+    ylab(ylab) +
+    theme_minimal(base_size=10) +
+    theme(plot.title = element_text(hjust = 0.5),
+          axis.text.x = element_text(colour="black"),
+          axis.text.y = element_text(colour="black"),
+          legend.title=element_blank()) +
+    guides(colour = guide_legend(nrow = 1))
 }
-```
 
-```{r}
-twoangio <- run_model(angio_inr = 2)
-```
+# Create sub-plots
+p1 <- create_plot(res_base,
+                  title="Baseline",
+                  ylab="Standardised density of patient in queue")
+p2 <- create_plot(res_exc,
+                  title="Exclusive-use",
+                  xlab="Patient wait time (min)",
+                  xlim=c(0, 250))
+p3 <- create_plot(res_two,
+                  title="Double angio INRs")
 
-### Results
-
-```{r}
-print(head(baseline[[1]], 5))
-print(head(exclusive[[1]], 5))
-print(head(twoangio[[1]], 5))
-```
-
-```{r}
-base_arrivals <- baseline[[1]]
-unique(base_arrivals$category)
-```
-
-```{r}
-# Loop through the dataframes and present the mean wait time for each resource
-# (across all replications)
-df_list <- list(baseline[[1]], exclusive[[1]], twoangio[[1]])
-for (i in 1:length(df_list)) {
-  print(df_list[[i]] %>%
-    filter(category == "ed") %>%
-    group_by(resource) %>%
-    summarize("mean" = mean(wait_time),
-              "median" = median(wait_time)))
-}
+# Arrange in a single figure
+ggarrange(p1, p2, p3, nrow=1,
+          common.legend=TRUE, legend="bottom",
+          labels=c("A", "B", "C"))
+ggsave(path_fig2a)
 ```
 
 ## Time elapsed
 
 ```{r}
-end.time <- Sys.time()
-elapsed.time <- round((end.time - start.time), 3)
-elapsed.time
+#end.time <- Sys.time()
+#elapsed.time <- round((end.time - start.time), 3)
+#elapsed.time
 ```
