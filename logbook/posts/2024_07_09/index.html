@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Amy Heather">
+<meta name="dcterms.date" content="2024-07-09">
 
-<title>Reproducing Huang et al.&nbsp;2019 - STARS framework</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 5</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,46 +22,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -94,14 +110,14 @@ div.csl-indent {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Reproducing Huang et al.&nbsp;2019</span>
     </a>
   </div>
@@ -112,7 +128,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/study_publication.html"> 
+    <a class="nav-link" href="../../../quarto_site/study_publication.html"> 
 <span class="menu-text">Original study</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -121,11 +137,11 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-reproduction">    
         <li>
-    <a class="dropdown-item" href="../quarto_site/reproduction_readme.html">
+    <a class="dropdown-item" href="../../../quarto_site/reproduction_readme.html">
  <span class="dropdown-text">README</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../reproduction/reproduction.html">
+    <a class="dropdown-item" href="../../../reproduction/reproduction.html">
  <span class="dropdown-text">Reproduction</span></a>
   </li>  
     </ul>
@@ -136,37 +152,37 @@ div.csl-indent {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-evaluation">    
         <li>
-    <a class="dropdown-item" href="../evaluation/scope.html">
+    <a class="dropdown-item" href="../../../evaluation/scope.html">
  <span class="dropdown-text">Scope</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reproduction_success.html">
+    <a class="dropdown-item" href="../../../evaluation/reproduction_success.html">
  <span class="dropdown-text">Reproduction success</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/badges.html">
+    <a class="dropdown-item" href="../../../evaluation/badges.html">
  <span class="dropdown-text">Journal badges</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/artefacts.html">
+    <a class="dropdown-item" href="../../../evaluation/artefacts.html">
  <span class="dropdown-text">STARS framework</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reporting.html">
+    <a class="dropdown-item" href="../../../evaluation/reporting.html">
  <span class="dropdown-text">Reporting guidelines</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../logbook/logbook.html"> 
+    <a class="nav-link" href="../../../logbook/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reproduction_report.html"> 
+    <a class="nav-link" href="../../../evaluation/reproduction_report.html"> 
 <span class="menu-text">Summary</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reflections.html"> 
+    <a class="nav-link" href="../../../evaluation/reflections.html"> 
 <span class="menu-text">Reflections</span></a>
   </li>  
 </ul>
@@ -184,168 +200,156 @@ div.csl-indent {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Day 5</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">reproduce</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Amy Heather </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 9, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#continuing-on-figure-2" id="toc-continuing-on-figure-2" class="nav-link active" data-scroll-target="#continuing-on-figure-2">09.04-09.06, 09.14-09.15: Continuing on Figure 2</a></li>
+  <li><a href="#untimed-fixing-github-commits-and-action-for-quarto-book" id="toc-untimed-fixing-github-commits-and-action-for-quarto-book" class="nav-link" data-scroll-target="#untimed-fixing-github-commits-and-action-for-quarto-book">Untimed: Fixing GitHub commits and action for Quarto book</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_09/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">STARS framework</h1>
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Working on figure 2 and (untimed) fixing Quarto book (environment issues). Total time used: X (X%)</p>
+</div>
+</div>
+<section id="continuing-on-figure-2" class="level2">
+<h2 class="anchored" data-anchor-id="continuing-on-figure-2">09.04-09.06, 09.14-09.15: Continuing on Figure 2</h2>
+<p>I was curious to see how a different seed would impact the appearance of the figures, and so tried changing the seed from 200 to 300. However, it looks fairly similar.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A Example 1</figcaption>
+</figure>
+</div>
+<p>And with seed 500 too:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A Example 2</figcaption>
+</figure>
+</div>
+</section>
+<section id="untimed-fixing-github-commits-and-action-for-quarto-book" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-fixing-github-commits-and-action-for-quarto-book">Untimed: Fixing GitHub commits and action for Quarto book</h2>
+<p><em>This is not timed as I feel it is relevant to the Quarto book and not specific to this reproduction, and so reflects an issue I might have ironed out in a test-run, if I had done a second test-run in R (and not just a Python test-run)</em>.</p>
+<p>Had commit the produced .csv files without recognising they were too large. Undid commits with <code>git reset HEAD^</code>, and switched reproduction to only save relevant rows and columns, and to save as a compressed <code>.csv.gz</code> file. This required adding <code>R.utils</code> to the environment.</p>
+<p>Also, modified <code>quarto_publish.yaml</code> to use <code>setup-r-dependencies</code>, but ran into several errors with this. One I could resolve related to having not pushed the <code>renv/</code> directory. However, one I have struggled to resolve, which was that <code>there is no package called ‘pak’</code>. I’ve tried switching to ubuntu-22.04, as suggested on <a href="r-lib/actions#750">this issue</a>. Also tried adding pak within the setup action with <code>extra-packages: | any::pak</code>. Still, issue persists.</p>
+<p>I explored using conda to manage the R environment, and whether that might actually be easier, as I’ve had alot of challenges with <code>renv</code> for this book (but also in general, having just defaulted to using the latest packages, due to facing major issues installing older R and packages). Based on <a href="https://andrewpwheeler.com/2022/04/08/managing-r-environments-using-conda/">this tutorial</a>, I created a requirements.txt file then ran the following:</p>
+<pre><code>conda create -n huang2019
+conda activate huang2019
+conda install -c conda-forge r-base==4.4.1 --file reproduction/requirements.txt</code></pre>
+<p>However, this was running into several issues, stating that the packages were not compatabile with the chosen r-base.</p>
+<p>Finally, I tried switching back to <code>setup-renv</code>. However, this took a <strong>long</strong> time to run but it does run (and supposedly future runs can use that cache so it is quicker). However, just like before, it stalls with an error (despite seeing that the renv installation above definitely included rmarkdown):</p>
+<pre><code>[19/22] reproduction/reproduction.Rmd
+Error in loadNamespace(x) : there is no package called ‘rmarkdown’
+Calls: loadNamespace -&gt; withRestarts -&gt; withOneRestart -&gt; doWithOneRestart
+Execution halted
+R installation:
+  Version: 4.4.1
+  Path: /opt/R/4.4.1/lib/R
+  LibPaths:
+    - /home/runner/work/_temp/Library
+    - /opt/R/4.4.1/lib/R/library
+  knitr: (None)
+  rmarkdown: (None)
+The knitr package is not available in this R installation.
+Install with install.packages("knitr")
+The rmarkdown package is not available in this R installation.
+Install with install.packages("rmarkdown")
+ERROR: Error
+    at renderFiles (file:///opt/quarto/bin/quarto.js:78081:29)
+    at eventLoopTick (ext:core/01_core.js:153:7)
+    at async renderProject (file:///opt/quarto/bin/quarto.js:78479:25)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:109334:33)
+    at async renderForPublish (file:///opt/quarto/bin/quarto.js:104866:24)
+    at async Object.publish1 [as publish] (file:///opt/quarto/bin/quarto.js:105351:26)
+    at async publishSite (file:///opt/quarto/bin/quarto.js:109371:38)
+    at async publish7 (file:///opt/quarto/bin/quarto.js:109590:61)
+    at async doPublish (file:///opt/quarto/bin/quarto.js:109550:13)
+    at async publishAction (file:///opt/quarto/bin/quarto.js:109561:9)
+Error: Process completed with exit code 1.</code></pre>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div id="fb45ffcd" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">790</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.04'</span>, <span class="st">'09.06'</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.15'</span>)]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 3m, or 0h 3m
+Total used to date: 793m, or 13h 13m
+Time remaining: 1607m, or 26h 47m
+Used 33.0% of 40 hours max</code></pre>
+</div>
 </div>
 
 
+</section>
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<!-- TODO: Remove this warning once completed assessment -->
-<p><strong>Please note: This is a template page and has not yet been completed</strong></p>
-<p>This page evaluates the extent to which the original study meets the recommendations from the STARS framework for the sharing of code and associated materials from discrete-event simulation models (<span class="citation" data-cites="monks_towards_2024">Monks, Harper, and Mustafee (<a href="#ref-monks_towards_2024" role="doc-biblioref">2024</a>)</span>).</p>
-<p>Of the <strong>8</strong> essential STARS components:</p>
-<!-- TODO: Add counts from evaluation -->
-<ul>
-<li><strong>X</strong> were met fully (✅)</li>
-<li><strong>X</strong> was met partially (🟡)</li>
-<li><strong>X</strong> was not met (❌)</li>
-</ul>
-<p>Of the <strong>5</strong> optional STARS components:</p>
-<!-- TODO: Add counts from evaluation -->
-<ul>
-<li><strong>X</strong> was met fully (✅)</li>
-<li><strong>X</strong> were not met (❌)</li>
-</ul>
-<!-- TODO: Fill in the table. Options are ✅ Fully, 🟡 Partially, or ❌ Not met -->
-<table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 35%">
-<col style="width: 20%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Component</th>
-<th>Description</th>
-<th style="text-align: center;">Met by study?</th>
-<th>Evidence/location</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Essential components</strong></td>
-<td></td>
-<td style="text-align: center;"></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Open license</td>
-<td>Free and open-source software (FOSS) license (e.g.&nbsp;MIT, GNU Public License (GPL))</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Dependency management</td>
-<td>Specify software libraries, version numbers and sources (e.g.&nbsp;dependency management tools like virtualenv, conda, poetry)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td>FOSS model</td>
-<td>Coded in FOSS language (e.g.&nbsp;R, Julia, Python)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Minimum documentation</td>
-<td>Minimal instructions (e.g.&nbsp;in README) that overview (a) what model does, (b) how to install and run model to obtain results, and (c) how to vary parameters to run new experiments</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td>ORCID</td>
-<td>ORCID for each study author</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Citation information</td>
-<td>Instructions on how to cite the research artefact (e.g.&nbsp;CITATION.cff file)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td>Remote code repository</td>
-<td>Code available in a remote code repository (e.g.&nbsp;GitHub, GitLab, BitBucket)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Open science archive</td>
-<td>Code stored in an open science archive with FORCE11 compliant citation and guaranteed persistance of digital artefacts (e.g.&nbsp;Figshare, Zenodo, the Open Science Framework (OSF), and the Computational Modeling in the Social and Ecological Sciences Network (CoMSES Net))</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td><strong>Optional components</strong></td>
-<td></td>
-<td style="text-align: center;"></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Enhanced documentation</td>
-<td>Open and high quality documentation on how the model is implemented and works (e.g.&nbsp;via notebooks and markdown files, brought together using software like Quarto and Jupyter Book). Suggested content includes:<br>• Plain english summary of project and model<br>• Clarifying license<br>• Citation instructions<br>• Contribution instructions<br>• Model installation instructions<br>• Structured code walk through of model<br>• Documentation of modelling cycle using TRACE<br>• Annotated simulation reporting guidelines<br>• Clear description of model validation including its intended purpose</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td>Documentation hosting</td>
-<td>Host documentation (e.g.&nbsp;with GitHub pages, GitLab pages, BitBucket Cloud, Quarto Pub)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Online coding environment</td>
-<td>Provide an online environment where users can run and change code (e.g.&nbsp;BinderHub, Google Colaboratory, Deepnote)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="even">
-<td>Model interface</td>
-<td>Provide web application interface to the model so it is accessible to less technical simulation users</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-<tr class="odd">
-<td>Web app hosting</td>
-<td>Host web app online (e.g.&nbsp;Streamlit Community Cloud, ShinyApps hosting)</td>
-<td style="text-align: center;"><!----></td>
-<td><!----></td>
-</tr>
-</tbody>
-</table>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-monks_towards_2024" class="csl-entry" role="listitem">
-Monks, Thomas, Alison Harper, and Navonil Mustafee. 2024. <span>“Towards Sharing Tools and Artefacts for Reusable Simulations in Healthcare.”</span> <em>Journal of Simulation</em> 0 (0): 1–20. <a href="https://doi.org/10.1080/17477778.2024.2347882">https://doi.org/10.1080/17477778.2024.2347882</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -764,22 +768,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="../CHANGELOG.html">
+    <a class="nav-link" href="../../../CHANGELOG.html">
 <p>Changelog</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/license.html">
+    <a class="nav-link" href="../../../quarto_site/license.html">
 <p>License</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../CONTRIBUTING.html">
+    <a class="nav-link" href="../../../CONTRIBUTING.html">
 <p>Contributing</p>
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/evaluation/artefacts.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_09/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Amy Heather">
+<meta name="dcterms.date" content="2024-07-05">
+
+<title>Reproducing Huang et al.&nbsp;2019 - Day 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Reproducing Huang et al.&nbsp;2019</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../quarto_site/study_publication.html"> 
+<span class="menu-text">Original study</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reproduction" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reproduction</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reproduction">    
+        <li>
+    <a class="dropdown-item" href="../../../quarto_site/reproduction_readme.html">
+ <span class="dropdown-text">README</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../reproduction/reproduction.html">
+ <span class="dropdown-text">Reproduction</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-evaluation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Evaluation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-evaluation">    
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/scope.html">
+ <span class="dropdown-text">Scope</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/reproduction_success.html">
+ <span class="dropdown-text">Reproduction success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/badges.html">
+ <span class="dropdown-text">Journal badges</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/artefacts.html">
+ <span class="dropdown-text">STARS framework</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/reporting.html">
+ <span class="dropdown-text">Reporting guidelines</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../logbook/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../evaluation/reproduction_report.html"> 
+<span class="menu-text">Summary</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../evaluation/reflections.html"> 
+<span class="menu-text">Reflections</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Day 3</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">reproduce</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Amy Heather </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 5, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#set-python-interpreter" id="toc-set-python-interpreter" class="nav-link active" data-scroll-target="#set-python-interpreter">09.46-09.47: Set Python interpreter</a></li>
+  <li><a href="#returning-to-troubleshooting-r-version" id="toc-returning-to-troubleshooting-r-version" class="nav-link" data-scroll-target="#returning-to-troubleshooting-r-version">09.48-10.21: Returning to troubleshooting R version</a></li>
+  <li><a href="#installing-the-packages" id="toc-installing-the-packages" class="nav-link" data-scroll-target="#installing-the-packages">10.40-11.30, 11.35-11.41: Installing the packages</a></li>
+  <li><a href="#try-running-the-code" id="toc-try-running-the-code" class="nav-link" data-scroll-target="#try-running-the-code">11.41-11.46, 11.52-12.00: Try running the code</a></li>
+  <li><a href="#getting-the-raw-model-results" id="toc-getting-the-raw-model-results" class="nav-link" data-scroll-target="#getting-the-raw-model-results">12.07-12.21, 13.00-13.21, 13.28-13.41: Getting the raw model results</a></li>
+  <li><a href="#checking-model-parameters" id="toc-checking-model-parameters" class="nav-link" data-scroll-target="#checking-model-parameters">13.42-14.13: Checking model parameters</a>
+  <ul class="collapse">
+  <li><a href="#comparing-parameters" id="toc-comparing-parameters" class="nav-link" data-scroll-target="#comparing-parameters">Comparing parameters</a></li>
+  <li><a href="#correcting-differences" id="toc-correcting-differences" class="nav-link" data-scroll-target="#correcting-differences">Correcting differences</a></li>
+  </ul></li>
+  <li><a href="#fixing-environment" id="toc-fixing-environment" class="nav-link" data-scroll-target="#fixing-environment">14.22-14.27: Fixing environment</a></li>
+  <li><a href="#in-text-results-1-and-2" id="toc-in-text-results-1-and-2" class="nav-link" data-scroll-target="#in-text-results-1-and-2">14.29-15.11, 15.32-16.23: In-text results 1 and 2</a>
+  <ul class="collapse">
+  <li><a href="#exclusive-use" id="toc-exclusive-use" class="nav-link" data-scroll-target="#exclusive-use">Exclusive use</a></li>
+  <li><a href="#two-angioinrs-scenario" id="toc-two-angioinrs-scenario" class="nav-link" data-scroll-target="#two-angioinrs-scenario">Two angioINRs scenario</a></li>
+  <li><a href="#check-in-text-results-1-and-2" id="toc-check-in-text-results-1-and-2" class="nav-link" data-scroll-target="#check-in-text-results-1-and-2">Check in-text results 1 and 2</a></li>
+  </ul></li>
+  <li><a href="#continuing-to-troubleshoot-in-text-results-1-and-2" id="toc-continuing-to-troubleshoot-in-text-results-1-and-2" class="nav-link" data-scroll-target="#continuing-to-troubleshoot-in-text-results-1-and-2">16.30-16.37, 16.43-16.48, 16.55-16.57: Continuing to troubleshoot in-text results 1 and 2</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_05/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Set-up environment and run model. Total time used: 7h 23m (18.5%)</p>
+</div>
+</div>
+<section id="set-python-interpreter" class="level2">
+<h2 class="anchored" data-anchor-id="set-python-interpreter">09.46-09.47: Set Python interpreter</h2>
+<p>Set Python interpreter (e.g.&nbsp;to render these from RStudio) by clicking on the project in the top right of RStudio, then selecting Project Options &gt; Python, and selecting the quarto_huang_2019 virtual environment I’d set up.</p>
+</section>
+<section id="returning-to-troubleshooting-r-version" class="level2">
+<h2 class="anchored" data-anchor-id="returning-to-troubleshooting-r-version">09.48-10.21: Returning to troubleshooting R version</h2>
+<p>Continuing to look at the <a href="https://cloud.r-project.org/bin/linux/ubuntu/olderreleasesREADME.html">instructions for old R releases</a> from yesterday:</p>
+<blockquote class="blockquote">
+<p>“As of July 2023, packages for R versions below 4.0 are no longer being updated. R 3.6 packages for Ubuntu on i386 and amd64 are available for most stable Desktop releases of Ubuntu until their official end of life date. However, only the latest Long Term Support (LTS) release is fully supported. As of November 18, 2018 the supported releases are Bionic Beaver (18.04;LTS), Xenial Xerus (16.04; LTS), and Trusty Tahr (14.04; LTS).”</p>
+</blockquote>
+<p>By running <code>lsb_release -a</code>, I can see that my linux version is jammy (22.04.4 LTS). Looking at the instructions from <a href="https://stackoverflow.com/questions/33652219/installing-older-version-of-r">this Stackoverflow post</a>, I’m a bit unclear as to whether I can use any of these if they’re for older versions of linux.</p>
+<p>From <a href="https://github.com/rstudio/renv/issues/254">this help post</a>, I then stumbled across <a href="https://github.com/rstudio/r-builds">RStudio r-builds</a> which has R builds that say they should install fast on Ubuntu from a .deb file and are designed to easily switch between multiple versions of R. These say they support Ubunutu 22.04. I ran:</p>
+<pre><code>R_VERSION=3.6.0
+curl -O https://cdn.posit.co/r/ubuntu-2204/pkgs/r-${R_VERSION}_1_amd64.deb
+sudo apt-get install gdebi-core
+sudo gdebi r-${R_VERSION}_1_amd64.deb</code></pre>
+<p>I confirmed this was installed by running <code>/opt/R/${R_VERSION}/bin/R --version</code>.</p>
+<p>I then followed their instructions to add R to the system path:</p>
+<pre><code>sudo ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R 
+sudo ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript</code></pre>
+<p>I restarted RStudio and found I was now in R 3.6.0. I delete the renv (which was built with 4.4.1) and remade it.</p>
+<pre><code>renv::deactivate(clean=TRUE)
+install.packages("renv")
+renv::init(bare=TRUE)
+renv::snapshot()</code></pre>
+<p>The lock file now had R 3.6.0 (previously 4.4.1) and renv 1.0.7.</p>
+</section>
+<section id="installing-the-packages" class="level2">
+<h2 class="anchored" data-anchor-id="installing-the-packages">10.40-11.30, 11.35-11.41: Installing the packages</h2>
+<p>I ran <code>renv::install()</code> but it failed with: <code>Warning: failed to find source for 'simmer.plot 0.1.15' in package repositories. Error: failed to retrieve package 'simmer.plot@0.1.15'.</code></p>
+<p>I then tried with remotes:</p>
+<pre><code>install.packages("remotes")
+remotes::install_version("simmer", "4.2.2")</code></pre>
+<p>However, this failed like before. Instead, I decided a different tactic - to just download them without the specified versions. I removed the versions from DESCRIPTION and ran <code>renv::install()</code>. However, this stopped with an error: <code>Error: package 'evaluate' is not available</code>.</p>
+<p>I then tried working through each package one by one.</p>
+<p><code>renv::install("simmer")</code> was successful.</p>
+<p><code>renv::install("simmer.plot")</code> failed with the issue of ‘evaluate’ is not available. Based on <a href="https://github.com/r-lib/evaluate/issues/52">this StackOverflow post</a>, I tried installing ‘stringi’ - but that didn’t end up helping. I tried install evaluate before and after restarting the R session but still stated as not available.</p>
+<p>Uncertain on what else might fix this, I decided to actually just start again from the latest version of R and try installing the packages there and see if I could get it to work without backdating the packages. I closed RStudio and ran the commands as above but changed R_VERSION to 4.4.1. I also couldn’t run the commands for symbolic link as it said the files already exist. I restarted R but still 3.6.0. Looking in <code>/opt/R/</code>, I can see I now have 3.6.0 and 4.4.1.</p>
+<p>Based on the <a href="https://support.bioconductor.org/p/9157825/">prior tutorial</a> I’d found, I tried:</p>
+<pre><code>export RSTUDIO_WHICH_R=/opt/R/4.4.1/bin/R
+rstudio</code></pre>
+<p>This worked, although default when open from application bar was still set to 3.6.0. I tried changing the .profile file (<code>nano .profile</code>) to add <code>export RSTUDIO_WHICH_R=/opt/R/4.4.1/bin/R</code> but made no difference.</p>
+<p>I tried forcing replacement of the symbolic links then reopening RStudio:</p>
+<pre><code>R_VERSION=4.4.1
+sudo ln -snf /opt/R/${R_VERSION}/bin/R /usr/local/bin/R 
+sudo ln -snf /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript</code></pre>
+<p>This worked! So, trying again (with DESCRIPTION file still containing no versions)…</p>
+<pre><code>renv::deactivate(clean=TRUE)
+install.packages("renv")
+renv::init(bare=TRUE)
+renv::snapshot()
+renv::install()
+renv::snapshot()</code></pre>
+</section>
+<section id="try-running-the-code" class="level2">
+<h2 class="anchored" data-anchor-id="try-running-the-code">11.41-11.46, 11.52-12.00: Try running the code</h2>
+<p>I copied over <code>server.R</code> and, on opening, it said that plyr and shiny were required but not installed, so I add these to the environment as well.</p>
+<p>On reflection, I realised that the settings to only store dependencies from DESCRIPTION in renv.lock probably wouldn’t be great, in case hidden things were also installed, so changed this setting to “implicit” (which is default).</p>
+<p>I ran the file and it did the command shiny, but said <code>Error: object 'shiny' not found</code>. I copied over all the files and tried again. It ran the script but nothing happened. Based on the <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html">Shiny documentation</a>, I moved the files into a folder called app and run the following in R console:</p>
+<pre><code>library(shiny)
+runApp("app")</code></pre>
+<p>This opened up a shiny app, but got an error “there is no package called ‘markdown’”. I add this to the environment and tried again.</p>
+<p>This ran the app successfully.</p>
+<p>However, from having looked at the app online, I knew that the figures it produced are not what I need to reproduce the results presented in the paper.</p>
+</section>
+<section id="getting-the-raw-model-results" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-raw-model-results">12.07-12.21, 13.00-13.21, 13.28-13.41: Getting the raw model results</h2>
+<p>I copied the function <code>simulate_nav</code> from <code>server.R</code>. Looking through it, there was only one part still using shiny - the progress bar - and I removed those lines of code, then add a call for the function at the end of the script (<code>simulate_nav()</code>), and ran it. This ran for a while, which was a little odd given how quick the app was.</p>
+<p>I tried running it with a very short run time (<code>simulate_nav(run_t=60)</code>) and this returned results!</p>
+<p>I borrowed from the <code>plot_nav()</code> function in <code>server.R</code> to help process the results.</p>
+<p>I add the <code>reproduction.Rmd</code> to the Quarto site, but this had issues since the Quarto book renv is seperate to the analysis renv. Based on <a href="https://forum.posit.co/t/possibility-to-specify-renv-for-quarto-render/161423/8">this forum post</a>, there are two possible solutions:</p>
+<ul>
+<li>Integrate the <code>.html</code> file produced from the <code>.Rmd</code> into the book, so it is pre-rendered, and set the <code>.Rmd</code> to <code>Render on Save</code>.</li>
+<li>Add the packages needed for the book to the analysis renv.</li>
+</ul>
+<p>However, it appears you’d have to copy the <code>.html</code> code into the Quarto document. So, decided on the simpler solution of adding the required packages for the book to the analysis environment. I deleted the environment in the main folder.</p>
+</section>
+<section id="checking-model-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="checking-model-parameters">13.42-14.13: Checking model parameters</h2>
+<section id="comparing-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-parameters">Comparing parameters</h3>
+<p>Table 1 provides the parameters for the model. I compared these against the function inputs (as the model have no comments/docstrings, it took a little while to make sure I was matching up the right things).</p>
+<p>Physical and human resources:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Paper</th>
+<th>Script</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Angiography machine for INR and IR</td>
+<td>1</td>
+<td><code>angio_inr = 1</code></td>
+</tr>
+<tr class="even">
+<td>Angiography machine for IR only</td>
+<td>1</td>
+<td><code>angio_ir = 1</code></td>
+</tr>
+<tr class="odd">
+<td>CT</td>
+<td>2</td>
+<td><code>ct = 2</code></td>
+</tr>
+<tr class="even">
+<td>Interventional neuroradiologist</td>
+<td>1 24h</td>
+<td><code>inr = 1</code> and <code>inr_night = 1</code></td>
+</tr>
+<tr class="odd">
+<td>Interventional radiologist</td>
+<td>2 8am-5pm 1 5pm-8am</td>
+<td><code>ir = 1</code> and <code>ir_night = 1</code></td>
+</tr>
+<tr class="even">
+<td>Angiography staff</td>
+<td>6 8am-5pm 3 5pm-8am</td>
+<td><code>angio_staff = 10</code> and <code>angio_staff_night = 3</code></td>
+</tr>
+<tr class="odd">
+<td>ED team</td>
+<td>10 24h</td>
+<td><code>ed_staff = 10</code></td>
+</tr>
+<tr class="even">
+<td>Stroke team</td>
+<td>1 24h</td>
+<td><code>stroke_staff = 1</code></td>
+</tr>
+</tbody>
+</table>
+<p>For the shifts parameter: <code>shifts = c(8,17)</code></p>
+<p>Patients:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Paper N</th>
+<th>Paper IAT</th>
+<th>Script</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ED</td>
+<td>107,700</td>
+<td>5</td>
+<td><code>ed_pt = 107000</code></td>
+</tr>
+<tr class="even">
+<td>Suspected stroke</td>
+<td>750</td>
+<td>701</td>
+<td><code>st_pt = 750</code></td>
+</tr>
+<tr class="odd">
+<td>AIS</td>
+<td>450</td>
+<td>1168</td>
+<td><code>ais_pt = 450</code></td>
+</tr>
+<tr class="even">
+<td>ECR</td>
+<td>58</td>
+<td>9062</td>
+<td><code>ecr_pt = 58</code></td>
+</tr>
+<tr class="odd">
+<td>Elective INR</td>
+<td>104</td>
+<td>5054</td>
+<td><code>inr_pt = 300</code></td>
+</tr>
+<tr class="even">
+<td>Emergency IR</td>
+<td>468</td>
+<td>1123</td>
+<td><code>eir_pt= 1000</code></td>
+</tr>
+<tr class="odd">
+<td>Elective IR</td>
+<td>3805</td>
+<td>138</td>
+<td><code>ir_pt = 4000</code></td>
+</tr>
+</tbody>
+</table>
+<p>I also compared some other parameters mentioned in the paper:</p>
+<ul>
+<li>Simulated each scenario 30 times - <code>nsim = 1</code></li>
+<li>Runtime 365 days - <code>run_t = 10000</code></li>
+</ul>
+</section>
+<section id="correcting-differences" class="level3">
+<h3 class="anchored" data-anchor-id="correcting-differences">Correcting differences</h3>
+<ul>
+<li>Interventional neuroradiologist: <code>inr_night = 0</code></li>
+<li>Interventional radiologist: <code>ir = 2</code></li>
+<li>Angiography staff: <code>angio_staff = 6</code></li>
+<li>ED: <code>ed_pt = 107700</code></li>
+<li>Elective INR: <code>inr_pt = 104</code></li>
+<li>Emergency INR: <code>eir_pt= 468</code></li>
+<li>Elective IR: <code>ir_pt = 3805</code></li>
+<li>Replications: <code>nsim=30</code></li>
+<li>Run time…
+<ul>
+<li>In the paper, run time is 365 days</li>
+<li>In the script, <code>run_t = 10000</code> and <code>RUN_T = run_t * 40320</code></li>
+<li>Deduced that time unit is minutes</li>
+<li>This is set up for the app, where user inputs the run time in months, and 40320 minutes = 28 days</li>
+<li>To more easily reproduce paper (with run time 365 days), modified script so input is in days (which are then converted to minutes for <code>RUN_T</code>)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="fixing-environment" class="level2">
+<h2 class="anchored" data-anchor-id="fixing-environment">14.22-14.27: Fixing environment</h2>
+<p>The build of the book on GitHub failed:</p>
+<pre><code>Configuration failed because libcurl was not found. Try installing:
+ * deb: libcurl4-openssl-dev (Debian, Ubuntu, etc)
+ * rpm: libcurl-devel (Fedora, CentOS, RHEL)
+If libcurl is already installed, check that 'pkg-config' is in your
+PATH and PKG_CONFIG_PATH contains a libcurl.pc file. If pkg-config
+is unavailable you can set INCLUDE_DIR and LIB_DIR manually via:
+R CMD INSTALL --configure-vars='INCLUDE_DIR=... LIB_DIR=...'</code></pre>
+<p>Based on <a href="https://github.com/actions/runner-images/issues/37">this GitHub issue</a>, add installation of this to the action.</p>
+</section>
+<section id="in-text-results-1-and-2" class="level2">
+<h2 class="anchored" data-anchor-id="in-text-results-1-and-2">14.29-15.11, 15.32-16.23: In-text results 1 and 2</h2>
+<p>The provided processing scripts may be able to help guide us, but not provided will create the Figures in the paper, so we do need to write that from scratch.</p>
+<p>Although the article focuses on the AngioINR, the plot includes 6 resources. The resources are provided by simmer’s <code>get_mon_resources()</code>.</p>
+<p>We’ll start with Figure 2 and its scenarios - with the related in-text results 1 and 2 probbaly being the easiest to initially check.</p>
+<p>The plot the angio INR wait times, which can be obtained from the <code>arrivals</code> dataframe.</p>
+<p>I created a function that runs the model with the baseline parameters identified above, then looked to the Figure 2 model variants.</p>
+<section id="exclusive-use" class="level3">
+<h3 class="anchored" data-anchor-id="exclusive-use">Exclusive use</h3>
+<p>In this scenario, AngioINR not available to elective IR patients. It is available to stroke, selective INR and emergency IR patients.</p>
+<p>Looking at the model code, use of the angioINR is controlled by a <code>seize("angio_inr", 1)</code> statement in the <code>trajectory()</code> for each patient. Can see that it is seized in:</p>
+<ul>
+<li>ecr_traj (ECR)</li>
+<li>ir_traj (Elective IR)</li>
+<li>inr_traj (Elective INR)</li>
+<li>eir_traj (Emergency INR)</li>
+</ul>
+<p>Hence, add an <code>exclusive_use</code> statement and conditional section to remove <code>angio_inr</code> as an option to choose from when the scenario is active for the <code>ir_traj</code> trajectory.</p>
+</section>
+<section id="two-angioinrs-scenario" class="level3">
+<h3 class="anchored" data-anchor-id="two-angioinrs-scenario">Two angioINRs scenario</h3>
+<p>This was super easy to change with the <code>angio_inr</code> parameter.</p>
+</section>
+<section id="check-in-text-results-1-and-2" class="level3">
+<h3 class="anchored" data-anchor-id="check-in-text-results-1-and-2">Check in-text results 1 and 2</h3>
+<p>Ran each of the scenarios and found the mean waiting time for each resource across all replications. Results for AngioINR were:</p>
+<ul>
+<li>Baseline: 86.99 minutes</li>
+<li>Exclusive use: 63.33 minutes</li>
+<li>Two AngioINR: 52.78 minutes</li>
+</ul>
+<p>This is markedly more than in the paper (<strong>exclusive reduces by 6 min</strong>, and <strong>two angioINRs reduces by 4 min</strong>). The median was even more different.</p>
+<p>This was looking at the waiting time for all patient types though. And the interest of the paper is in stroke (“The elective INR, elective IR and emergency IR pathways are modeled because they utilize resources shared with the stroke pathway.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>)</p>
+<p>The results have 4 categories: ed, ir, eir, and inr. Hence, it appears ED should be stroke - and indeed, in paper, the stroke pathway begins with a new patient in the emergency department (ED). When filtered just to those patients…</p>
+<p>Mean wait times are:</p>
+<ul>
+<li>Baseline 307.83 minutes</li>
+<li>Exclusive: 292.18 minutes</li>
+<li>Two AngioINR: 319.94 minutes</li>
+</ul>
+<p>Median wait times for the AngioINR are:</p>
+<ul>
+<li>Baseline: 206.53 minutes</li>
+<li>Exclusive: 199.03 minutes</li>
+<li>Two AngioINR: 244.27 minutes</li>
+</ul>
+<p>By the median times, we’re fairly close to the paper (comparing the averages, it 7 minutes quicker). However, two angioINR is very different, and I’m a little sceptical as to whether I’ve got it quite right.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reflections
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Disregarding my attempts to backdate R and the packages, the provided code was actually quite simple to get up and running as a shiny app.</p>
+<p>However, it was provided with the article more for that purpose, than to be producing the items in the article, as the base parameters of the model differ, and as there is no code to process and generate the figures and results.</p>
+<p>I’ll keep working in latest R and packages, as current focus of this stage is just to try and reproduce the items. However, it would be good to try and figure out how to successfully backdate R and the packages, as that feels like an essential thing to be able to do, that I just hadn’t managed to get to the bottom of yet.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="continuing-to-troubleshoot-in-text-results-1-and-2" class="level2">
+<h2 class="anchored" data-anchor-id="continuing-to-troubleshoot-in-text-results-1-and-2">16.30-16.37, 16.43-16.48, 16.55-16.57: Continuing to troubleshoot in-text results 1 and 2</h2>
+<p>I realised that perhaps my issue as in incorrectly assuming that I should set <code>inr_night</code> to 0. There should be one INR person 24h, but because all the staff get put on a schedule, by removing the “night” person I technically only have someone during day time hours.</p>
+<p>I changed this and re-ran (with timer - can see it took 6.3 minutes).</p>
+<p>This was definitely a fix - the waiting times now look far closer to what I expected (around 10 minutes rather than 200!). The median results are very small, but looking at the mean results:</p>
+<ul>
+<li>Baseline: 13.33 minutes</li>
+<li>Exclusive: 8.58 minutes</li>
+<li>Two AngioINR: 14.86 minutes</li>
+</ul>
+<p>However, still not quite right… 4.7 minute reduction for exclusive (should be 6 minutes) and 1.5 minute increase for two machines (should be 4 minute reduction). The exclusive is pretty close, although its not yet clear to me how much it varies between runs, and whether that could be reasonably attributed to be stochasticity or not. Given we’re comparing fairly small numbers, it is a bit on the fence for me, and wouldn’t yet say I feel confident in it being successfully reproduced.</p>
+<p>I tried re-running it all to see how much the results differed - and it was by a fair bit actually! Up to about a minute:</p>
+<ul>
+<li>Baseline: 13.65 minutes</li>
+<li>Exclusive: 9.20 minutes</li>
+<li>Two AngioINR: 13.61 minutes</li>
+</ul>
+<p>However, differences are still off the reported - 4.45 minute reduction and 0.01 minute reduction.</p>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div id="15c01f6e" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">149</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.46'</span>, <span class="st">'09.47'</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.48'</span>, <span class="st">'10.21'</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.40'</span>, <span class="st">'11.30'</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.35'</span>, <span class="st">'11.41'</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.41'</span>, <span class="st">'11.46'</span>),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.52'</span>, <span class="st">'12.00'</span>),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.07'</span>, <span class="st">'12.21'</span>),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.00'</span>, <span class="st">'13.21'</span>),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.28'</span>, <span class="st">'13.41'</span>),</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.42'</span>, <span class="st">'14.13'</span>),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.22'</span>, <span class="st">'14.27'</span>),</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.29'</span>, <span class="st">'15.11'</span>),</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.32'</span>, <span class="st">'16.23'</span>),</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.30'</span>, <span class="st">'16.37'</span>),</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.43'</span>, <span class="st">'16.48'</span>),</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.55'</span>, <span class="st">'16.57'</span>)]</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 294m, or 4h 54m
+Total used to date: 443m, or 7h 23m
+Time remaining: 1957m, or 32h 37m
+Used 18.5% of 40 hours max</code></pre>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
+Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pythonhealthdatascience\.github\.io\/stars-reproduce-huang-2019\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="https://github.com/pythonhealthdatascience"><img src="https://raw.githubusercontent.com/pythonhealthdatascience/stars-logo/main/stars_logo_blue_text.png" class="img-fluid" alt="STARS" width="300"></a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../CHANGELOG.html">
+<p>Changelog</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../../quarto_site/license.html">
+<p>License</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../../CONTRIBUTING.html">
+<p>Contributing</p>
+</a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_05/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

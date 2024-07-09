@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Amy Heather">
+<meta name="dcterms.date" content="2024-07-08">
+
+<title>Reproducing Huang et al.&nbsp;2019 - Day 4</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Reproducing Huang et al.&nbsp;2019</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../quarto_site/study_publication.html"> 
+<span class="menu-text">Original study</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reproduction" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reproduction</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reproduction">    
+        <li>
+    <a class="dropdown-item" href="../../../quarto_site/reproduction_readme.html">
+ <span class="dropdown-text">README</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../reproduction/reproduction.html">
+ <span class="dropdown-text">Reproduction</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-evaluation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Evaluation</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-evaluation">    
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/scope.html">
+ <span class="dropdown-text">Scope</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/reproduction_success.html">
+ <span class="dropdown-text">Reproduction success</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/badges.html">
+ <span class="dropdown-text">Journal badges</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/artefacts.html">
+ <span class="dropdown-text">STARS framework</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../evaluation/reporting.html">
+ <span class="dropdown-text">Reporting guidelines</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../logbook/logbook.html"> 
+<span class="menu-text">Logbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../evaluation/reproduction_report.html"> 
+<span class="menu-text">Summary</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../evaluation/reflections.html"> 
+<span class="menu-text">Reflections</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Day 4</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">reproduce</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Amy Heather </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 8, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#continuing-on-in-text-results-1-and-2" id="toc-continuing-on-in-text-results-1-and-2" class="nav-link active" data-scroll-target="#continuing-on-in-text-results-1-and-2">09.14-09.17, 09.22-09.24, 09.30-09.35: Continuing on in-text results 1 and 2</a></li>
+  <li><a href="#adding-seeds" id="toc-adding-seeds" class="nav-link" data-scroll-target="#adding-seeds">09.50-10.49, 11.02-11.05, 11.13-11.14: Adding seeds</a></li>
+  <li><a href="#working-on-figure-2" id="toc-working-on-figure-2" class="nav-link" data-scroll-target="#working-on-figure-2">11.15-12.30, 13:15-13.50, 13.55-14.55: Working on Figure 2</a>
+  <ul class="collapse">
+  <li><a href="#y-axis" id="toc-y-axis" class="nav-link" data-scroll-target="#y-axis">Y axis</a></li>
+  <li><a href="#standardising-the-density" id="toc-standardising-the-density" class="nav-link" data-scroll-target="#standardising-the-density">Standardising the density</a></li>
+  </ul></li>
+  <li><a href="#research-into-transformations" id="toc-research-into-transformations" class="nav-link" data-scroll-target="#research-into-transformations">15.10-15.30: Research into transformations</a>
+  <ul class="collapse">
+  <li><a href="#square-root-axis-transformation" id="toc-square-root-axis-transformation" class="nav-link" data-scroll-target="#square-root-axis-transformation">Square root axis transformation</a></li>
+  <li><a href="#density-functions" id="toc-density-functions" class="nav-link" data-scroll-target="#density-functions">Density functions</a></li>
+  </ul></li>
+  <li><a href="#returning-to-figure-2" id="toc-returning-to-figure-2" class="nav-link" data-scroll-target="#returning-to-figure-2">15.31-16.55: Returning to Figure 2</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_08/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add seeds, got in-text result 1, working on Figure 2. Total time used: 13h 10m (32.9%)</p>
+</div>
+</div>
+<section id="continuing-on-in-text-results-1-and-2" class="level2">
+<h2 class="anchored" data-anchor-id="continuing-on-in-text-results-1-and-2">09.14-09.17, 09.22-09.24, 09.30-09.35: Continuing on in-text results 1 and 2</h2>
+<p>Re-ran twice more to see again how much variation we get between runs, and how likely that could attribute for the difference against the paper. We saw-</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Result 1 (Day 3)</th>
+<th>Result 2 (Day 3)</th>
+<th>Result 3 (Today)</th>
+<th>Result 4 (Today)</th>
+<th>Paper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Baseline</td>
+<td>13.33 minutes</td>
+<td>13.65 minutes</td>
+<td>14.15 minutes</td>
+<td>14.09 minutes</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Exclusive</td>
+<td>8.58 minutes (4.75 reduction)</td>
+<td>9.20 minutes (4.45 reduction)</td>
+<td>8.79 minutes (5.36 reduction)</td>
+<td>8.05 minutes (6.04 reduction)</td>
+<td>6 minute reduction from baseline</td>
+</tr>
+<tr class="odd">
+<td>Two AngioINR</td>
+<td>14.86 minutes (1.53 increase)</td>
+<td>13.61 minutes (0.04 reduction)</td>
+<td>14.37 minutes (0.22 increase)</td>
+<td>14.04 minutes (0.05 reduction)</td>
+<td>4 minute reduction from baseline</td>
+</tr>
+</tbody>
+</table>
+<p>Based on this, it’s reasonable to assume that a 6 minute reduction can be observed within the variation of model runs (in-text result 1), but that the two angioINR scenario is not matching up.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reflections
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Environment used does not match up to paper - paper use Simmer version 4.1.0, and otherwise, other versions of packages and of R being used are more recent than publication. It is unlikely that differences in results are due to this (although not impossible). Note trying to revert the environment to older versions as a possible troubleshooting strategy if issues persist, but not yet, due to major challenges found in trying to do so prior.</p>
+</div>
+</div>
+</section>
+<section id="adding-seeds" class="level2">
+<h2 class="anchored" data-anchor-id="adding-seeds">09.50-10.49, 11.02-11.05, 11.13-11.14: Adding seeds</h2>
+<p>Based on <a href="https://pythonhealthdatascience.github.io/stars-treat-simmer/02_model/03_r_sampling.html">this tutorial</a>, add seeds to the model. This is because the result was only returned by certain runs of the model and not others, so want to add seeds now so can give a seed for which the result is reproduced. I installed simEd - <code>renv::install("simEd")</code> and add to <code>DESCRIPTION</code> and <code>renv::snapshot()</code> - and then made the following changes to the model:</p>
+<ul>
+<li><code>library(simEd)</code></li>
+<li>Input <code>seed</code> to function which becomes SEED, then <code>set.seed(SEED+i)</code> within model replications</li>
+<li>Sampling functions changed from <code>r</code> to <code>v</code> - i.e.&nbsp;<code>rpois()</code> to <code>vpois()</code>, with incremental stream numbers</li>
+</ul>
+<p>I tried running baseline, but it took a long time - after 6 minutes, it was still running (which is normally how long the whole script takes). I interrupted it and it returned <code>Error : object 'shifts' not found</code>. However, no change has been made to shifts code. I ran a short section of code practicing sampling and this worked fine:</p>
+<pre><code>library(simEd)
+
+ed_pt = 107000
+year2min = 525600
+I_ED  = round(year2min/ed_pt)
+
+set.seed(5)
+vpois(10, I_ED, stream=1)
+
+set.seed(3)
+vpois(10, I_ED, stream=1)
+
+set.seed(5)
+vpois(10, I_ED, stream=1)</code></pre>
+<p>I then tried running it with 3 replications instead of 30 (<code>baseline &lt;- run_model(nsim=3, seed=100)</code>), and that ran fine, so it appears that introducing this library just slowed down the model alot, as 3 replications could complete in 40 seconds.</p>
+<p>I looked into changing the <code>lapply()</code> in <code>model.R</code> to a parallel version:</p>
+<ul>
+<li><code>parLapply</code> requires you to specify every variable to be included, plus additional lines of code to set up and close clusters</li>
+<li><code>mcapply()</code> just requires you to change <code>lapply</code></li>
+</ul>
+<p>Hence, I tried <code>mcapply</code>, but it returned <code>Error: external pointer is not valid</code>, which was resolved based on <a href="https://groups.google.com/g/simmer-devel/c/4cQWtS571iQ?pli=1">this post</a> by adding <code>wrap()</code>. However, learnt that mclapply wouldn’t work on Windows. Moreover, it still took a fair while to run (testing with 30 replications, it’s still going at 4 minutes).</p>
+<p>As such, removed simEd from <code>model.R</code> and environment and returned to <code>rpois()</code>, and instead just set a simple seed without controlling streams. The time for this to run was as per usual, which was fab. I ran the baseline model twice with the same seed and compared the results, and it came out looking (by eye, at the processed results) identical.</p>
+<p>I therefore ran baseline and exclusive with three different starter seeds, and the seed <code>200</code> came out closest to the paper -</p>
+<ul>
+<li>Baseline: 13.96 minutes</li>
+<li>Exclusive: 8.12 minutes</li>
+<li>Difference: 5.84 minutes</li>
+</ul>
+<p>Hence, I feel we can mark in-text result 1 as reproduced at this time (11.14), with starter seed of 200.</p>
+<div id="677035f0" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">443</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.17'</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.22'</span>, <span class="st">'09.24'</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.30'</span>, <span class="st">'09.35'</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.50'</span>, <span class="st">'10.49'</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.02'</span>, <span class="st">'11.05'</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.13'</span>, <span class="st">'11.14'</span>)]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 73m, or 1h 13m
+Total used to date: 516m, or 8h 36m
+Time remaining: 1884m, or 31h 24m
+Used 21.5% of 40 hours max</code></pre>
+</div>
+</div>
+</section>
+<section id="working-on-figure-2" class="level2">
+<h2 class="anchored" data-anchor-id="working-on-figure-2">11.15-12.30, 13:15-13.50, 13.55-14.55: Working on Figure 2</h2>
+<p>Figure 2 uses the results from the scenarios above but creates plots where:</p>
+<ul>
+<li>X axis is wait time in minutes (on a non-linear scale)</li>
+<li>Y axis is standardised density of patients in queue, from 0 to 1 (on a non-linear scale)
+<ul>
+<li>i.e.&nbsp;“Probability density of patients who are waiting standardised to patients who are not waiting”</li>
+<li>i.e.&nbsp;“To facilitate graphical and descriptive comparison across models, we express waiting times as relative probabilities of waiting a given amount of time, compared to not waiting at all. Since most patients accessed services without waiting, wait time densities could be directly compared across simulations after this normalization.”</li>
+</ul></li>
+</ul>
+<p>It’s not immediately clear exactly what this means, but I’ll start with creating a density plot of waiting times for one of the resources. First though, I add some code to save the model results to CSV files so that we don’t have to re-run the model each time (since with seeds added, it should now come out the same each time anyway). I initially saved these with <code>write.csv()</code> but it was too slow, so then (based on <a href="https://medium.com/r-evolution/how-to-export-100x-faster-csv-files-from-r-for-big-data-1d969a6b9269">this tutorial</a>), I switched to <code>data.table::fwrite()</code> (“fast CSV writer”), which was much much better! Hence, used <code>fread()</code> to import (as should also be quicker, based on <a href="https://www.r-bloggers.com/2020/09/the-fastest-way-to-read-and-writes-file-in-r/">this tutorial</a>).</p>
+<p>I then created a basic density plot with ggplot with ED AngioINR untransformed wait times.</p>
+<pre><code>base_angio &lt;- res_base %&gt;% filter(category == "ed") %&gt;% filter(resource == "angio_inr")
+p &lt;- ggplot(base_angio, aes(x = wait_time)) +
+  geom_density()
+ggsave(path_fig2a)
+p</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A raw wait times</figcaption>
+</figure>
+</div>
+<section id="y-axis" class="level3">
+<h3 class="anchored" data-anchor-id="y-axis">Y axis</h3>
+<p>I played around with various transformations, as it wasn’t immediately clear to me how they had stretched the y axis, including creating custom functions, transforming the data directly, and trying out default transform options. I eventually stumbled across <code>scale_y_continuous(transform="sqrt")</code>, which matched up to the axis in the paper.</p>
+</section>
+<section id="standardising-the-density" class="level3">
+<h3 class="anchored" data-anchor-id="standardising-the-density">Standardising the density</h3>
+<p>I played around with a few different transformation as I tried to work out what they meant by standardised density of patients in queue. Whilst converting raw wait times to probabilities, I noticed a bunch of ever so slightly negative wait times, but given these are very small (i.e.&nbsp;0.0000000…), I am not concerned.</p>
+<p>One thing I tried was converting each wait time into a probability of that wait time (e.g.&nbsp;rounding each to 2dp, then 0 wait time = probability 0.68).</p>
+<pre><code># Filter to just AngioINR for ED and round wait times to 2dp
+base_angio &lt;- res_base %&gt;%
+  filter(category == "ed", resource == "angio_inr") %&gt;%
+  select(wait_time)
+
+# Round to 2dp
+base_angio$wait_time &lt;- round(base_angio$wait_time, 2)
+
+# Convert raw wait times into probability of waiting that long given all
+# wait times observed
+prob_wait &lt;- base_angio %&gt;%
+  group_by(wait_time) %&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(probability = count / sum(count)) %&gt;%
+  select(wait_time, probability)
+
+ggplot(prob_wait, aes(x=wait_time, y=probability)) + geom_line() + geom_point()</code></pre>
+<p>However, that really didn’t look quite right.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A wrong transformation</figcaption>
+</figure>
+</div>
+<p>Looking at the curve with the raw wait times, the shape of the curve is more similar to the paper, just with different y axis and stretched. Revisiting the paper description, it is the “relative probabilities of waiting a given amount of time, compared to not waiting at all”. So, it’s not just the relative probability of waiting a given amount of time, compared to any other time.</p>
+<p>I created a plot where the waiting times were normalised in such a way that the values range from 0 to 1, which starts to look a bit more similar to the paper -</p>
+<pre><code># Filter to just AngioINR for ED and round wait times to 2dp
+base_angio &lt;- res_base %&gt;%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time &lt; 0] &lt;- 0
+
+# Create the density data
+density_data &lt;- density(base_angio$wait_time)
+
+# Normalize the density values
+normalized_density &lt;- density_data$y / max(density_data$y)
+
+# Create a data frame with the normalized density values
+density_df &lt;- data.frame(x = density_data$x, y = normalized_density)
+
+# Plot using ggplot2
+ggplot(density_df, aes(x = x, y = y)) +
+  geom_line() +
+  scale_y_continuous(transform="sqrt")
+ggsave(path_fig2a)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example3.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A scaled to 0 to 1</figcaption>
+</figure>
+</div>
+<p>I then tried creating a dataframe of counts for each wait time, then calculated probability based on number of people with no wait time. However, many were tiny (as count e.g.&nbsp;1 of wait time 0.00000000000002842171). Tried it with rounding first. However, it is still then the same, as most are just 0, and then e.g.&nbsp;1 wait time 0.2, 3 wait time 0.5.</p>
+<pre><code># Filter to just AngioINR for ED and round wait times to 2dp
+base_angio &lt;- res_base %&gt;%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time &lt; 0] &lt;- 0
+
+# Round everything to 1dp
+base_angio$wait_time &lt;- round(base_angio$wait_time, 1)
+
+# Get probability of no wait time
+n_zero = length(which(base_angio$wait_time == 0))
+prob_zero = n_zero / nrow(base_angio)
+
+# Convert dataframe to counts of each wait time
+wait_df = base_angio %&gt;%
+  group_by(wait_time) %&gt;%
+  summarise(count=n())</code></pre>
+<p>I tried transforming by the density of 0 (<code>density_data$y[which.min(abs(density_data$x - 0))]</code>) but that worked out to just be the same as <code>max(density_data$y)</code>, since 0 has the max density.</p>
+<p>I tried transforming the x axis, which also appears to be a sqrt transformation, although this has an issue of introducing Inf values and losing where x=0 and density=1. I explored a few different ways of doing this transformation to see if anything helps</p>
+</section>
+</section>
+<section id="research-into-transformations" class="level2">
+<h2 class="anchored" data-anchor-id="research-into-transformations">15.10-15.30: Research into transformations</h2>
+<p>As I’m struggling with these transformations - to the x axis, and to the probability density function. As such, it seems a good idea to do a bit more research into these and what exactly they are doing, to see if that helps.</p>
+<section id="square-root-axis-transformation" class="level3">
+<h3 class="anchored" data-anchor-id="square-root-axis-transformation">Square root axis transformation</h3>
+<p>I read a few articles and looked at the documentation for the square root transformation, and understand that this simply applying the <code>sqrt()</code> function.</p>
+<p>You get the same graph if you do this:</p>
+<pre><code>density_df %&gt;%
+  mutate(x_sqrt = sqrt(x)) %&gt;%
+  ggplot(aes(x=x_sqrt, y=y)) + geom_line() + xlim(0, sqrt(200)) + scale_y_continuous(transform="sqrt")</code></pre>
+<p>The only difference is the x axis labels - when we use the ggplot axis transformation, it keeps the old labels to maintain interpretation of the original data.</p>
+</section>
+<section id="density-functions" class="level3">
+<h3 class="anchored" data-anchor-id="density-functions">Density functions</h3>
+<p>A probability density function is used to describe a continuous distribution. It can be used to find the likelihood of values of a continuous random variable.</p>
+<p><code>ggplot::geom_density()</code> is described as plotting a smoothed version of the histogram.</p>
+</section>
+</section>
+<section id="returning-to-figure-2" class="level2">
+<h2 class="anchored" data-anchor-id="returning-to-figure-2">15.31-16.55: Returning to Figure 2</h2>
+<p>I add the sqrt x axis transformation to the basic density plot, and suddenly got a result that looked alot like the article! The only differences are the range of each axis, and the min/max values for y (ranges from 0 to 0.2…)</p>
+<pre><code># Filter to just AngioINR for ED and round wait times to 2dp
+base_angio &lt;- res_base %&gt;%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time &lt; 0] &lt;- 0
+
+ggplot(base_angio, aes(x = wait_time)) +
+  geom_density() +
+  scale_y_continuous(transform="sqrt") +
+  scale_x_continuous(transform="sqrt")</code></pre>
+<p><img src="fig2a_example4.png" class="img-fluid" alt="Figure 2A… getting closer!">.png</p>
+<p>I tried out using previous transforms but they didn’t look right. Then I came across <a href="https://stackoverflow.com/questions/51385455/geom-density-y-axis-goes-above-1">this stack Overflow post</a> which suggested you can scale the density estimate to a maximum of one by inputting <code>..scaled..</code>. This is the computed <code>..scaled..</code> value from <code>geom_density()</code> which provides the density estimate scaled to a maximum of 1. From the <a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">documentation</a>, can see that <code>..scaled..</code> has been replaced with <code>after_stat(scaled)</code>.</p>
+<p>This is however assuming that scaling to 1 is the same as scaling by probability of 0 wait time (which is at least true in this case, as we saw above).</p>
+<pre><code># Filter to just AngioINR for ED and round wait times to 2dp
+base_angio &lt;- res_base %&gt;%
+  filter(category == "ed", resource == "angio_inr")
+
+# Set negative wait times to 0
+base_angio$wait_time[base_angio$wait_time &lt; 0] &lt;- 0
+
+# Create the plot, scaling the density estimate to a maximum of 1
+ggplot(base_angio, aes(x=wait_time, y=after_stat(scaled))) +
+  geom_density() +
+  scale_y_continuous(transform="sqrt") +
+  scale_x_continuous(transform="sqrt")</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example5.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A example 5</figcaption>
+</figure>
+</div>
+<p>I tried adding all the resources in to the plots, and converting it into a function so I can apply it to all three dataframes. To easily show the plots side-by-side with a shared legend, I installed the package ggpubr.</p>
+<p>Installation of ggpubr failed with message <code>ERROR: configuration failed for package ‘nloptr’</code>. It suggested I install cmake so, as prompted, I ran <code>sudo apt install cmake</code>. This then installed fine.</p>
+<p>Creating the plots and making various tweaks to the plotting and appearance, we’re getting a bit closer to the paper.</p>
+<pre><code>create_plot &lt;- function(df, title, xlim=c(0, 200)) {
+  #' Create sub-plots for Figure 2A
+  #' 
+  #' @param df Dataframe with wait times across replications
+  #' @param xlim Tuple with limits for x axis
+
+  # Filter to just ED
+  base_angio &lt;- df %&gt;%
+    filter(category == "ed")
+  
+  # Set negative wait times to 0
+  base_angio$wait_time[base_angio$wait_time &lt; 0] &lt;- 0
+  
+  # Create the plot, scaling the density estimate to a maximum of 1
+  ggplot(base_angio, aes(x = wait_time,
+                         colour = resource,
+                         y = after_stat(scaled))) +
+    geom_density() +
+    # Apply square transformation to each axis, removing x points beyond limits
+    scale_y_continuous(transform = "sqrt") +
+    scale_x_continuous(transform = "sqrt",
+                       breaks = scales::breaks_width(50),
+                       limits = xlim,
+                       oob = scales::censor,
+                       guide = guide_axis(angle=45)) +
+    # Titles and styling
+    ggtitle(title) +
+    xlab("") +
+    ylab("") +
+    theme_bw(base_size=10)
+}
+
+p1 &lt;- create_plot(res_base, title="Baseline")
+p2 &lt;- create_plot(res_exc, title="Exclusive-use", xlim=c(0, 250))
+p3 &lt;- create_plot(res_two, title="Double angio INRs")
+ggarrange(p1, p2, p3, nrow=1, common.legend=TRUE, legend="bottom", labels=c("A", "B", "C"))
+ggsave(path_fig2a)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_example6.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A example 6</figcaption>
+</figure>
+</div>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div id="c81d38dd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">443</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.17'</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.22'</span>, <span class="st">'09.24'</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.30'</span>, <span class="st">'09.35'</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.50'</span>, <span class="st">'10.49'</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.02'</span>, <span class="st">'11.05'</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.13'</span>, <span class="st">'11.14'</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.15'</span>, <span class="st">'12.30'</span>),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.15'</span>, <span class="st">'13.50'</span>),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.55'</span>, <span class="st">'14.55'</span>),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.10'</span>, <span class="st">'15.30'</span>),</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.31'</span>, <span class="st">'16.55'</span>)]</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 347m, or 5h 47m
+Total used to date: 790m, or 13h 10m
+Time remaining: 1610m, or 26h 50m
+Used 32.9% of 40 hours max</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pythonhealthdatascience\.github\.io\/stars-reproduce-huang-2019\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="https://github.com/pythonhealthdatascience"><img src="https://raw.githubusercontent.com/pythonhealthdatascience/stars-logo/main/stars_logo_blue_text.png" class="img-fluid" alt="STARS" width="300"></a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../CHANGELOG.html">
+<p>Changelog</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../../quarto_site/license.html">
+<p>License</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../../CONTRIBUTING.html">
+<p>Contributing</p>
+</a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_08/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
