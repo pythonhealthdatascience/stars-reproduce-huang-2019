@@ -22,7 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -208,6 +262,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#going-back-to-the-app" id="toc-going-back-to-the-app" class="nav-link active" data-scroll-target="#going-back-to-the-app">09.18-09.25: Going back to the app</a></li>
   <li><a href="#running-the-model-with-default-parameters-from-the-code" id="toc-running-the-model-with-default-parameters-from-the-code" class="nav-link" data-scroll-target="#running-the-model-with-default-parameters-from-the-code">09.26-09.32, 09.38-9.40, 10.09-10.12: Running the model with default parameters from the code</a></li>
   <li><a href="#in-middle-of-the-above-discussion-with-tom" id="toc-in-middle-of-the-above-discussion-with-tom" class="nav-link" data-scroll-target="#in-middle-of-the-above-discussion-with-tom">09.42-10.00 (in middle of the above): Discussion with Tom</a></li>
+  <li><a href="#check-the-inter-arrival-times" id="toc-check-the-inter-arrival-times" class="nav-link" data-scroll-target="#check-the-inter-arrival-times">10.31-10.36: Check the inter-arrival times</a></li>
+  <li><a href="#check-distributions-and-length-of-resources" id="toc-check-distributions-and-length-of-resources" class="nav-link" data-scroll-target="#check-distributions-and-length-of-resources">10.51-12.02, 12.12-12.15: Check distributions and length of resources</a>
+  <ul class="collapse">
+  <li><a href="#emergency-arrival-patient-sampling-distributions-length" id="toc-emergency-arrival-patient-sampling-distributions-length" class="nav-link" data-scroll-target="#emergency-arrival-patient-sampling-distributions-length">Emergency arrival patient sampling / distributions / length</a></li>
+  <li><a href="#other-patients" id="toc-other-patients" class="nav-link" data-scroll-target="#other-patients">Other patients</a></li>
+  <li><a href="#reflections-from-this" id="toc-reflections-from-this" class="nav-link" data-scroll-target="#reflections-from-this">Reflections from this</a></li>
+  </ul></li>
+  <li><a href="#varying-ed-triage-length" id="toc-varying-ed-triage-length" class="nav-link" data-scroll-target="#varying-ed-triage-length">13.00-13.15: Varying ED triage length</a></li>
+  <li><a href="#double-check-category-being-presented" id="toc-double-check-category-being-presented" class="nav-link" data-scroll-target="#double-check-category-being-presented">13.16-13.26: Double check category being presented</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_10/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -243,6 +307,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Check distributions are the same</li>
 <li>Check length of resources (we realised not mentioned in paper - e.g.&nbsp;timeout for appointment)</li>
 </ul>
+<p>Also, reminded that the use of simEd and seed streams is not about getting the same results from the same model with the same parameters, but about controlling change when you change parameters (i.e.&nbsp;so the only thing that changes is that parameter, and not the sampling). However, in this case, <code>set.seed()</code> is sufficient.</p>
 <p>My additional reflections of things to try from this are to:</p>
 <ul>
 <li>Vary length of resources</li>
@@ -251,13 +316,259 @@ ul.task-list li input[type="checkbox"] {
 <li>Look at parameters used in the diagram on CLOUDES</li>
 <li>Try uncommenting sections of the model code</li>
 </ul>
-<p>Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors.</p>
+<p>Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors (once have tried the final figures - resource utilisation and supplementary).</p>
 <p>Felt could then move into evaluation against guidelines - in protocol, had mentioned waiting until after fully wrapped with the model, with rationale that it impacts on code timings, but on reflection, you could argue likewise for influence on timings of that evaluation if you waited before proceeding to it (e.g.&nbsp;waiting for response) and had then had a gap from working on that model and were no longer as familiar.</p>
+</section>
+<section id="check-the-inter-arrival-times" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-inter-arrival-times">10.31-10.36: Check the inter-arrival times</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set in reproduction.qmd</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ed_pt <span class="ot">=</span> <span class="dv">107700</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>inr_pt <span class="ot">=</span> <span class="dv">104</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>eir_pt<span class="ot">=</span> <span class="dv">468</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ir_pt <span class="ot">=</span> <span class="dv">3805</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set in model.R</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>st_pt <span class="ot">=</span> <span class="dv">750</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ais_pt <span class="ot">=</span> <span class="dv">450</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ecr_pt <span class="ot">=</span> <span class="dv">58</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate inter-arrival times (as from model.R)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>year2min <span class="ot">=</span> <span class="dv">525600</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>I_ED  <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>ed_pt)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>I_ST  <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>st_pt)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>I_AIS <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>ais_pt)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>I_ECR <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>ecr_pt)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>I_INR <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>inr_pt)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>I_EIR <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>eir_pt)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>I_IR  <span class="ot">=</span> <span class="fu">round</span>(year2min<span class="sc">/</span>ir_pt)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># View calculated inter-arrival times</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(I_ED, I_ST, I_AIS, I_ECR, I_INR, I_EIR, I_IR))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]    5  701 1168 9062 5054 1123  138</code></pre>
+</div>
+</div>
+<p>These match up with the times from the paper, as in the image below from <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../original_study/tab1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Table 1</figcaption>
+</figure>
+</div>
+</section>
+<section id="check-distributions-and-length-of-resources" class="level2">
+<h2 class="anchored" data-anchor-id="check-distributions-and-length-of-resources">10.51-12.02, 12.12-12.15: Check distributions and length of resources</h2>
+<p>As a reminder, this is the set-up of the model, with Figure 1 from <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>. There are several resources, including single plane (angioIR) and biplane (angioINR) angiography suites.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../../original_study/fig1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Table 1</figcaption>
+</figure>
+</div>
+<p>Emergency arrival (potential stroke) patients:</p>
+<ul>
+<li>Start as emergency arrival (<code>new_patient_traj</code>)</li>
+<li>Become either a stroke patient (<code>stroke_traj</code>) or non-stroke patient (<code>nonstroke_traj</code>)</li>
+<li>The stroke patients will then become either AIS (acute ischaemic stroke) (<code>ais_traj</code>) or non-AIS (timeout then leave)</li>
+<li>The AIS patients will then become either ECR (endovascular clot retrieval) (<code>ecr_traj</code>) or TPA (tissue plasminogen activator) only (timeout then leave)</li>
+</ul>
+<p>Other patients (pathways included as they share resources with stroke pathway):</p>
+<ul>
+<li>Interventional radiology patients (<code>ir_traj</code>)</li>
+<li>Emergency interventional radiology patients (<code>eir_traj</code>)</li>
+<li>Interventional neuroradiology patients (<code>inr_traj</code>)</li>
+</ul>
+<section id="emergency-arrival-patient-sampling-distributions-length" class="level3">
+<h3 class="anchored" data-anchor-id="emergency-arrival-patient-sampling-distributions-length">Emergency arrival patient sampling / distributions / length</h3>
+<section id="model" class="level4">
+<h4 class="anchored" data-anchor-id="model">Model</h4>
+<p>Emergency arrivals (<code>new_patient_traj</code>):</p>
+<ul>
+<li><code>add_generator("pt_ed", new_patient_traj, function() rpois(1, I_ED) )</code>
+<ul>
+<li>Where <code>I_ED  = round(year2min/ed_pt)</code> = 5</li>
+</ul></li>
+<li>Time with <code>ed_staff</code>: <code>timeout(function() rnorm(1, 20,10))</code> (sample 1 from normal distribution with mean 20 and sd 10)</li>
+<li>Probability of stroke: <code>sample(1:2, 1, prob = c(PROB_STROKE, (1-PROB_STROKE) )</code>
+<ul>
+<li>Where <code>PROB_STROKE = st_pt / ed_pt</code>, which is 750/107700=0.006963788 (so probability 0.007, or 0.7%)</li>
+<li>Interestingly, the inter-arrival time calculated for stroke (<code>I_ST  = round(year2min/st_pt)</code>) is not used, and instead, the arrival of stroke patients is based on this probability sampling</li>
+</ul></li>
+</ul>
+<p>Non-stroke patients (<code>nonstroke_traj</code>):</p>
+<ul>
+<li>Probability of discharge vs ct review: <code>sample(1:2, 1, prob = c(.9, .1))</code> so 0.9 or 90% leave, and then 10% get CT review before leave</li>
+<li>Discharge: <code>timeout(1)</code></li>
+<li>CT review: <code>timeout(20)</code></li>
+</ul>
+<p>Stroke patients (<code>stroke_traj</code>):</p>
+<ul>
+<li>Time with stroke doctor: <code>timeout(function() rnorm(1, 30, 10))</code></li>
+<li>CT time: <code>timeout(function() rnorm(1, 20,10))</code></li>
+<li>Probability of AIS: <code>sample(1:2, 1, prob = c(PROB_AIS, (1-PROB_AIS)))</code>
+<ul>
+<li>Where <code>PROB_AIS = ais_pt / st_pt</code> = 450/750 = 0.6 (or 60%)</li>
+</ul></li>
+<li>Not ais: <code>timeout(1)</code></li>
+</ul>
+<p>AIS patients:</p>
+<ul>
+<li>Probability of ECR: <code>sample(1:2, 1, prob = c(PROB_ECR, (1-PROB_ECR))</code>
+<ul>
+<li>Where <code>PROB_ECR = ecr_pt / ais_pt</code> = 58/450 = 0.1288889 (probability 0.13, or 13%)</li>
+</ul></li>
+<li>TPA only: <code>timeout(1)</code></li>
+</ul>
+<p>ECR patients:</p>
+<ul>
+<li>AngioINR time (uses <code>angio_inr</code>, <code>inr</code>, and 3 <code>angio_staff</code>): <code>timeout(function() rnorm(1, 120,60))</code></li>
+</ul>
+</section>
+<section id="paper" class="level4">
+<h4 class="anchored" data-anchor-id="paper">Paper</h4>
+<p>“The stroke pathway begins with a new patient in the Emergency Department (ED) and ends with the patient “seizing” an angioINR, an INR and angio staff which represents nurses and technologists. The patient must proceed through a sequence of events chronologically as follows: triage in ED, assessment by the stroke team, CT imaging, assessment for ECR eligibility and lastly, acquiring ECR resources (Figure 1). The decision to proceed to the next event is probabilistic and is acquired from logged data from a Comprehensive Stroke Service in Melbourne, Australia, between 2016 and 17 (Table 1).”<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+<p>As it stands, Table 1 just contains the number of resources and patients - but, from this paragraph, it appears it might previously have included some of these probabilities.</p>
+<p>I had a look online to see if I could find any pre-prints. I came across a <a href="https://jnis.bmj.com/content/10/Suppl_2/A113.2">poster abstract</a>, but otherwise nothing that could help elucidate this. I also looked for the data from the Comprehensive Stroke Service (although I couldn’t easily come across anything with patient counts, and wasn’t certain this information would definitely be public, so limited search).</p>
+<p>I looked the the <a href="https://beta.cloudes.me/loadShare?simId=17588">model on CLOUDES</a>, and this had different parameters (although this might just be illustrative). But, for example:</p>
+<ul>
+<li>ED arrivals - poisson with IAT 10 and 2 entities per arrival- <em>similar</em> to model (poisson with IAT 5 and 1 entity per arrival)</li>
+<li>ED triage - normal mean 15 stdev 5 - <em>differs</em> from model (mean 20 sd 10)</li>
+<li>Probability stroke 0.7 (and 99.3 leave) - <em>same</em> as model</li>
+<li>Time with stroke doctor normal mean 30 sd 10 - <em>same</em> as model</li>
+<li>CT normal mean 20 sd 10 - <em>same</em> as model</li>
+<li>AIS probability 15 (and 85 leave) and then LVO probability 60 (and 40 leave) (which is described as probabilitiy true AIS) - <em>differs</em> from model (simply, from those who received the CT, 60% AIS and 40% exit)</li>
+<li>ECR probabiltiy 15 (and 85 leave) - <em>differs</em> from model (13% ECR)</li>
+<li>AngioINR normal mean 120 sd 60 - <em>same</em> as model</li>
+</ul>
+<p>However, several of them are the same, so it seems it would be worth running the model with those parameters.</p>
+</section>
+</section>
+<section id="other-patients" class="level3">
+<h3 class="anchored" data-anchor-id="other-patients">Other patients</h3>
+<section id="model-1" class="level4">
+<h4 class="anchored" data-anchor-id="model-1">Model</h4>
+<p>Interventional radiology patients (<code>ir_traj</code>):</p>
+<ul>
+<li><code>add_generator("pt_ir", ir_traj, function() rpois(1, I_IR) )</code>
+<ul>
+<li>Where <code>I_IR  = round(year2min/ir_pt)</code> = 138</li>
+</ul></li>
+<li>Angio staff time: <code>timeout(function() rnorm(1, 20,10))</code></li>
+<li>AngioINR/IR time (uses <code>angio_inr</code> or <code>angio_ir</code>, plus <code>ir</code> and 3 <code>angio_staff</code>): <code>timeout(function() rnorm(1, 60,30))</code></li>
+</ul>
+<p>Emergency interventional radiology patients (<code>eir_traj</code>):</p>
+<ul>
+<li><code>add_generator("pt_eir", eir_traj, priority = 1, function() rpois(1, I_EIR) )</code>
+<ul>
+<li>Where <code>I_EIR = round(year2min/eir_pt)</code> = 1123</li>
+</ul></li>
+<li>Angio staff time: <code>timeout(function() rnorm(1, 20,10))</code></li>
+<li>AngioINR/IR time (uses <code>angio_inr</code> or <code>angio_ir</code>, plus <code>ir</code> and 3 <code>angio_staff</code>): <code>timeout(function() rnorm(1, 60,30))</code></li>
+</ul>
+<p>Interventional neuroradiology patients (<code>inr_traj</code>): * <code>add_generator("pt_inr", inr_traj, function() rpois(1, I_INR) )</code> * Where <code>I_INR = round(year2min/inr_pt)</code> = 5054 * Angio staff time: <code>timeout(function() rnorm(1, 20,10))</code> * AngioINR time (uses <code>angio_inr</code>, <code>inr</code> and 3 <code>angio_staff</code>): <code>timeout(function() rnorm(1, 60,30))</code></p>
+</section>
+<section id="cloudes" class="level4">
+<h4 class="anchored" data-anchor-id="cloudes">CLOUDES</h4>
+<ul>
+<li>Non-emergency IR arrivals - poisson IAT 120 1 entity - <em>differs</em> from model (138)</li>
+<li>Emergency IR arrivals - poisson IAT 1120 1 entity - <em>differs</em> from model (1123)</li>
+<li>Non-emergency INR arrivals - poisson IAT 5040 1 entity - <em>differs</em> from model (5040)</li>
+<li>Time with angio staff: normal mean 20 sd 10 - <em>same</em> as model</li>
+<li>Routing to rooms: non-emergency IR check for angio room for IR (which chooses between IR and INR based on shortest queue), non-emergency go into INR queue, doesn’t have route for emergency IR - <em>differs</em> from model but looks like this is due to limitation of software in only letting you choose one patient type or all patients</li>
+<li>Angio INR time - normal mean 120 sd 60 - <em>differs</em> from model (mean 60 sd 30) but this again might be limitation of software (only allowing one time length regardless of patient type)</li>
+<li>Angio IR time - normal mean 60 sd 30 - <em>same</em> as model</li>
+</ul>
+</section>
+</section>
+<section id="reflections-from-this" class="level3">
+<h3 class="anchored" data-anchor-id="reflections-from-this">Reflections from this</h3>
+<p>Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I’m anticipating it’s possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there’s a chance that the CLOUDES model was based on the paper parameters (rather than app), there’s a chance it could help us match up?</p>
+<p>However, the only one of real interest I think (that is not simplification or limitation) is the difference in ED triage time.</p>
+</section>
+</section>
+<section id="varying-ed-triage-length" class="level2">
+<h2 class="anchored" data-anchor-id="varying-ed-triage-length">13.00-13.15: Varying ED triage length</h2>
+<p>I modified the <code>model.R</code> so I could easily change the ED triage mean and SD, then ran a scenario where these were 15 and 5. However, that didn’t make much difference.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_cloudes.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A with ED triage from CLOUDES</figcaption>
+</figure>
+</div>
+</section>
+<section id="double-check-category-being-presented" class="level2">
+<h2 class="anchored" data-anchor-id="double-check-category-being-presented">13.16-13.26: Double check category being presented</h2>
+<p>I’m pretty sure I’m presenting the right category (ED), but I looked at presenting wait times from patients in any category, or in each of the other categories.</p>
+<p>I temporarily removed the filtering from <code>run_model()</code> and then ran:</p>
+<pre><code>baseline &lt;- run_model(seed = SEED)
+
+p1 &lt;- create_plot(baseline,
+                  group="resource",
+                  title="All patients")
+p2 &lt;- create_plot(baseline %&gt;% filter(category == "ed"),
+                  group="resource",
+                  title="ED")
+p3 &lt;- create_plot(baseline %&gt;% filter(category == "ir"),
+                  group="resource",
+                  title="IR")
+p4 &lt;- create_plot(baseline %&gt;% filter(category == "eir"),
+                  group="resource",
+                  title="EIR")
+p5 &lt;- create_plot(baseline %&gt;% filter(category == "inr"),
+                  group="resource",
+                  title="INR")
+
+# Arrange in a single figure
+ggarrange(p1, p2, p3, p4, p5, nrow=1, ncol=5,
+          common.legend=TRUE, legend="bottom")
+ggsave("fig2a_categories.png", width=18)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_categories.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A categories</figcaption>
+</figure>
+</div>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div class="cell" data-python.reticulate="false">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">975</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.18'</span>, <span class="st">'09.25'</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.26'</span>, <span class="st">'09.32'</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.38'</span>, <span class="st">'09.40'</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.42'</span>, <span class="st">'10.00'</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.09'</span>, <span class="st">'10.12'</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.31'</span>, <span class="st">'10.36'</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.51'</span>, <span class="st">'12.02'</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.12'</span>, <span class="st">'12.15'</span>)]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 115m, or 1h 55m
+Total used to date: 1090m, or 18h 10m
+Time remaining: 1310m, or 21h 50m
+Used 45.4% of 40 hours max</code></pre>
+</div>
+</div>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
+Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
