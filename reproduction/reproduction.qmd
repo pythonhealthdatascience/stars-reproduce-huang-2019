@@ -57,6 +57,7 @@ path_fig3 <- file.path(folder, "fig3.png")
 
 ```{r}
 run_model <- function(angio_inr = 1,
+                      angio_ir = 1,
                       ir = 2,
                       angio_staff = 6,
                       ed_pt = 107700,
@@ -72,6 +73,7 @@ run_model <- function(angio_inr = 1,
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
+  #' @param angio_ir number of AngioIR machines
   #' @param ir number of interventional radiologists on day shift
   #' @param angio_staff number of angiography staff on day shift
   #' @param ed_pt number of ED patients
@@ -91,6 +93,7 @@ run_model <- function(angio_inr = 1,
   # Run the model
   list_containing_output <- simulate_nav(
     angio_inr = angio_inr,
+    angio_ir = angio_ir,
     ir = ir,
     angio_staff = angio_staff,
     ed_pt = ed_pt,
@@ -106,9 +109,9 @@ run_model <- function(angio_inr = 1,
   )
   # Get arrivals (not interested in resources - list_containing_output[[2]]))
   # Filter to the relevant results (ED + resource and wait_time)
-  arrivals <- data.frame(list_containing_output[[1]]) # %>%
-    # filter(category == "ed") %>%
-    # select(resource, wait_time)
+  arrivals <- data.frame(list_containing_output[[1]]) %>%
+    filter(category == "ed") %>%
+    select(resource, wait_time)
 
   # Return list with two dataframes
   return(arrivals)
@@ -165,10 +168,14 @@ create_plot <- function(df, group, title, xlab="", ylab="", xlim=c(0, 200),
   df$wait_time[df$wait_time < 0] <- 0
   
   # Create the plot, scaling the density estimate to a maximum of 1
-  ggplot(df, aes(x = wait_time,
-                 colour = .data[[group]],
-                 y = after_stat(scaled))) +
+  # Remove INR resources as they hide the angio_staff line, which is on top
+  # in the figures in the paper
+  ggplot(df %>% filter(resource!="inr"),
+         aes(x = wait_time,
+             colour = .data[[group]],
+             y = after_stat(scaled))) +
     geom_density() +
+    geom_density(aes(x = wait_time, y = after_stat(scaled))) +
     # Apply square transformation to each axis, removing x points beyond limits
     scale_y_continuous(transform = "sqrt") +
     scale_x_continuous(transform = "sqrt",
@@ -187,6 +194,16 @@ create_plot <- function(df, group, title, xlab="", ylab="", xlim=c(0, 200),
           legend.title=element_blank()) +
     guides(colour = guide_legend(nrow = 1))
 }
+```
+
+```{r}
+#baseline <- run_model(nsim=3, seed = SEED, angio_staff = 3, ed_pt=107700*2)
+# create_plot(baseline, group="resource", title="", xlim=c(0,300))
+#ggsave("../logbook/posts/2024_07_10/fig2a_doubleed_lessangiostaff.png")
+# baseline %>% filter(resource=="angio_staff")
+
+#baseline <- run_model(nsim=3, seed = SEED, angio_inr=2)
+#create_plot(baseline %>% filter(resource!="inr"), group="resource", title="", xlim=c(0,100))
 ```
 
 ## Run model
@@ -211,9 +228,9 @@ if (isTRUE(run)) {
   exclusive_6pm <- run_model(shifts = c(8,18), exclusive_use = TRUE, seed = SEED)
   exclusive_7pm <- run_model(shifts = c(8,19), exclusive_use = TRUE, seed = SEED)
 
-  twoangio <- run_model(angio_inr = 2, seed = SEED)
-  twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, seed = SEED)
-  twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, seed = SEED)
+  twoangio <- run_model(angio_inr = 2, angio_ir=0, seed = SEED)
+  twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, angio_ir=0, seed = SEED)
+  twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, angio_ir=0, seed = SEED)
 }
 ```
 ```{r}
@@ -423,7 +440,7 @@ for (c in no_wait$colour) {
 }
 ```
 
-## Figure 2 (baseline only) with default code parameters
+### Figure 2 (baseline only) with default code parameters
 
 ```{r}
 create_plot(base_f2_code,
@@ -435,7 +452,7 @@ create_plot(base_f2_code,
 ggsave(path_fig2a_code)
 ```
 
-## Figure 2 (baseline only) with ED triage length from CLOUDES
+### Figure 2 (baseline only) with ED triage length from CLOUDES
 
 ```{r}
 create_plot(base_f2_cloudes,
