@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-Working on figures 2 + 3 and in-text result 3. Plus (untimed) fixing Quarto book (environment issues). Total time used: X (X%)
+Working on figures 2 + 3 and in-text result 3. Plus (untimed) fixing Quarto book (environment issues). Total time used: 16h 15m (40.6%).
 
 :::
 
