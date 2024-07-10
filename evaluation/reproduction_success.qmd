@@ -9,6 +9,121 @@ title: "Reproduction success"
 
 Of the X items in the scope, X% (X out of X) were considered to be **successfully reproduced**.
 
+## Time-to-completion
+
+```{python}
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+import numpy as np
+import pandas as pd
+import plotly.express as px
+from plotly import graph_objects as go
+
+# List of time to complete each item ------------------------------------------
+time_list = [
+    [516, 'In-text result 1'],
+    [np.nan, 'Figure 2'],
+    [np.nan, 'Figure 3'],
+    [np.nan, 'Figure 4'],
+    [np.nan, 'Figure 5'],
+    [np.nan, 'Supplementary figure'],
+    [np.nan, 'In-text result 2'],
+    [np.nan, 'In-text result 3']]
+```
+
+```{python}
+# Create times dataframe...
+
+# Convert to dataframe
+times = pd.DataFrame(time_list, columns=['time', 'item'])
+
+# Sort the DataFrame by 'time' to correctly plot the ECDF
+times_clean = times.sort_values(by='time').reset_index(drop=True)
+
+# Compute the ECDF values
+times_clean['ecdf'] = np.arange(1, len(times_clean) + 1) / len(times_clean) * 100
+
+# AMEND result 7 as not successful, so set ecdf to that of the last item
+times_clean.loc[times_clean['item'] == 'In-text result 7', 'ecdf'] = np.nan
+times_clean.loc[times_clean['item'] == 'In-text result 7', 'ecdf'] = (
+    max(times_clean['ecdf']))
+
+# Insert the starting point (0, 0) in the ECDF
+times_clean.loc[-1] = [0, 'Start', 0]
+times_clean.index = times_clean.index + 1
+times_clean = times_clean.sort_index()
+
+# Convert time to hours
+times_clean['hours'] = times_clean['time']/60
+```
+
+```{python}
+# Add points for the 90 degree turns in the line...
+
+# Adjust index so it goes 0 2 4 6...
+times_original = times_clean.copy()
+times_original.index = times_clean.index*2
+
+times_extra = times_clean.copy()
+# Get result from row 1 to final, and add another row with np.nan
+next_result = times_clean['time'][1:].reset_index(drop=True)
+next_result[len(next_result)] = np.nan
+# Replace time with those values (i.e. the value from the row below)
+times_extra['time'] = next_result
+times_extra['item'] = np.nan
+# Then adjust index so it goes 1 3 5 7...
+times_extra.index = (times_extra.index*2)+1
+
+# Combine (so have alternating rows from each due to odd and even indexes)
+plt_times = pd.concat([times_original, times_extra]).sort_index()
+
+# Convert time to hours
+plt_times['hours'] = plt_times['time']/60
+```
+
+Non-interactive plot:
+
+```{python}
+# Create non-interactive plot with matplotlib...
+
+fig, ax = plt.subplots()
+ax.plot(plt_times['hours'], plt_times['ecdf'], marker='.', markevery=2)
+plt.xlim(0, 40)
+plt.ylim(0, 100)
+plt.xlabel('Time elapsed (hours)')
+plt.ylabel('Percentage of items reproduced')
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+plt.show()
+```
+
+Interactive plot:
+
+```{python}
+# Create interactive plot with plotly express...
+
+# Create plot using combination of scatter and line
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=plt_times['hours'], y=plt_times['ecdf'], mode='lines', hoverinfo='skip'))
+fig.add_trace(go.Scatter(
+    x=times_clean['hours'], y=times_clean['ecdf'],
+    mode='markers', marker=dict(color='blue', size=6),
+    hovertext=times_clean['item'], hoverlabel=dict(namelength=0),
+    hovertemplate = (
+        '%{hovertext}<br>Time: %{x:.1f} hours<br>Completion: %{y:.1f}%')))
+
+# Amend appearance
+fig.update_layout(xaxis_range=[0, 40], yaxis_range=[0, 100],
+                  showlegend=False)
+
+# Show plot, hiding toolbar and not allowing zoom
+fig.layout.xaxis.fixedrange = True
+fig.layout.yaxis.fixedrange = True
+fig.show(config={'displayModeBar': False})
+```
+
+## Reproduction of items from the scope
+
 ## Figure X
 
 Original figure:
