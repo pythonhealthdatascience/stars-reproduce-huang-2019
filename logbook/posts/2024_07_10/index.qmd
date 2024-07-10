@@ -1,0 +1,43 @@
+---
+title: "Day 6"
+author: "Amy Heather"
+date: "2024-07-10"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## 09.18-09.25: Going back to the app
+
+Although the figures in the app don't match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.
+
+Could put in all the parameters, except number of simulations was limited to 10 (rather than 30) but crashes at that number, so run at their default. However, the outputs don't really contain anything usable (e.g. just know most had short wait time, and know median occupancy ratio was around 20%). However, it did make me think that's it's worth trying the models with the default parameters from the code (rather than the paper), just to see if that happens to look any more similar.
+
+## 09.26-09.32, 09.38-9.40, 10.09-10.12: Running the model with default parameters from the code
+
+Ran baseline model with default parameters from the code (rather than fixing to meet paper).
+
+Interesting differences, for example, are that it is 1 simulation (`nsim=1`) but run time 10,000 days (`run_t=10000`) which works out to about 27 years (which is not far off running 30 simulations each of 1 year).
+
+However, can see this is absolutely wrong! Which is not surprising, but still good we checked.
+
+![Figure 2A with parameters from code](fig2a_codeparam.png)
+
+## 09.42-10.00 (in middle of the above): Discussion with Tom
+
+Showed Tom the progress and he shared from additional suggestions of things to look into:
+
+* Check calculated inter-arrival times match paper
+* Check distributions are the same
+* Check length of resources (we realised not mentioned in paper - e.g. timeout for appointment)
+
+My additional reflections of things to try from this are to:
+
+* Vary length of resources
+* Try not limiting to just ED patients
+* Double-check if INR procedures only have one room option (whilst IR have two rooms)
+* Look at parameters used in the diagram on CLOUDES
+* Try uncommenting sections of the model code
+
+Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors.
+
+Felt could then move into evaluation against guidelines - in protocol, had mentioned waiting until after fully wrapped with the model, with rationale that it impacts on code timings, but on reflection, you could argue likewise for influence on timings of that evaluation if you waited before proceeding to it (e.g. waiting for response) and had then had a gap from working on that model and were no longer as familiar.
