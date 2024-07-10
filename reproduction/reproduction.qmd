@@ -35,6 +35,7 @@ folder = "outputs"
 path_baseline_f2 <- file.path(folder, "fig2_baseline.csv.gz")
 path_exclusive_f2 <- file.path(folder, "fig2_exclusive.csv.gz")
 path_twoangio_f2 <- file.path(folder, "fig2_twoangio.csv.gz")
+path_baseline_f2_code <- file.path(folder, "fig2_baseline_codedefault.csv.gz")
 
 path_baseline_f3 <- file.path(folder, "fig3_baseline.csv.gz")
 path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
@@ -46,6 +47,7 @@ path_txt2 <- file.path(folder, "txt2.csv")
 path_txt3 <- file.path(folder, "txt3.csv")
 path_txt3_seeds <- file.path(folder, "txt3_seeds.csv")
 path_fig2 <- file.path(folder, "fig2.png")
+path_fig2a_code <- file.path(folder, "fig2a_codeparam.png")
 path_fig3 <- file.path(folder, "fig3.png")
 ```
 
@@ -63,8 +65,7 @@ run_model <- function(angio_inr = 1,
                       run_t = 365,
                       nsim = 30,
                       exclusive_use = FALSE,
-                      seed = 42,
-                      figure = FALSE) {
+                      seed = 42) {
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
@@ -209,7 +210,6 @@ if (isTRUE(run)) {
   twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, seed = SEED)
 }
 ```
-
 ```{r}
 # (in seperate cell to above as otherwise seemed to crash)
 if (isTRUE(run)) {
@@ -250,6 +250,22 @@ if (isTRUE(run)) {
 }
 ```
 
+Run baseline with default parameters from the code (rather than parameters from the paper).
+
+```{r}
+if (isTRUE(run)) {
+  list_containing_output <- simulate_nav(seed=200)
+  baseline_code <- data.frame(list_containing_output[[1]]) %>%
+    filter(category == "ed") %>%
+    select(resource, wait_time)
+}
+```
+```{r}
+if (isTRUE(run)) {
+  data.table::fwrite(baseline_code, path_baseline_f2_code)
+}
+```
+
 ## Import results
 
 Import the results, adding a column to each to indicate the scenario.
@@ -258,6 +274,7 @@ Import the results, adding a column to each to indicate the scenario.
 base_f2 <- import_results(path_baseline_f2, "Baseline")
 exc_f2 <- import_results(path_exclusive_f2, "Exclusive use")
 two_f2 <- import_results(path_twoangio_f2, "Two AngioINRs")
+base_f2_code <- import_results(path_baseline_f2_code, "Baseline (code param)")
 
 base_f3 <- data.table::fread(path_baseline_f3) %>% mutate(scenario="Baseline")
 exc_f3 <- data.table::fread(path_exclusive_f3) %>% mutate(scenario="Exclusive use")
@@ -374,6 +391,18 @@ for (c in no_wait$colour) {
   n_total <- nrow(d)
   print(sprintf("%s out of %s results match", n_match, n_total))
 }
+```
+
+## Figure 2 (baseline only) with default code parameters
+
+```{r}
+create_plot(base_f2_code,
+            group="resource",
+            title="Baseline (code parameters)",
+            xlab="Patient wait time (min)",
+            ylab="Standardised density of patient in queue",
+            xlim=c(0, 1000))
+ggsave(path_fig2a_code)
 ```
 
 ## Figure 3
