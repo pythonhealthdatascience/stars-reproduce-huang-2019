@@ -17,9 +17,9 @@ paramNames <- c("ct", "angio_inr", "angio_ir",
 simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
                          stroke_staff = 1, ed_staff = 10, angio_staff = 10, ir = 1, inr = 1, angio_staff_night = 3, ir_night = 1,
                          ed_pt = 107000, st_pt = 750, ais_pt = 450, ecr_pt = 58, inr_pt = 300, eir_pt= 1000, ir_pt = 4000,
-                         shifts = c(8,17),
-                         nsim = 1, run_t = 10000,
-                         exclusive_use = FALSE, seed = 42) {
+                         shifts = c(8,17), nsim = 1, run_t = 10000,
+                         exclusive_use = FALSE, seed = 42,
+                         ed_triage=c(20,10)) {
   #' Discrete-event simulation model
   #'
   #' @param run_t model run time in days
@@ -27,6 +27,8 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   #' IR patients allowed to use the machine)
   #' @param seed integer that provides seed to be incremented on in each
   #' replication (e.g. run 1 is seed+=1, run 2 is seed+=2)
+  #' @param ed_triage tuple with mean and SD of normal distribution for
+  #'sampling the length of the emergency department triage
 
   ###################
   #Model variables ##
@@ -68,6 +70,19 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
   RUN_T = run_t * 1440
   N_SIM = nsim
   SEED = seed
+
+  # Additional parameters
+  ED_TRIAGE_MEAN = ed_triage[1]
+  ED_TRIAGE_SD = ed_triage[2]
+
+  # Set IR resources to be selected, depending on scenario
+  # If true, can only choose angio_ir, but if false, will choose whichever is
+  # first available of angio_ir and angio_inr
+  if (exclusive_use == TRUE) {
+    ir_resources = c("angio_ir")
+  } else {
+    ir_resources = c("angio_ir", "angio_inr")
+  }
 
   #######################
   ##model
@@ -129,7 +144,7 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
 
   new_patient_traj <- trajectory(name = "new patient's path") %>%
     seize("ed_staff", 1) %>%
-    timeout(function() rnorm(1, 20,10)) %>%
+    timeout(function() rnorm(1, ED_TRIAGE_MEAN, ED_TRIAGE_SD)) %>%
     release("ed_staff", 1) %>%
 
     branch(option = function() sample(1:2, 1, prob = c(PROB_STROKE, (1-PROB_STROKE) ) ),
@@ -138,15 +153,6 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
 
            nonstroke_traj
     )
-
-  # Set IR resources to be selected, depending on scenario
-  # If true, can only choose angio_ir, but if false, will choose whichever is
-  # first available of angio_ir and angio_inr
-  if (exclusive_use == TRUE) {
-    ir_resources = c("angio_ir")
-  } else {
-    ir_resources = c("angio_ir", "angio_inr")
-  }
 
   # Define the elective IR trajectory
   ir_traj <-trajectory("ir traj") %>%

@@ -30,14 +30,229 @@ Showed Tom the progress and he shared from additional suggestions of things to l
 * Check distributions are the same
 * Check length of resources (we realised not mentioned in paper - e.g. timeout for appointment)
 
+Also, reminded that the use of simEd and seed streams is not about getting the same results from the same model with the same parameters, but about controlling change when you change parameters (i.e. so the only thing that changes is that parameter, and not the sampling). However, in this case, `set.seed()` is sufficient.
+
 My additional reflections of things to try from this are to:
 
 * Vary length of resources
 * Try not limiting to just ED patients
 * Double-check if INR procedures only have one room option (whilst IR have two rooms)
 * Look at parameters used in the diagram on CLOUDES
-* Try uncommenting sections of the model code
 
-Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors.
+Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors (once have tried the final figures - resource utilisation and supplementary).
 
 Felt could then move into evaluation against guidelines - in protocol, had mentioned waiting until after fully wrapped with the model, with rationale that it impacts on code timings, but on reflection, you could argue likewise for influence on timings of that evaluation if you waited before proceeding to it (e.g. waiting for response) and had then had a gap from working on that model and were no longer as familiar.
+
+## 10.31-10.36: Check the inter-arrival times
+
+```{r}
+# Set in reproduction.qmd
+ed_pt = 107700
+inr_pt = 104
+eir_pt= 468
+ir_pt = 3805
+
+# Set in model.R
+st_pt = 750
+ais_pt = 450
+ecr_pt = 58
+
+# Calculate inter-arrival times (as from model.R)
+year2min = 525600
+I_ED  = round(year2min/ed_pt)
+I_ST  = round(year2min/st_pt)
+I_AIS = round(year2min/ais_pt)
+I_ECR = round(year2min/ecr_pt)
+I_INR = round(year2min/inr_pt)
+I_EIR = round(year2min/eir_pt)
+I_IR  = round(year2min/ir_pt)
+
+# View calculated inter-arrival times
+print(c(I_ED, I_ST, I_AIS, I_ECR, I_INR, I_EIR, I_IR))
+```
+
+These match up with the times from the paper, as in the image below from @huang_optimizing_2019.
+
+![Table 1](../../../../original_study/tab1.jpg)
+
+## 10.51-12.02, 12.12-12.15: Check distributions and length of resources
+
+As a reminder, this is the set-up of the model, with Figure 1 from @huang_optimizing_2019. There are several resources, including single plane (angioIR) and biplane (angioINR) angiography suites.
+
+![Table 1](../../../../original_study/fig1.jpg)
+
+Emergency arrival (potential stroke) patients:
+
+* Start as emergency arrival (`new_patient_traj`)
+* Become either a stroke patient (`stroke_traj`) or non-stroke patient (`nonstroke_traj`)
+* The stroke patients will then become either AIS (acute ischaemic stroke) (`ais_traj`) or non-AIS (timeout then leave)
+* The AIS patients will then become either ECR (endovascular clot retrieval) (`ecr_traj`) or TPA (tissue plasminogen activator) only (timeout then leave)
+
+Other patients (pathways included as they share resources with stroke pathway):
+
+* Interventional radiology patients (`ir_traj`)
+* Emergency interventional radiology patients (`eir_traj`)
+* Interventional neuroradiology patients (`inr_traj`)
+
+### Emergency arrival patient sampling / distributions / length
+
+#### Model
+
+Emergency arrivals (`new_patient_traj`):
+
+* `add_generator("pt_ed", new_patient_traj, function() rpois(1, I_ED) )`
+  * Where `I_ED  = round(year2min/ed_pt)` = 5
+* Time with `ed_staff`: `timeout(function() rnorm(1, 20,10))` (sample 1 from normal distribution with mean 20 and sd 10)
+* Probability of stroke: `sample(1:2, 1, prob = c(PROB_STROKE, (1-PROB_STROKE) )`
+  * Where `PROB_STROKE = st_pt / ed_pt`, which is 750/107700=0.006963788 (so probability 0.007, or 0.7%)
+  * Interestingly, the inter-arrival time calculated for stroke (`I_ST  = round(year2min/st_pt)`) is not used, and instead, the arrival of stroke patients is based on this probability sampling
+
+Non-stroke patients (`nonstroke_traj`):
+
+* Probability of discharge vs ct review: `sample(1:2, 1, prob = c(.9, .1))` so 0.9 or 90% leave, and then 10% get CT review before leave
+* Discharge: `timeout(1)`
+* CT review: `timeout(20)`
+
+Stroke patients (`stroke_traj`):
+
+* Time with stroke doctor: `timeout(function() rnorm(1, 30, 10))`
+* CT time: `timeout(function() rnorm(1, 20,10))`
+* Probability of AIS: `sample(1:2, 1, prob = c(PROB_AIS, (1-PROB_AIS)))`
+  * Where `PROB_AIS = ais_pt / st_pt` = 450/750 = 0.6 (or 60%)
+* Not ais: `timeout(1)`
+
+AIS patients:
+
+* Probability of ECR: `sample(1:2, 1, prob = c(PROB_ECR, (1-PROB_ECR))`
+  * Where `PROB_ECR = ecr_pt / ais_pt` = 58/450 = 0.1288889 (probability 0.13, or 13%)
+* TPA only: `timeout(1)`
+
+ECR patients:
+
+* AngioINR time (uses `angio_inr`, `inr`, and 3 `angio_staff`): `timeout(function() rnorm(1, 120,60))`
+
+#### Paper
+
+"The stroke pathway begins with a new patient in the Emergency Department (ED) and ends with the patient “seizing” an angioINR, an INR and angio staff which represents nurses and technologists. The patient must proceed through a sequence of events chronologically as follows: triage in ED, assessment by the stroke team, CT imaging, assessment for ECR eligibility and lastly, acquiring ECR resources (Figure 1). The decision to proceed to the next event is probabilistic and is acquired from logged data from a Comprehensive Stroke Service in Melbourne, Australia, between 2016 and 17 (Table 1)."@huang_optimizing_2019
+
+As it stands, Table 1 just contains the number of resources and patients - but, from this paragraph, it appears it might previously have included some of these probabilities.
+
+I had a look online to see if I could find any pre-prints. I came across a [poster abstract](https://jnis.bmj.com/content/10/Suppl_2/A113.2), but otherwise nothing that could help elucidate this. I also looked for the data from the Comprehensive Stroke Service (although I couldn't easily come across anything with patient counts, and wasn't certain this information would definitely be public, so limited search).
+
+I looked the the [model on CLOUDES](https://beta.cloudes.me/loadShare?simId=17588), and this had different parameters (although this might just be illustrative). But, for example:
+
+* ED arrivals - poisson with IAT 10 and 2 entities per arrival- *similar* to model (poisson with IAT 5 and 1 entity per arrival)
+* ED triage - normal mean 15 stdev 5 - *differs* from model (mean 20 sd 10)
+* Probability stroke 0.7 (and 99.3 leave) - *same* as model
+* Time with stroke doctor normal mean 30 sd 10 - *same* as model
+* CT normal mean 20 sd 10 - *same* as model
+* AIS probability 15 (and 85 leave) and then LVO probability 60 (and 40 leave) (which is described as probabilitiy true AIS) - *differs* from model (simply, from those who received the CT, 60% AIS and 40% exit)
+* ECR probabiltiy 15 (and 85 leave) - *differs* from model (13% ECR)
+* AngioINR normal mean 120 sd 60 - *same* as model
+
+However, several of them are the same, so it seems it would be worth running the model with those parameters.
+
+### Other patients
+
+#### Model
+
+Interventional radiology patients (`ir_traj`):
+
+* `add_generator("pt_ir", ir_traj, function() rpois(1, I_IR) )`
+  * Where `I_IR  = round(year2min/ir_pt)` = 138
+* Angio staff time: `timeout(function() rnorm(1, 20,10))`
+* AngioINR/IR time (uses `angio_inr` or `angio_ir`, plus `ir` and 3 `angio_staff`): `timeout(function() rnorm(1, 60,30))`
+
+Emergency interventional radiology patients (`eir_traj`):
+
+* `add_generator("pt_eir", eir_traj, priority = 1, function() rpois(1, I_EIR) )`
+  * Where `I_EIR = round(year2min/eir_pt)` = 1123
+* Angio staff time: `timeout(function() rnorm(1, 20,10))`
+* AngioINR/IR time (uses `angio_inr` or `angio_ir`, plus `ir` and 3 `angio_staff`): `timeout(function() rnorm(1, 60,30))`
+
+Interventional neuroradiology patients (`inr_traj`):
+* `add_generator("pt_inr", inr_traj, function() rpois(1, I_INR) )`
+  * Where `I_INR = round(year2min/inr_pt)` = 5054
+* Angio staff time: `timeout(function() rnorm(1, 20,10))`
+* AngioINR time (uses `angio_inr`, `inr` and 3 `angio_staff`): `timeout(function() rnorm(1, 60,30))`
+
+#### CLOUDES
+
+* Non-emergency IR arrivals - poisson IAT 120 1 entity - *differs* from model (138)
+* Emergency IR arrivals - poisson IAT 1120 1 entity - *differs* from model (1123)
+* Non-emergency INR arrivals - poisson IAT 5040 1 entity - *differs* from model (5040)
+* Time with angio staff: normal mean 20 sd 10 - *same* as model
+* Routing to rooms: non-emergency IR check for angio room for IR (which chooses between IR and INR based on shortest queue), non-emergency go into INR queue, doesn't have route for emergency IR - *differs* from model but looks like this is due to limitation of software in only letting you choose one patient type or all patients
+* Angio INR time - normal mean 120 sd 60 - *differs* from model (mean 60 sd 30) but this again might be limitation of software (only allowing one time length regardless of patient type)
+* Angio IR time - normal mean 60 sd 30 - *same* as model
+
+### Reflections from this
+
+Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I'm anticipating it's possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there's a chance that the CLOUDES model was based on the paper parameters (rather than app), there's a chance it could help us match up?
+
+However, the only one of real interest I think (that is not simplification or limitation) is the difference in ED triage time.
+
+## 13.00-13.15: Varying ED triage length
+
+I modified the `model.R` so I could easily change the ED triage mean and SD, then ran a scenario where these were 15 and 5. However, that didn't make much difference.
+
+![Figure 2A with ED triage from CLOUDES](fig2a_cloudes.png)
+
+## 13.16-13.26: Double check category being presented
+
+I'm pretty sure I'm presenting the right category (ED), but I looked at presenting wait times from patients in any category, or in each of the other categories.
+
+I temporarily removed the filtering from `run_model()` and then ran:
+
+```
+baseline <- run_model(seed = SEED)
+
+p1 <- create_plot(baseline,
+                  group="resource",
+                  title="All patients")
+p2 <- create_plot(baseline %>% filter(category == "ed"),
+                  group="resource",
+                  title="ED")
+p3 <- create_plot(baseline %>% filter(category == "ir"),
+                  group="resource",
+                  title="IR")
+p4 <- create_plot(baseline %>% filter(category == "eir"),
+                  group="resource",
+                  title="EIR")
+p5 <- create_plot(baseline %>% filter(category == "inr"),
+                  group="resource",
+                  title="INR")
+
+# Arrange in a single figure
+ggarrange(p1, p2, p3, p4, p5, nrow=1, ncol=5,
+          common.legend=TRUE, legend="bottom")
+ggsave("fig2a_categories.png", width=18)
+```
+
+This supports that ED is the correct choice (the only other similar is EIR but logically, it does still make sense to be ED, and it doesn't happen to be that EIR is a great match either, just similar).
+
+![Figure 2A categories](fig2a_categories.png)
+
+## Timings
+
+```{python, python.reticulate = FALSE}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 975
+
+# Times from today
+times = [
+    ('09.18', '09.25'),
+    ('09.26', '09.32'),
+    ('09.38', '09.40'),
+    ('09.42', '10.00'),
+    ('10.09', '10.12'),
+    ('10.31', '10.36'),
+    ('10.51', '12.02'),
+    ('12.12', '12.15')]
+
+calculate_times(used_to_date, times)
+```

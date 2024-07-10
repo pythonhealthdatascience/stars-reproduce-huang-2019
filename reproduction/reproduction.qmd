@@ -36,6 +36,7 @@ path_baseline_f2 <- file.path(folder, "fig2_baseline.csv.gz")
 path_exclusive_f2 <- file.path(folder, "fig2_exclusive.csv.gz")
 path_twoangio_f2 <- file.path(folder, "fig2_twoangio.csv.gz")
 path_baseline_f2_code <- file.path(folder, "fig2_baseline_codedefault.csv.gz")
+path_baseline_f2_cloudes <- file.path(folder, "fig2_baseline_cloudes.csv.gz")
 
 path_baseline_f3 <- file.path(folder, "fig3_baseline.csv.gz")
 path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
@@ -48,6 +49,7 @@ path_txt3 <- file.path(folder, "txt3.csv")
 path_txt3_seeds <- file.path(folder, "txt3_seeds.csv")
 path_fig2 <- file.path(folder, "fig2.png")
 path_fig2a_code <- file.path(folder, "fig2a_codeparam.png")
+path_fig2a_cloudes <- file.path(folder, "fig2a_cloudes.png")
 path_fig3 <- file.path(folder, "fig3.png")
 ```
 
@@ -65,7 +67,8 @@ run_model <- function(angio_inr = 1,
                       run_t = 365,
                       nsim = 30,
                       exclusive_use = FALSE,
-                      seed = 42) {
+                      seed = 42,
+                      ed_triage = c(20,10)) {
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
@@ -82,6 +85,8 @@ run_model <- function(angio_inr = 1,
   #' IR patients allowed to use the machine)
   #' @param seed integer that provides seed to be incremented on in each
   #' replication (e.g. run 1 is seed+=1, run 2 is seed+=2)
+  #' @param ed_triage tuple with mean and SD of normal distribution for
+  #'sampling the length of the emergency department triage
 
   # Run the model
   list_containing_output <- simulate_nav(
@@ -96,13 +101,14 @@ run_model <- function(angio_inr = 1,
     run_t = run_t,
     nsim = nsim,
     exclusive_use = exclusive_use,
-    seed = seed
+    seed = seed,
+    ed_triage = ed_triage
   )
   # Get arrivals (not interested in resources - list_containing_output[[2]]))
   # Filter to the relevant results (ED + resource and wait_time)
-  arrivals <- data.frame(list_containing_output[[1]]) %>%
-    filter(category == "ed") %>%
-    select(resource, wait_time)
+  arrivals <- data.frame(list_containing_output[[1]]) # %>%
+    # filter(category == "ed") %>%
+    # select(resource, wait_time)
 
   # Return list with two dataframes
   return(arrivals)
@@ -266,22 +272,46 @@ if (isTRUE(run)) {
 }
 ```
 
+Run baseline with ED triage team from CLOUDES
+
+```{r}
+if (isTRUE(run)) {
+  baseline_cloudes <- run_model(seed = 700, ed_triage=c(15, 5))
+}
+```
+```{r}
+if (isTRUE(run)) {
+  data.table::fwrite(baseline_cloudes, path_baseline_f2_cloudes)
+}
+```
+
 ## Import results
 
 Import the results, adding a column to each to indicate the scenario.
 
 ```{r}
-base_f2 <- import_results(path_baseline_f2, "Baseline")
-exc_f2 <- import_results(path_exclusive_f2, "Exclusive use")
-two_f2 <- import_results(path_twoangio_f2, "Two AngioINRs")
-base_f2_code <- import_results(path_baseline_f2_code, "Baseline (code param)")
+base_f2 <- import_results(path_baseline_f2,
+                          "Baseline")
+exc_f2 <- import_results(path_exclusive_f2,
+                         "Exclusive use")
+two_f2 <- import_results(path_twoangio_f2,
+                         "Two AngioINRs")
+base_f2_code <- import_results(path_baseline_f2_code,
+                               "Baseline (code param)")
+base_f2_cloudes <- import_results(path_baseline_f2_cloudes,
+                                  "Baseline (ED triage CLOUDES)")
 
-base_f3 <- data.table::fread(path_baseline_f3) %>% mutate(scenario="Baseline")
-exc_f3 <- data.table::fread(path_exclusive_f3) %>% mutate(scenario="Exclusive use")
-two_f3 <- data.table::fread(path_twoangio_f3) %>% mutate(scenario="Two AngioINRs")
+base_f3 <- import_results(path_baseline_f3,
+                          "Baseline")
+exc_f3 <- import_results(path_exclusive_f3,
+                         "Exclusive use")
+two_f3 <- import_results(path_twoangio_f3,
+                         "Two AngioINRs")
 
-base_f3_s500  <- data.table::fread(path_baseline_f3_seed500) %>% mutate(scenario="Baseline (seed 500)")
-base_f3_s700  <- data.table::fread(path_baseline_f3_seed700) %>% mutate(scenario="Baseline (seed 700)")
+base_f3_s500  <- import_results(path_baseline_f3_seed500,
+                                "Baseline (seed 500)")
+base_f3_s700  <- import_results(path_baseline_f3_seed700,
+                                "Baseline (seed 700)")
 ```
 
 ## In-text results
@@ -405,6 +435,18 @@ create_plot(base_f2_code,
 ggsave(path_fig2a_code)
 ```
 
+## Figure 2 (baseline only) with ED triage length from CLOUDES
+
+```{r}
+create_plot(base_f2_cloudes,
+            group="resource",
+            title="Baseline (ED triage from CLOUDES)",
+            xlab="Patient wait time (min)",
+            ylab="Standardised density of patient in queue",
+            xlim=c(0, 200))
+ggsave(path_fig2a_cloudes)
+```
+
 ## Figure 3
 
 ```{r}
@@ -434,7 +476,9 @@ ggsave(path_fig3)
 ## Time elapsed
 
 ```{r}
-#end.time <- Sys.time()
-#elapsed.time <- round((end.time - start.time), 3)
-#elapsed.time
+if (isTRUE(run)) {
+  end.time <- Sys.time()
+  elapsed.time <- round((end.time - start.time), 3)
+  elapsed.time
+}
 ```
