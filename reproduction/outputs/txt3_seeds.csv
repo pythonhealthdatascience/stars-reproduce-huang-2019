@@ -2,3 +2,6 @@ scenario,5pm,6pm,7pm
 Baseline,13.96,12.49,12.49
 Baseline (seed 500),13.96,12.15,12.2
 Baseline (seed 700),15.47,13.32,12.3
+Two AngioINRs,9.62,9.22,8.7
+Two AngioINRs (seed 500),11.17,10.6,10.07
+Two AngioINRs (seed 700),10.39,9.96,9.63

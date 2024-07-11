@@ -43,6 +43,8 @@ path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
 path_twoangio_f3 <- file.path(folder, "fig3_twoangio.csv.gz")
 path_baseline_f3_seed500 <- file.path(folder, "fig3_baseline_seed500.csv.gz")
 path_baseline_f3_seed700 <- file.path(folder, "fig3_baseline_seed700.csv.gz")
+path_twoangio_f3_seed500 <- file.path(folder, "fig3_twoangio_seed500.csv.gz")
+path_twoangio_f3_seed700 <- file.path(folder, "fig3_twoangio_seed700.csv.gz")
 
 path_txt2 <- file.path(folder, "txt2.csv")
 path_txt3 <- file.path(folder, "txt3.csv")
@@ -52,6 +54,7 @@ path_fig2a_code <- file.path(folder, "fig2a_codeparam.png")
 path_fig2a_cloudes <- file.path(folder, "fig2a_cloudes.png")
 path_fig2a_seeds <- file.path(folder, "fig2a_seeds.png")
 path_fig3 <- file.path(folder, "fig3.png")
+path_fig4 <- file.path(folder, "fig4.png")
 ```
 
 ## Functions
@@ -60,6 +63,7 @@ path_fig3 <- file.path(folder, "fig3.png")
 run_model <- function(angio_inr = 1,
                       angio_ir = 1,
                       ir = 2,
+                      ed_staff = 10,
                       angio_staff = 6,
                       ed_pt = 107700,
                       inr_pt = 104,
@@ -76,6 +80,7 @@ run_model <- function(angio_inr = 1,
   #' @param angio_inr number of AngioINR machines
   #' @param angio_ir number of AngioIR machines
   #' @param ir number of interventional radiologists on day shift
+  #' @param ed_staff number of emergency department staff on 24h shift
   #' @param angio_staff number of angiography staff on day shift
   #' @param ed_pt number of ED patients
   #' @param inr_pt number of elective INR patients
@@ -96,6 +101,7 @@ run_model <- function(angio_inr = 1,
     angio_inr = angio_inr,
     angio_ir = angio_ir,
     ir = ir,
+    ed_staff = ed_staff,
     angio_staff = angio_staff,
     ed_pt = ed_pt,
     inr_pt = inr_pt,
@@ -197,6 +203,8 @@ create_plot <- function(df, group, title, xlab="", ylab="", xlim=c(0, 200),
 }
 ```
 
+## Run models
+
 Run model scenarios.
 
 ```{r}
@@ -230,7 +238,7 @@ if (isTRUE(run)) {
 }
 ```
 
-Run baseline with varying hours and seeds.
+Run baseline and double angioINR with varying hours and seeds.
 
 ```{r}
 if (isTRUE(run)) {
@@ -243,6 +251,16 @@ if (isTRUE(run)) {
   s700_baseline <- run_model(seed = 700)
   s700_baseline_6pm <- run_model(shifts = c(8,18), seed = 700)
   s700_baseline_7pm <- run_model(shifts = c(8,19), seed = 700)
+
+  # Double AngioINR with varying hours and seed 500
+  s500_twoangio <- run_model(angio_inr = 2, angio_ir=0, seed = 500)
+  s500_twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, angio_ir=0, seed = 500)
+  s500_twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, angio_ir=0, seed = 500)
+
+  # Double AngioINR with varying hours and seed 700
+  s700_twoangio <- run_model(angio_inr = 2, angio_ir=0, seed = 700)
+  s700_twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, angio_ir=0, seed = 700)
+  s700_twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, angio_ir=0, seed = 700)
 }
 ```
 ```{r}
@@ -252,6 +270,10 @@ if (isTRUE(run)) {
                   path_baseline_f3_seed500)
   process_f3_data(s700_baseline, s700_baseline_6pm, s700_baseline_7pm,
                   path_baseline_f3_seed700)
+  process_f3_data(s500_twoangio, s500_twoangio_6pm, s500_twoangio_7pm,
+                  path_twoangio_f3_seed500)
+  process_f3_data(s700_twoangio, s700_twoangio_6pm, s700_twoangio_7pm,
+                  path_twoangio_f3_seed700)
 }
 ```
 
@@ -300,9 +322,7 @@ baseline_seeds <- function(seed, run, folder) {
     data.table::fwrite(seed_baseline, seed_path)
   }
 }
-```
 
-```{r}
 baseline_seeds(0, run, folder)
 baseline_seeds(50, run, folder)
 baseline_seeds(100, run, folder)
@@ -339,6 +359,10 @@ base_f3_s500  <- import_results(path_baseline_f3_seed500,
                                 "Baseline (seed 500)")
 base_f3_s700  <- import_results(path_baseline_f3_seed700,
                                 "Baseline (seed 700)")
+two_f3_s500 <- import_results(path_twoangio_f3_seed500,
+                              "Two AngioINRs (seed 500)")
+two_f3_s700  <- import_results(path_twoangio_f3_seed700,
+                               "Two AngioINRs (seed 700)")
 ```
 
 ## In-text results
@@ -380,18 +404,32 @@ The same applies to the prior scenarios for Figure 2. I've held the seeds still 
 However, as we are not sure, it is also reasonable to assume that a seed might have been used for the paper, but just not mentioned in the article or included in the code.
 
 ```{r variation}
-# Process results
-base_seeds <- dplyr::bind_rows(base_f3, base_f3_s500, base_f3_s700) %>%
-  filter(resource=="angio_inr") %>%
-  group_by(scenario, shift) %>%
-  summarize(mean = round(mean(wait_time),2)) %>%
-  ungroup()
+# Dataframes to analyse
+var_list <- c(list(base_f3, base_f3_s500, base_f3_s700),
+              list(two_f3, two_f3_s500, two_f3_s700))
 
-# Convert to wide format and display
-base_seeds_wide <- pivot_wider(base_seeds, id_cols="scenario",
-                               values_from=c("mean"), names_from="shift")
-data.table::fwrite(base_seeds_wide, path_txt3_seeds)
-base_seeds_wide
+# For loop through those two lists
+df_seeds_list <- list()
+i <- 0
+for (l in var_list) {
+  i <- i + 1
+
+  # Process results
+  df_seeds <- dplyr::bind_rows(l) %>%
+    filter(resource=="angio_inr") %>%
+    group_by(scenario, shift) %>%
+    summarize(mean = round(mean(wait_time),2)) %>%
+    ungroup()
+  
+  # Convert to wide format and display
+  df_seeds_list[[i]] <- pivot_wider(df_seeds, id_cols="scenario",
+                                    values_from=c("mean"), names_from="shift")
+}
+
+# Combine into single dataframe, save and display
+combined_seeds <- dplyr::bind_rows(df_seeds_list)
+data.table::fwrite(combined_seeds, path_txt3_seeds)
+combined_seeds
 ```
 
 ## Figure 2
@@ -478,7 +516,7 @@ ggsave(path_fig2a_cloudes)
 
 This imports the files too (as several files)
 
-```{r}
+```{r figa2a_seeds}
 plot_list <- list()
 i <- 0
 seeds <- c(0, 50, 100, 150, 450, 700, 750)
@@ -491,14 +529,14 @@ for (s in seeds) {
 }
 ```
 
-```{r}
+```{r fig2a_seeds_arrange}
 ggarrange(plotlist=plot_list, common.legend=TRUE, legend="bottom")
 ggsave(path_fig2a_seeds, width=13, height=20)
 ```
 
 ## Figure 3
 
-```{r}
+```{r fig3}
 # Create sub-plots
 p1 <- create_plot(base_f3,
                   group="shift",
@@ -522,9 +560,37 @@ ggarrange(p1, p2, p3, nrow=1,
 ggsave(path_fig3)
 ```
 
+## Figure 4
+
+```{r fig4}
+# Get the relevant results from in-text results 1, 2 and 3
+# Then calculate difference from baseline
+fig4 <- dplyr::bind_rows(txt2 %>% select(scenario, mean),
+                         txt3 %>%
+                          filter(scenario=="Exclusive use", shift=="6pm") %>%
+                          mutate(scenario="Exclusive use (+1h)") %>%
+                          select(scenario, mean)) %>%
+  mutate(diff = mean - mean[1]) %>%
+  filter(scenario!="Baseline") %>%
+  mutate(dis_free_gain = abs(diff)*4.2)
+
+# Set order of the bars, and give full labels
+fig4_col <- c("Exclusive use", "Two AngioINRs", "Exclusive use (+1h)")
+fig4_col_l <- c("Exclusive-use", "Two angio INRs", "Exclusive-use and +1hr work")
+fig4$scenario <- factor(fig4$scenario, levels=fig4_col)
+fig4$scenario_lab <- plyr::mapvalues(fig4$scenario, from=fig4_col, to=fig4_col_l)
+
+ggplot(fig4, aes(x=scenario_lab, y=dis_free_gain)) +
+  geom_bar(stat="identity") +
+  ylim(0, 32) +
+  xlab("Scenarios") +
+  ylab("Mean disability-free life added (days)")
+ggsave(path_fig4, width=5, height=3)
+```
+
 ## Time elapsed
 
-```{r}
+```{r timer}
 if (isTRUE(run)) {
   end.time <- Sys.time()
   elapsed.time <- round((end.time - start.time), 3)
