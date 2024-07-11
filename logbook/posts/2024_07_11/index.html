@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Amy Heather">
+<meta name="dcterms.date" content="2024-07-11">
 
-<title>Reproducing Huang et al.&nbsp;2019 - Logbook</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 7</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,28 +22,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../quarto_site/stars_logo_blue.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,65 +103,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -138,10 +114,10 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../quarto_site/stars_logo_blue.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Reproducing Huang et al.&nbsp;2019</span>
     </a>
   </div>
@@ -152,7 +128,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/study_publication.html"> 
+    <a class="nav-link" href="../../../quarto_site/study_publication.html"> 
 <span class="menu-text">Original study</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -161,11 +137,11 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-reproduction">    
         <li>
-    <a class="dropdown-item" href="../quarto_site/reproduction_readme.html">
+    <a class="dropdown-item" href="../../../quarto_site/reproduction_readme.html">
  <span class="dropdown-text">README</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../reproduction/reproduction.html">
+    <a class="dropdown-item" href="../../../reproduction/reproduction.html">
  <span class="dropdown-text">Reproduction</span></a>
   </li>  
     </ul>
@@ -176,37 +152,37 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-evaluation">    
         <li>
-    <a class="dropdown-item" href="../evaluation/scope.html">
+    <a class="dropdown-item" href="../../../evaluation/scope.html">
  <span class="dropdown-text">Scope</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reproduction_success.html">
+    <a class="dropdown-item" href="../../../evaluation/reproduction_success.html">
  <span class="dropdown-text">Reproduction success</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/badges.html">
+    <a class="dropdown-item" href="../../../evaluation/badges.html">
  <span class="dropdown-text">Journal badges</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/artefacts.html">
+    <a class="dropdown-item" href="../../../evaluation/artefacts.html">
  <span class="dropdown-text">STARS framework</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../evaluation/reporting.html">
+    <a class="dropdown-item" href="../../../evaluation/reporting.html">
  <span class="dropdown-text">Reporting guidelines</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../logbook/logbook.html" aria-current="page"> 
+    <a class="nav-link" href="../../../logbook/logbook.html"> 
 <span class="menu-text">Logbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reproduction_report.html"> 
+    <a class="nav-link" href="../../../evaluation/reproduction_report.html"> 
 <span class="menu-text">Summary</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../evaluation/reflections.html"> 
+    <a class="nav-link" href="../../../evaluation/reflections.html"> 
 <span class="menu-text">Reflections</span></a>
   </li>  
 </ul>
@@ -226,285 +202,105 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Logbook</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Day 7</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">reproduce</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Amy Heather </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 11, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="reproduce">reproduce <span class="quarto-category-count">(6)</span></div><div class="category" data-category="scope">scope <span class="quarto-category-count">(1)</span></div><div class="category" data-category="setup">setup <span class="quarto-category-count">(3)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00: Running model with 30 replications and various seeds</a></li>
+  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-<p>These diary entries record daily progress in reproduction of the study, providing a transparent and detailed record of work.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>TBC. Total time used: TBC. (TBC.).</p>
+</div>
+</div>
+<section id="running-model-with-30-replications-and-various-seeds" class="level2">
+<h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00: Running model with 30 replications and various seeds</h2>
+<p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_seeds.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A with different seeds</figcaption>
+</figure>
+</div>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div id="6c7d5a66" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">1228</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.45'</span>, <span class="st">'11.00'</span>)]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 15m, or 0h 15m
+Total used to date: 1243m, or 20h 43m
+Time remaining: 1157m, or 19h 17m
+Used 51.8% of 40 hours max</code></pre>
+</div>
+</div>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="reproduce" data-listing-date-sort="1720652400000" data-listing-file-modified-sort="1720694814347" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="89">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_11/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_11/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024_07_11/fig2a_seeds.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="../logbook/posts/2024_07_11/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_11/index.html" class="no-external">Day 7</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_11/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_11/index.html" class="no-external">TBC. Total time used: TBC. (TBC.).</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_11/index.html" class="no-external">
-<div class="listing-date">
-Jul 11, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="reproduce" data-listing-date-sort="1720566000000" data-listing-file-modified-sort="1720689215304" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2767">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_10/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_10/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024_07_10/fig2a_codeparam.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="../logbook/posts/2024_07_10/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_10/index.html" class="no-external">Day 6</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_10/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_10/index.html" class="no-external">Although the figures in the app don’t match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_10/index.html" class="no-external">
-<div class="listing-date">
-Jul 10, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="setup,reproduce" data-listing-date-sort="1720479600000" data-listing-file-modified-sort="1720603189877" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1442">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_09/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_09/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024_07_09/fig2a_example1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="../logbook/posts/2024_07_09/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_09/index.html" class="no-external">Day 5</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_09/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('setup'); return false;">
-setup
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_09/index.html" class="no-external">Working on figures 2 + 3 and in-text result 3. Plus (untimed) fixing Quarto book (environment issues). Total time used: 16h 15m (40.6%).</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_09/index.html" class="no-external">
-<div class="listing-date">
-Jul 9, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="reproduce" data-listing-date-sort="1720393200000" data-listing-file-modified-sort="1720522056269" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2459">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_08/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_08/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/2024_07_08/fig2a_example1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="../logbook/posts/2024_07_08/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_08/index.html" class="no-external">Day 4</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_08/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_08/index.html" class="no-external">Add seeds, got in-text result 1, working on Figure 2. Total time used: 13h 10m (32.9%)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_08/index.html" class="no-external">
-<div class="listing-date">
-Jul 8, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="reproduce" data-listing-date-sort="1720134000000" data-listing-file-modified-sort="1720521771717" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2306">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_05/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_05/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../logbook/posts/2024_07_05/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_05/index.html" class="no-external">Day 3</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_05/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_05/index.html" class="no-external">Set-up environment and run model. Total time used: 7h 23m (18.5%)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_05/index.html" class="no-external">
-<div class="listing-date">
-Jul 5, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="setup,scope,reproduce" data-listing-date-sort="1720047600000" data-listing-file-modified-sort="1720433346737" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2150">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_04/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">Day 2</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('setup'); return false;">
-setup
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('scope'); return false;">
-scope
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reproduce'); return false;">
-reproduce
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">Defined scope and problem-solving renv. Total time used: 2h 29m (6.2%)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_04/index.html" class="no-external">
-<div class="listing-date">
-Jul 4, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="setup" data-listing-date-sort="1719961200000" data-listing-file-modified-sort="1720098219658" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="355">
-<div class="thumbnail">
-<p><a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a></p><a href="../logbook/posts/2024_07_03/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">Day 1</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('setup'); return false;">
-setup
-</div>
-</div>
-<div class="listing-description">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">Set-up repository and add article and code. Total time used: 0h 45m (1.9%)</a>
-</div>
-</div>
-<div class="metadata">
-<a href="../logbook/posts/2024_07_03/index.html" class="no-external">
-<div class="listing-date">
-Jul 3, 2024
-</div>
-<div class="listing-author">
-Amy Heather
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -923,22 +719,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="../CHANGELOG.html">
+    <a class="nav-link" href="../../../CHANGELOG.html">
 <p>Changelog</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../quarto_site/license.html">
+    <a class="nav-link" href="../../../quarto_site/license.html">
 <p>License</p>
 </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../CONTRIBUTING.html">
+    <a class="nav-link" href="../../../CONTRIBUTING.html">
 <p>Contributing</p>
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/logbook.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -270,7 +270,11 @@ div.csl-indent {
   <li><a href="#reflections-from-this" id="toc-reflections-from-this" class="nav-link" data-scroll-target="#reflections-from-this">Reflections from this</a></li>
   </ul></li>
   <li><a href="#varying-ed-triage-length" id="toc-varying-ed-triage-length" class="nav-link" data-scroll-target="#varying-ed-triage-length">13.00-13.15: Varying ED triage length</a></li>
-  <li><a href="#double-check-category-being-presented" id="toc-double-check-category-being-presented" class="nav-link" data-scroll-target="#double-check-category-being-presented">13.16-13.26: Double check category being presented</a></li>
+  <li><a href="#double-check-category-being-presented" id="toc-double-check-category-being-presented" class="nav-link" data-scroll-target="#double-check-category-being-presented">13.16-13.28: Double check category being presented</a></li>
+  <li><a href="#double-check-inr-room-options" id="toc-double-check-inr-room-options" class="nav-link" data-scroll-target="#double-check-inr-room-options">13.39-13.43: Double-check INR room options</a></li>
+  <li><a href="#vary-length-of-resources-to-try-to-engineer-results" id="toc-vary-length-of-resources-to-try-to-engineer-results" class="nav-link" data-scroll-target="#vary-length-of-resources-to-try-to-engineer-results">13.44-14.10, 14.15-14.45: Vary length of resources to try to engineer results</a></li>
+  <li><a href="#looking-into-figure-2c-and-3c-and-getting-in-text-result-2" id="toc-looking-into-figure-2c-and-3c-and-getting-in-text-result-2" class="nav-link" data-scroll-target="#looking-into-figure-2c-and-3c-and-getting-in-text-result-2">16.03-16.19: Looking into Figure 2C and 3C, and getting in-text result 2!</a></li>
+  <li><a href="#trying-to-raise-the-angioinr-queues" id="toc-trying-to-raise-the-angioinr-queues" class="nav-link" data-scroll-target="#trying-to-raise-the-angioinr-queues">16.25-17.00: Trying to raise the angioINR queues</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_10/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -314,7 +318,6 @@ div.csl-indent {
 <li>Try not limiting to just ED patients</li>
 <li>Double-check if INR procedures only have one room option (whilst IR have two rooms)</li>
 <li>Look at parameters used in the diagram on CLOUDES</li>
-<li>Try uncommenting sections of the model code</li>
 </ul>
 <p>Agreed to explore these and anything else can think of, but if then still stuck, at that point to email the authors (once have tried the final figures - resource utilisation and supplementary).</p>
 <p>Felt could then move into evaluation against guidelines - in protocol, had mentioned waiting until after fully wrapped with the model, with rationale that it impacts on code timings, but on reflection, you could argue likewise for influence on timings of that evaluation if you waited before proceeding to it (e.g.&nbsp;waiting for response) and had then had a gap from working on that model and were no longer as familiar.</p>
@@ -362,8 +365,8 @@ div.csl-indent {
 <p>As a reminder, this is the set-up of the model, with Figure 1 from <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>. There are several resources, including single plane (angioIR) and biplane (angioINR) angiography suites.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../../../../original_study/fig1.jpg" class="img-fluid figure-img"></p>
-<figcaption>Table 1</figcaption>
+<p><img src="../../../original_study/fig1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1</figcaption>
 </figure>
 </div>
 <p>Emergency arrival (potential stroke) patients:</p>
@@ -483,7 +486,7 @@ div.csl-indent {
 </section>
 <section id="reflections-from-this" class="level3">
 <h3 class="anchored" data-anchor-id="reflections-from-this">Reflections from this</h3>
-<p>Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I’m anticipating it’s possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there’s a chance that the CLOUDES model was based on the paper parameters (rather than app), there’s a chance it could help us match up?</p>
+<p>Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I’m anticipating it’s possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there’s a chance that the CLOUDES model was based on the paper parameters (rather than app), there’s a chance it could help us match up? This seems unlikely though (given it accompanies the app).</p>
 <p>However, the only one of real interest I think (that is not simplification or limitation) is the difference in ED triage time.</p>
 </section>
 </section>
@@ -498,7 +501,7 @@ div.csl-indent {
 </div>
 </section>
 <section id="double-check-category-being-presented" class="level2">
-<h2 class="anchored" data-anchor-id="double-check-category-being-presented">13.16-13.26: Double check category being presented</h2>
+<h2 class="anchored" data-anchor-id="double-check-category-being-presented">13.16-13.28: Double check category being presented</h2>
 <p>I’m pretty sure I’m presenting the right category (ED), but I looked at presenting wait times from patients in any category, or in each of the other categories.</p>
 <p>I temporarily removed the filtering from <code>run_model()</code> and then ran:</p>
 <pre><code>baseline &lt;- run_model(seed = SEED)
@@ -523,6 +526,7 @@ p5 &lt;- create_plot(baseline %&gt;% filter(category == "inr"),
 ggarrange(p1, p2, p3, p4, p5, nrow=1, ncol=5,
           common.legend=TRUE, legend="bottom")
 ggsave("fig2a_categories.png", width=18)</code></pre>
+<p>This supports that ED is the correct choice (the only other similar is EIR but logically, it does still make sense to be ED, and it doesn’t happen to be that EIR is a great match either, just similar).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="fig2a_categories.png" class="img-fluid figure-img"></p>
@@ -530,8 +534,67 @@ ggsave("fig2a_categories.png", width=18)</code></pre>
 </figure>
 </div>
 </section>
-<section id="timings" class="level2">
-<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<section id="double-check-inr-room-options" class="level2">
+<h2 class="anchored" data-anchor-id="double-check-inr-room-options">13.39-13.43: Double-check INR room options</h2>
+<p>Looks right compared with paper, can’t spot any issues</p>
+</section>
+<section id="vary-length-of-resources-to-try-to-engineer-results" class="level2">
+<h2 class="anchored" data-anchor-id="vary-length-of-resources-to-try-to-engineer-results">13.44-14.10, 14.15-14.45: Vary length of resources to try to engineer results</h2>
+<p>I can see what looks wrong in each of the figures and so, one option, is to see if I could easily attempt to engineer the results by varying the parameters slightly, to see what might make it look similar.</p>
+<p>Looking at Figure 2A as an example:</p>
+<ul>
+<li>I have <strong>lower AngioINR</strong> queue density and <strong>no visible angio staff</strong> queues (should be queues)
+<ul>
+<li>Could try increasing the number of patients accessing the angioINR</li>
+</ul></li>
+<li>There are <strong>INR queues</strong> (when should be none)
+<ul>
+<li>Could try either having ED patients not use INR, or having more INR availability</li>
+</ul></li>
+<li>CT, ED staff and stroke doctor queues are similar</li>
+</ul>
+<p>I ran a few quick models (3 replications), just to see what comes out.</p>
+<p><code>run_model(nsim=3, seed = SEED, ed_pt = 107700*2)</code></p>
+<p>Doubled the number of emergency department arrivals. This increased angio INR queue but moved CT and ED staff away from desired. Interestingly, no impact on angio staff.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_doubleed.png" class="img-fluid figure-img"></p>
+<figcaption>Double ED</figcaption>
+</figure>
+</div>
+<p><code>run_model(nsim=3, seed = SEED, angio_staff = 3)</code></p>
+<p>Reduce number of angio staff to 3 during day, which had large impact on angioINR and INR queues, but still no visible angio staff queue.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_lessangiostaff.png" class="img-fluid figure-img"></p>
+<figcaption>Halve angio daytime staff</figcaption>
+</figure>
+</div>
+<p>Double ED AND less staff:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_doubleed_lessangiostaff.png" class="img-fluid figure-img"></p>
+<figcaption>Double ED AND less staff</figcaption>
+</figure>
+</div>
+<p>Looking at <code>model.R</code>, these results are coming from the simpy resource itself, so this shouldn’t be due to any issues with the calculation of angio staff resource use.</p>
+<p>Some extra suggestions from quick chat with Tom:</p>
+<ul>
+<li>Increase length of AngioINR appointment</li>
+<li>Look at the utilisation (e.g.&nbsp;angio staff utilisation)</li>
+</ul>
+<p>However, if I just plot angio_staff (without the group by resource), I can see it! It just doesn’t appear in the other plot. I then realised that this is because the angio_staff and INR lines <strong>completely overlap</strong>. If we remove INR from the plot, it starts to look a bit more similar.</p>
+<p>Hence, it seems that actually the main difference to the paper is just the angioINR queue.</p>
+</section>
+<section id="looking-into-figure-2c-and-3c-and-getting-in-text-result-2" class="level2">
+<h2 class="anchored" data-anchor-id="looking-into-figure-2c-and-3c-and-getting-in-text-result-2">16.03-16.19: Looking into Figure 2C and 3C, and getting in-text result 2!</h2>
+<p>Figure 2C has double the machines but, in the paper, they have no change in angio staff levels, whilst I find that increases. That makes sense - with plenty of machines, the bottleneck is now on having the staff for those machines.</p>
+<p>I realised then, from reading back on the paper, that I should have replaced an angioIR machine with an angioINR machine (and not just add an extra angioINR machine).</p>
+<blockquote class="blockquote">
+<p>“Second, in the “two angioINRs” scenario, the angioIR is replaced with an angioINR, doubling angiography availability for ECR patients.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+</blockquote>
+<p>I changed this in <code>reproduction.qmd</code> (<code>angio_inr=2</code>, <code>angio_ir=0</code>) and re-ran the models for Figure 2 and 3. This fixed the (C) part of those figures to be more similar to the paper.</p>
+<p>This then resolved in-text result 3, with a 4.3 minute reduction in the queue length (which is very similar to “4 min less”). Hence, can consider that reproduced at this point!</p>
 <div class="cell" data-python.reticulate="false">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
@@ -549,14 +612,90 @@ ggsave("fig2a_categories.png", width=18)</code></pre>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.09'</span>, <span class="st">'10.12'</span>),</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.31'</span>, <span class="st">'10.36'</span>),</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.51'</span>, <span class="st">'12.02'</span>),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.12'</span>, <span class="st">'12.15'</span>)]</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.12'</span>, <span class="st">'12.15'</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.00'</span>, <span class="st">'13.15'</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.16'</span>, <span class="st">'13.28'</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.39'</span>, <span class="st">'13.43'</span>),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.44'</span>, <span class="st">'14.10'</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.15'</span>, <span class="st">'14.45'</span>),</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.03'</span>, <span class="st">'16.19'</span>)]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 115m, or 1h 55m
-Total used to date: 1090m, or 18h 10m
-Time remaining: 1310m, or 21h 50m
-Used 45.4% of 40 hours max</code></pre>
+<pre><code>Time spent today: 218m, or 3h 38m
+Total used to date: 1193m, or 19h 53m
+Time remaining: 1207m, or 20h 7m
+Used 49.7% of 40 hours max</code></pre>
+</div>
+</div>
+</section>
+<section id="trying-to-raise-the-angioinr-queues" class="level2">
+<h2 class="anchored" data-anchor-id="trying-to-raise-the-angioinr-queues">16.25-17.00: Trying to raise the angioINR queues</h2>
+<p>Tried changing length of angio appointments for all non-ED patients to the same as ED patients - definitely not right!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_lonangio.png" class="img-fluid figure-img"></p>
+<figcaption>Longer angio</figcaption>
+</figure>
+</div>
+<p>Shorterning the ED angio appointments to the non-ED length is also not helpful.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_shorteredangio.png" class="img-fluid figure-img"></p>
+<figcaption>Shorter ED angio</figcaption>
+</figure>
+</div>
+<p>Then I ran through a bunch of different seeds, to see if that also could explain it. Some do come a little closer than others… though this was only five replications. Should probably repeat this exercise, but with 30 replications!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_5rep_diffseeds.png" class="img-fluid figure-img"></p>
+<figcaption>Different seeds</figcaption>
+</figure>
+</div>
+<pre><code>plot_list &lt;- list()
+i &lt;- 0
+for (s in seq(0, 800, 50)) {
+  i &lt;- i + 1
+  baseline &lt;- run_model(nsim=5, seed = s)
+  plot_list[[i]] &lt;- create_plot(baseline, group="resource", title="")
+}
+ggarrange(plotlist=plot_list, common.legend=TRUE, legend="bottom")
+ggsave("../logbook/posts/2024_07_10/fig2a_5rep_diffseeds.png", width=20, height=20)</code></pre>
+</section>
+<section id="timings" class="level2">
+<h2 class="anchored" data-anchor-id="timings">Timings</h2>
+<div class="cell" data-python.reticulate="false">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">975</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.18'</span>, <span class="st">'09.25'</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.26'</span>, <span class="st">'09.32'</span>),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.38'</span>, <span class="st">'09.40'</span>),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.42'</span>, <span class="st">'10.00'</span>),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.09'</span>, <span class="st">'10.12'</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.31'</span>, <span class="st">'10.36'</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.51'</span>, <span class="st">'12.02'</span>),</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.12'</span>, <span class="st">'12.15'</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.00'</span>, <span class="st">'13.15'</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.16'</span>, <span class="st">'13.28'</span>),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.39'</span>, <span class="st">'13.43'</span>),</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.44'</span>, <span class="st">'14.10'</span>),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.15'</span>, <span class="st">'14.45'</span>),</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.03'</span>, <span class="st">'16.19'</span>),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.25'</span>, <span class="st">'17.00'</span>)]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time spent today: 253m, or 4h 13m
+Total used to date: 1228m, or 20h 28m
+Time remaining: 1172m, or 19h 32m
+Used 51.2% of 40 hours max</code></pre>
 </div>
 </div>
 
