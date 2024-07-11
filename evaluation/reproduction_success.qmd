@@ -22,12 +22,12 @@ from plotly import graph_objects as go
 # List of time to complete each item ------------------------------------------
 time_list = [
     [516, 'In-text result 1'],
+    [1193, 'In-text result 2'],
     [np.nan, 'Figure 2'],
     [np.nan, 'Figure 3'],
     [np.nan, 'Figure 4'],
     [np.nan, 'Figure 5'],
     [np.nan, 'Supplementary figure'],
-    [np.nan, 'In-text result 2'],
     [np.nan, 'In-text result 3']]
 ```
 
@@ -43,10 +43,9 @@ times_clean = times.sort_values(by='time').reset_index(drop=True)
 # Compute the ECDF values
 times_clean['ecdf'] = np.arange(1, len(times_clean) + 1) / len(times_clean) * 100
 
-# AMEND result 7 as not successful, so set ecdf to that of the last item
-times_clean.loc[times_clean['item'] == 'In-text result 7', 'ecdf'] = np.nan
-times_clean.loc[times_clean['item'] == 'In-text result 7', 'ecdf'] = (
-    max(times_clean['ecdf']))
+# AMEND figure 2 set ecdf to that of the last item
+#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = np.nan
+#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = 25
 
 # Insert the starting point (0, 0) in the ECDF
 times_clean.loc[-1] = [0, 'Start', 0]
