@@ -109,14 +109,14 @@
     "href": "logbook/posts/2024_07_10/index.html",
     "title": "Day 6",
     "section": "",
-    "text": "Although the figures in the app don’t match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.\nCould put in all the parameters, except number of simulations was limited to 10 (rather than 30) but crashes at that number, so run at their default. However, the outputs don’t really contain anything usable (e.g. just know most had short wait time, and know median occupancy ratio was around 20%). However, it did make me think that’s it’s worth trying the models with the default parameters from the code (rather than the paper), just to see if that happens to look any more similar."
+    "text": "Note\n\n\n\nReproduced in-text 2, working on Figures 2 + 3. Total time used: 20h 28m (51.2%)."
   },
   {
     "objectID": "logbook/posts/2024_07_10/index.html#going-back-to-the-app",
     "href": "logbook/posts/2024_07_10/index.html#going-back-to-the-app",
     "title": "Day 6",
-    "section": "",
-    "text": "Although the figures in the app don’t match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.\nCould put in all the parameters, except number of simulations was limited to 10 (rather than 30) but crashes at that number, so run at their default. However, the outputs don’t really contain anything usable (e.g. just know most had short wait time, and know median occupancy ratio was around 20%). However, it did make me think that’s it’s worth trying the models with the default parameters from the code (rather than the paper), just to see if that happens to look any more similar."
+    "section": "09.18-09.25: Going back to the app",
+    "text": "09.18-09.25: Going back to the app\nAlthough the figures in the app don’t match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.\nCould put in all the parameters, except number of simulations was limited to 10 (rather than 30) but crashes at that number, so run at their default. However, the outputs don’t really contain anything usable (e.g. just know most had short wait time, and know median occupancy ratio was around 20%). However, it did make me think that’s it’s worth trying the models with the default parameters from the code (rather than the paper), just to see if that happens to look any more similar."
   },
   {
     "objectID": "logbook/posts/2024_07_10/index.html#running-the-model-with-default-parameters-from-the-code",
@@ -619,15 +619,15 @@
     "objectID": "logbook/posts/2024_07_11/index.html#running-model-with-30-replications-and-various-seeds",
     "href": "logbook/posts/2024_07_11/index.html#running-model-with-30-replications-and-various-seeds",
     "title": "Day 7",
-    "section": "10.45-11.00: Running model with 30 replications and various seeds",
-    "text": "10.45-11.00: Running model with 30 replications and various seeds\nIntermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications.\n\n\n\nFigure 2A with different seeds"
+    "section": "10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds",
+    "text": "10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds\nIntermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.\n\n\n\nFigure 2A with different seeds"
   },
   {
     "objectID": "logbook/posts/2024_07_11/index.html#timings",
     "href": "logbook/posts/2024_07_11/index.html#timings",
     "title": "Day 7",
     "section": "Timings",
-    "text": "Timings\n\nimport sys\nsys.path.append('../')\nfrom timings import calculate_times\n\n# Minutes used prior to today\nused_to_date = 1228\n\n# Times from today\ntimes = [\n    ('10.45', '11.00')]\n\ncalculate_times(used_to_date, times)\n\nTime spent today: 15m, or 0h 15m\nTotal used to date: 1243m, or 20h 43m\nTime remaining: 1157m, or 19h 17m\nUsed 51.8% of 40 hours max"
+    "text": "Timings\n\nimport sys\nsys.path.append('../')\nfrom timings import calculate_times\n\n# Minutes used prior to today\nused_to_date = 1228\n\n# Times from today\ntimes = [\n    ('10.45', '11.00'),\n    ('11.35', '11.45')]\n\ncalculate_times(used_to_date, times)\n\nTime spent today: 25m, or 0h 25m\nTotal used to date: 1253m, or 20h 53m\nTime remaining: 1147m, or 19h 7m\nUsed 52.2% of 40 hours max"
   },
   {
     "objectID": "logbook/posts/2024_07_04/index.html",

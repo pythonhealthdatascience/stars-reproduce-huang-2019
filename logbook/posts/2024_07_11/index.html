@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00: Running model with 30 replications and various seeds</a></li>
+  <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -265,8 +265,8 @@ Note
 </div>
 </div>
 <section id="running-model-with-30-replications-and-various-seeds" class="level2">
-<h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00: Running model with 30 replications and various seeds</h2>
-<p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications.</p>
+<h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</h2>
+<p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="fig2a_seeds.png" class="img-fluid figure-img"></p>
@@ -276,7 +276,7 @@ Note
 </section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="6c7d5a66" class="cell" data-execution_count="1">
+<div id="435e52d1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -286,14 +286,15 @@ Note
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.45'</span>, <span class="st">'11.00'</span>)]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.45'</span>, <span class="st">'11.00'</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.35'</span>, <span class="st">'11.45'</span>)]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 15m, or 0h 15m
-Total used to date: 1243m, or 20h 43m
-Time remaining: 1157m, or 19h 17m
-Used 51.8% of 40 hours max</code></pre>
+<pre><code>Time spent today: 25m, or 0h 25m
+Total used to date: 1253m, or 20h 53m
+Time remaining: 1147m, or 19h 7m
+Used 52.2% of 40 hours max</code></pre>
 </div>
 </div>
 
