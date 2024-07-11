@@ -6,6 +6,12 @@ categories: [reproduce]
 bibliography: ../../../quarto_site/references.bib
 ---
 
+::: {.callout-note}
+
+Reproduced in-text 2, working on Figures 2 + 3. Total time used: 20h 28m (51.2%).
+
+:::
+
 ## 09.18-09.25: Going back to the app
 
 Although the figures in the app don't match up to the figures in the paper, I wanted to check to see if I could get any more similar results via the app.
@@ -79,7 +85,7 @@ These match up with the times from the paper, as in the image below from @huang_
 
 As a reminder, this is the set-up of the model, with Figure 1 from @huang_optimizing_2019. There are several resources, including single plane (angioIR) and biplane (angioINR) angiography suites.
 
-![Table 1](../../../../original_study/fig1.jpg)
+![Figure 1](../../../original_study/fig1.jpg)
 
 Emergency arrival (potential stroke) patients:
 
@@ -188,7 +194,7 @@ Interventional neuroradiology patients (`inr_traj`):
 
 ### Reflections from this
 
-Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I'm anticipating it's possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there's a chance that the CLOUDES model was based on the paper parameters (rather than app), there's a chance it could help us match up?
+Some of these differences appear to be rounding/simplifying numbers, or limitations of the CLOUDES software. However, some are more different. My logic here is that the model code we have is for the app and some parameters differed to the paper - so I'm anticipating it's possible that some of these other parameters may have differed too (but cannot confirm due to them not being reported in the paper). However, if there's a chance that the CLOUDES model was based on the paper parameters (rather than app), there's a chance it could help us match up? This seems unlikely though (given it accompanies the app).
 
 However, the only one of real interest I think (that is not simplification or limitation) is the difference in ED triage time.
 
@@ -198,7 +204,7 @@ I modified the `model.R` so I could easily change the ED triage mean and SD, the
 
 ![Figure 2A with ED triage from CLOUDES](fig2a_cloudes.png)
 
-## 13.16-13.26: Double check category being presented
+## 13.16-13.28: Double check category being presented
 
 I'm pretty sure I'm presenting the right category (ED), but I looked at presenting wait times from patients in any category, or in each of the other categories.
 
@@ -233,6 +239,117 @@ This supports that ED is the correct choice (the only other similar is EIR but l
 
 ![Figure 2A categories](fig2a_categories.png)
 
+## 13.39-13.43: Double-check INR room options
+
+Looks right compared with paper, can't spot any issues
+
+## 13.44-14.10, 14.15-14.45: Vary length of resources to try to engineer results
+
+I can see what looks wrong in each of the figures and so, one option, is to see if I could easily attempt to engineer the results by varying the parameters slightly, to see what might make it look similar.
+
+Looking at Figure 2A as an example:
+
+* I have **lower AngioINR** queue density and **no visible angio staff** queues (should be queues)
+  *  Could try increasing the number of patients accessing the angioINR
+* There are **INR queues** (when should be none)
+  * Could try either having ED patients not use INR, or having more INR availability
+* CT, ED staff and stroke doctor queues are similar
+
+I ran a few quick models (3 replications), just to see what comes out.
+
+`run_model(nsim=3, seed = SEED, ed_pt = 107700*2)`
+
+Doubled the number of emergency department arrivals. This increased angio INR queue but moved CT and ED staff away from desired. Interestingly, no impact on angio staff.
+
+![Double ED](fig2a_doubleed.png)
+
+`run_model(nsim=3, seed = SEED, angio_staff = 3)`
+
+Reduce number of angio staff to 3 during day, which had large impact on angioINR and INR queues, but still no visible angio staff queue.
+
+![Halve angio daytime staff](fig2a_lessangiostaff.png)
+
+Double ED AND less staff:
+
+![Double ED AND less staff](fig2a_doubleed_lessangiostaff.png)
+
+Looking at `model.R`, these results are coming from the simpy resource itself, so this shouldn't be due to any issues with the calculation of angio staff resource use.
+
+Some extra suggestions from quick chat with Tom:
+
+* Increase length of AngioINR appointment
+* Look at the utilisation (e.g. angio staff utilisation)
+
+However, if I just plot angio_staff (without the group by resource), I can see it! It just doesn't appear in the other plot. I then realised that this is because the angio_staff and INR lines **completely overlap**. If we remove INR from the plot, it starts to look a bit more similar.
+
+Hence, it seems that actually the main difference to the paper is just the angioINR queue.
+
+## 16.03-16.19: Looking into Figure 2C and 3C, and getting in-text result 2!
+
+Figure 2C has double the machines but, in the paper, they have no change in angio staff levels, whilst I find that increases. That makes sense - with plenty of machines, the bottleneck is now on having the staff for those machines.
+
+I realised then, from reading back on the paper, that I should have replaced an angioIR machine with an angioINR machine (and not just add an extra angioINR machine).
+
+> "Second, in the “two angioINRs” scenario, the angioIR is replaced with an angioINR, doubling angiography availability for ECR patients." @huang_optimizing_2019
+
+I changed this in `reproduction.qmd` (`angio_inr=2`, `angio_ir=0`) and re-ran the models for Figure 2 and 3. This fixed the (C) part of those figures to be more similar to the paper.
+
+This then resolved in-text result 3, with a 4.3 minute reduction in the queue length (which is very similar to "4 min less"). Hence, can consider that reproduced at this point!
+
+```{python, python.reticulate = FALSE}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 975
+
+# Times from today
+times = [
+    ('09.18', '09.25'),
+    ('09.26', '09.32'),
+    ('09.38', '09.40'),
+    ('09.42', '10.00'),
+    ('10.09', '10.12'),
+    ('10.31', '10.36'),
+    ('10.51', '12.02'),
+    ('12.12', '12.15'),
+    ('13.00', '13.15'),
+    ('13.16', '13.28'),
+    ('13.39', '13.43'),
+    ('13.44', '14.10'),
+    ('14.15', '14.45'),
+    ('16.03', '16.19')]
+
+calculate_times(used_to_date, times)
+```
+
+## 16.25-17.00: Trying to raise the angioINR queues
+
+Tried changing length of angio appointments for all non-ED patients to the same as ED patients - definitely not right!
+
+![Longer angio](fig2a_lonangio.png)
+
+Shorterning the ED angio appointments to the non-ED length is also not helpful.
+
+![Shorter ED angio](fig2a_shorteredangio.png)
+
+Then I ran through a bunch of different seeds, to see if that also could explain it. Some do come a little closer than others... though this was only five replications. Should probably repeat this exercise, but with 30 replications!
+
+![Different seeds](fig2a_5rep_diffseeds.png)
+
+```
+plot_list <- list()
+i <- 0
+for (s in seq(0, 800, 50)) {
+  i <- i + 1
+  baseline <- run_model(nsim=5, seed = s)
+  plot_list[[i]] <- create_plot(baseline, group="resource", title="")
+}
+ggarrange(plotlist=plot_list, common.legend=TRUE, legend="bottom")
+ggsave("../logbook/posts/2024_07_10/fig2a_5rep_diffseeds.png", width=20, height=20)
+```
+
 ## Timings
 
 ```{python, python.reticulate = FALSE}
@@ -252,7 +369,14 @@ times = [
     ('10.09', '10.12'),
     ('10.31', '10.36'),
     ('10.51', '12.02'),
-    ('12.12', '12.15')]
+    ('12.12', '12.15'),
+    ('13.00', '13.15'),
+    ('13.16', '13.28'),
+    ('13.39', '13.43'),
+    ('13.44', '14.10'),
+    ('14.15', '14.45'),
+    ('16.03', '16.19'),
+    ('16.25', '17.00')]
 
 calculate_times(used_to_date, times)
 ```
