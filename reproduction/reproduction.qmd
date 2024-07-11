@@ -50,6 +50,7 @@ path_txt3_seeds <- file.path(folder, "txt3_seeds.csv")
 path_fig2 <- file.path(folder, "fig2.png")
 path_fig2a_code <- file.path(folder, "fig2a_codeparam.png")
 path_fig2a_cloudes <- file.path(folder, "fig2a_cloudes.png")
+path_fig2a_seeds <- file.path(folder, "fig2a_seeds.png")
 path_fig3 <- file.path(folder, "fig3.png")
 ```
 
@@ -196,25 +197,6 @@ create_plot <- function(df, group, title, xlab="", ylab="", xlim=c(0, 200),
 }
 ```
 
-```{r}
-#baseline <- run_model(nsim=3, seed = SEED, angio_staff = 3, ed_pt=107700*2)
-# create_plot(baseline, group="resource", title="", xlim=c(0,300))
-#ggsave("../logbook/posts/2024_07_10/fig2a_doubleed_lessangiostaff.png")
-# baseline %>% filter(resource=="angio_staff")
-
-#baseline <- run_model(nsim=3, seed = SEED, angio_inr=2)
-#create_plot(baseline %>% filter(resource!="inr"), group="resource", title="", xlim=c(0,100))
-```
-
-## Run model
-
-Decide whether to run model or to use saved results.
-
-```{r}
-# Set to FALSE to skip this section and use saved results
-run = FALSE
-```
-
 Run model scenarios.
 
 ```{r}
@@ -302,11 +284,39 @@ if (isTRUE(run)) {
 }
 ```
 
+Run baseline with several different seeds
+
+```{r}
+baseline_seeds <- function(seed, run, folder) {
+  #' Run baseline model with different seeds
+  #' 
+  #' @param seed integer, starting seed for replications
+  #' @param run boolean, whether to run model
+  #' @param folder string, folder to store results in
+  if (isTRUE(run)) {
+    seed_baseline <- run_model(seed = seed)
+    seed_path <- file.path(folder, paste(
+      "fig2_baseline_seed", seed, ".csv.gz", sep=""))
+    data.table::fwrite(seed_baseline, seed_path)
+  }
+}
+```
+
+```{r}
+baseline_seeds(0, run, folder)
+baseline_seeds(50, run, folder)
+baseline_seeds(100, run, folder)
+baseline_seeds(150, run, folder)
+baseline_seeds(450, run, folder)
+baseline_seeds(700, run, folder)
+baseline_seeds(750, run, folder)
+```
+
 ## Import results
 
 Import the results, adding a column to each to indicate the scenario.
 
-```{r}
+```{r import}
 base_f2 <- import_results(path_baseline_f2,
                           "Baseline")
 exc_f2 <- import_results(path_exclusive_f2,
@@ -335,7 +345,7 @@ base_f3_s700  <- import_results(path_baseline_f3_seed700,
 
 In-text results 1 and 2
 
-```{r}
+```{r in_text_1_and_2}
 txt2 <- dplyr::bind_rows(base_f2, exc_f2, two_f2) %>%
   filter(resource=="angio_inr") %>%
   group_by(scenario) %>%
@@ -349,7 +359,7 @@ txt2
 
 In-text result 3
 
-```{r}
+```{r in_text_3}
 txt3 <- dplyr::bind_rows(base_f3, exc_f3, two_f3) %>%
   filter(resource=="angio_inr") %>%
   group_by(scenario, shift) %>%
@@ -369,7 +379,7 @@ The same applies to the prior scenarios for Figure 2. I've held the seeds still 
 
 However, as we are not sure, it is also reasonable to assume that a seed might have been used for the paper, but just not mentioned in the article or included in the code.
 
-```{r}
+```{r variation}
 # Process results
 base_seeds <- dplyr::bind_rows(base_f3, base_f3_s500, base_f3_s700) %>%
   filter(resource=="angio_inr") %>%
@@ -386,7 +396,7 @@ base_seeds_wide
 
 ## Figure 2
 
-```{r}
+```{r fig2}
 # Create sub-plots
 p1 <- create_plot(base_f2,
                   group="resource",
@@ -410,7 +420,7 @@ ggsave(path_fig2)
 
 ### Demonstrate that geom_density scaled is scaling against density of 0 wait time
 
-```{r}
+```{r fig2_scaling}
 # Create figure as usual
 p <- create_plot(base_f2,
                  group="resource",
@@ -442,7 +452,7 @@ for (c in no_wait$colour) {
 
 ### Figure 2 (baseline only) with default code parameters
 
-```{r}
+```{r fig2a_code_param}
 create_plot(base_f2_code,
             group="resource",
             title="Baseline (code parameters)",
@@ -454,7 +464,7 @@ ggsave(path_fig2a_code)
 
 ### Figure 2 (baseline only) with ED triage length from CLOUDES
 
-```{r}
+```{r fig2a_cloudes}
 create_plot(base_f2_cloudes,
             group="resource",
             title="Baseline (ED triage from CLOUDES)",
@@ -462,6 +472,28 @@ create_plot(base_f2_cloudes,
             ylab="Standardised density of patient in queue",
             xlim=c(0, 200))
 ggsave(path_fig2a_cloudes)
+```
+
+### Figure 2 (baseline only) with various different seeds
+
+This imports the files too (as several files)
+
+```{r}
+plot_list <- list()
+i <- 0
+seeds <- c(0, 50, 100, 150, 450, 700, 750)
+for (s in seeds) {
+  i <- i + 1
+  seed_path <- file.path(folder, paste(
+      "fig2_baseline_seed", s, ".csv.gz", sep=""))
+  seed_baseline <- import_results(seed_path, "Baseline")
+  plot_list[[i]] <- create_plot(seed_baseline, group="resource", title=s)
+}
+```
+
+```{r}
+ggarrange(plotlist=plot_list, common.legend=TRUE, legend="bottom")
+ggsave(path_fig2a_seeds, width=13, height=20)
 ```
 
 ## Figure 3
