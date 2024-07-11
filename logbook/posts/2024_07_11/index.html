@@ -240,6 +240,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</a></li>
+  <li><a href="#evaluating-in-text-result-3" id="toc-evaluating-in-text-result-3" class="nav-link" data-scroll-target="#evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</a></li>
+  <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">13.45-13.54, 14.00-14.21: Figure 4</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -267,16 +269,125 @@ Note
 <section id="running-model-with-30-replications-and-various-seeds" class="level2">
 <h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</h2>
 <p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.</p>
+<p><img src="fig2a_seeds.png" class="img-fluid" alt="Figure 2A with different seeds"> ## 12.00-12.17: Working on Figure 2B</p>
+<p>Figures 2A and 2C have lower angioINR wait times but are otherwise fairly similar to the scope. However, Figure 2B is very different. It should have higher angioINR and angio staff wait times.</p>
+<p>I tried a few variants to see how they impacted results, although none got us what we are hoping for:</p>
+<ul>
+<li>Changing the number of angioINR machines</li>
+<li>Excluding emergency IR patients</li>
+<li>Doubling the number of ED arrivals</li>
+<li>Reducing the number of angio staff (did bring up the curves, but too high, and as they are normally requested as 3 at a time, as soon as go to 6, the wait times drop again)</li>
+<li>Reducing the number of ED staff</li>
+<li>Increasing the INR angioINR appointment length to mean 120 SD 60 (from mean 60 SD 30)</li>
+<li>Force emergency IR to only use angioINR (and not angioIR)</li>
+</ul>
+</section>
+<section id="evaluating-in-text-result-3" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</h2>
+<p>Given that in-text result 2 now matches up due to the fix to the double angioINR scenario, I also checked the results for in-text result 3. These complement figure 3, but provide the reduced wait times for some of the scenarios (excludes exclusive use). These are changes to wait time in min.</p>
+<p>The fix to the model has definitely improved the two angioINR results (previously -2.1 and -2.2) but still are both dissimilar to the paper.</p>
+<p>I have previously tried running different seeds for baseline, which caused alot of fluctation in results (and although not similar to the original, I do think it could be possible to get closer if I just tried some more different seeds!). I tried also running the seed variants for the angioINR scenarios, to see what sort of fluctuation we get in those results - as if that looked to get us slightly closer, then I’d be convinced to try some more seeds for both of them (takes a little while to run, so was only planning to do if looked hopeful).</p>
+<p>However, they do all still look rather different, with nothing very similar to the paper. Hence, feel there might be another underlying cause for the differences (beyond seeds) (particularly as haven’t got related figure to match).</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Paper reduction</th>
+<th>My reduction (seed 200)</th>
+<th>(seed 500)</th>
+<th>(seed 700)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Baseline 1h extra</td>
+<td>-1.7</td>
+<td>-1.47</td>
+<td>-1.8</td>
+<td>-2.2</td>
+</tr>
+<tr class="even">
+<td>Baseline 2h extra</td>
+<td>-0.9</td>
+<td>-1.47</td>
+<td>-1.8</td>
+<td>-3.2</td>
+</tr>
+<tr class="odd">
+<td>AngioINR 1h extra</td>
+<td>+1</td>
+<td>-0.4</td>
+<td>-0.57</td>
+<td>-0.43</td>
+</tr>
+<tr class="even">
+<td>AngioINR 2h extra</td>
+<td>+0.3</td>
+<td>-0·92</td>
+<td>-1.1</td>
+<td>-0.76</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="figure-4" class="level2">
+<h2 class="anchored" data-anchor-id="figure-4">13.45-13.54, 14.00-14.21: Figure 4</h2>
+<p>This figure uses the reduction in patient wait times (from baseline) from three scenarios, multiplying the minutes saved by 4.2. With a seed 200 and so average wait for baseline of 14 minutes…</p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Wait time</th>
+<th>Reduction from baseline (14 min)</th>
+<th>Disability-life years added</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exclusive use</td>
+<td>8.12</td>
+<td>- 5.84</td>
+<td>24.528</td>
+</tr>
+<tr class="even">
+<td>Two angioINRs</td>
+<td>9.62</td>
+<td>-4.34</td>
+<td>18.23</td>
+</tr>
+<tr class="odd">
+<td>Exclusive use + 1 hour</td>
+<td>7.80</td>
+<td>-6.20</td>
+<td>26.04</td>
+</tr>
+</tbody>
+</table>
+<p>Although the exclusive use results look a bit lower than the figure, the pattern is similar and it’s somewhat close, so I worked to create a plot of this within <code>reproduction.Rmd</code>.</p>
+<p>Looking at the plot, I think the results are reasonably similar (middle one definite!), but the right bar may just be a bit too different (-5 ish).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="fig2a_seeds.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 2A with different seeds</figcaption>
+<p><img src="fig4.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4</figcaption>
 </figure>
 </div>
 </section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="435e52d1" class="cell" data-execution_count="1">
+<div id="3a195ca9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
