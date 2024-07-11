@@ -1,0 +1,37 @@
+---
+title: "Day 7"
+author: "Amy Heather"
+date: "2024-07-11"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+TBC. Total time used: TBC. (TBC.).
+
+:::
+
+## 10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds
+
+Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.
+
+![Figure 2A with different seeds](fig2a_seeds.png)
+
+## Timings
+
+```{python, python.reticulate = FALSE}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 1228
+
+# Times from today
+times = [
+    ('10.45', '11.00'),
+    ('11.35', '11.45')]
+
+calculate_times(used_to_date, times)
+```
