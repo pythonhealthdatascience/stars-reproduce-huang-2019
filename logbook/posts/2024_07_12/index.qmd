@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-TBC. Total time used: TBC. (TBC.).
+Supplementary figure then evaluation against guideliens. Total time used for reproduction: 24h 10m (60.4%).
 
 :::
 
@@ -67,8 +67,6 @@ Notes on the unmet (and why)
 
 ## 11.07-11.16: STARS Framework
 
--
-
 ## 11.26-11.51, 12.00-12.17, 13.04-13.18: STRESS-DES
 
 ### Uncertain
@@ -83,8 +81,6 @@ Notes on the unmet (and why)
 for comprehensive stroke services." @huang_optimizing_2019 |
 
 ## 13.19-13.33, 13.39-13.43: DES checklist derived from ISPOR-SDM
-
--
 
 ## Timings for evaluation
 
@@ -108,3 +104,18 @@ times = [
 
 calculate_times(used_to_date, times, limit=False)
 ```
+
+## Untimed: Working on research compendium stage
+
+Some tidying up and sorting for research compendium stage inc.
+
+* Working on README for reproduction
+* Looking into options for unit testing in R...
+    * Package `testthat`
+    * `use_testthat()`. This initializes the unit testing machinery for your package. It adds Suggests: testthat to DESCRIPTION, creates the directory tests/testthat/, and adds the script tests/testthat.R.
+    * `use_test("functionname")` to create matching testfile.
+    * `library(testthat)`, `load_all()`, `test()` to run the test. Tests will also run whenever check() package
+    * `rename_files("strsplit1", "str_split_one")` to rename the R file and will also rename testthat file (which we also edit with new function name), to fit with convention of filename matching function name
+    * Can use `expect_equal()` to compare two dataframes
+    * File structure: `tests/`, `testthat.R`, `testthat`, `helper_func1.R`, `helper_func2.R`, `test_name.R`
+    * Test files prefixed `test_`, keep data in files prefixed `helper_`
