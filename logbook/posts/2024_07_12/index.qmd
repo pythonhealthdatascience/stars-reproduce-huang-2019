@@ -1,0 +1,44 @@
+---
+title: "Day 8"
+author: "Amy Heather"
+date: "2024-07-12"
+categories: [reproduce]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+TBC. Total time used: TBC. (TBC.).
+
+:::
+
+## 09.00-09.07, 09.14-09.24, 09.36-09.40: Working on the supplementary figure
+
+The supplementary figure consists of doubling and tripling the number of ECR patients.
+
+> "Since acquiring data for this study, the demands for ECR at our Comprehensive Stroke Service has doubled between 2018 and 19 and is predicted to triple by the end of 2019. We simulated these increased demands on the resource. As expected, the patient wait times do become longer, but the patterns of resource utilization remained unchanged, suggesting that the same bottlenecks affect throughput" @huang_optimizing_2019
+
+I've assumed this to mean we double and triple the number of ED arrivals (`ed_pt`, e.g.`ed_pt=107700*2`), but the output plots looked vastly different to the paper!
+
+![Wrong supplementary figure](supplementary_figure.png)
+
+I then realised I was mistaken, and that perhaps I should have interpreted this as being double and triple the `ecr_pt` (which is used when model decides whether patient needs ECR: `PROB_ECR = ecr_pt / ais_pt`). This looked right, and very similar to the paper, with the exception that my angioINR wait times curves peak much lower.
+
+## Timings
+
+```{python, python.reticulate = FALSE}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 1409
+
+# Times from today
+times = [
+    ('09.00', '09.07'),
+    ('09.14', '09.24'),
+    ('09.36', '09.40')]
+
+calculate_times(used_to_date, times)
+```
