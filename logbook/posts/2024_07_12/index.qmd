@@ -28,7 +28,11 @@ I then realised I was mistaken, and that perhaps I should have interpreted this 
 
 Shared with Tom and Alison. Tom and Alison both agreed with decisions (reproduced Figure 5 and in-text 1 and 2, and not other items).
 
-## Timings
+## 10.30-10.50: Tidy and email author
+
+Did a little bit of tidying (e.g. removed some old scenarioes from `reproduction.qmd`), and then emailed the corresponding author, to let them know the progress with this work, and to ask for any advice re: discrepancies, and whether they might have and be happy to share code that produces these figures.
+
+## Timings for reproduction
 
 ```{python, python.reticulate = FALSE}
 import sys
@@ -42,7 +46,65 @@ used_to_date = 1409
 times = [
     ('09.00', '09.07'),
     ('09.14', '09.24'),
-    ('09.36', '09.40')]
+    ('09.36', '09.40'),
+    ('10.30', '10.50')]
 
 calculate_times(used_to_date, times)
+```
+
+## 10.58-11.06: Badges
+
+As mentioned in prior logbook entry, will now move on to evaluation stage.
+
+Notes on the unmet (and why)
+
+* **archive** and **id** - only on GitHub
+* **complete** - didn't have the scenario and figure code
+* **structure** - not sufficient to facilitate reuse (i.e. would want more commenting/docstrings/dcoumentation), and as structure was designed for application (but had to extract code to make the paper results)
+* **documentation_...** - no documentation provided
+* **regenerated** - wasn't able to reproduce all the items
+* **hour** - took longer than an hour
+
+## 11.07-11.16: STARS Framework
+
+-
+
+## 11.26-11.51, 12.00-12.17, 13.04-13.18: STRESS-DES
+
+### Uncertain
+
+| Item | My comments |
+| --- | --- |
+| STRESS-DES 1.2 Model outputs. Define all quantitative performance measures that are reported, using equations where necessary. Specify how and when they are calculated during the model run along with how any measures of error such as confidence intervals are calculated. | It does describe the measures, and how these are calculated, and so I have said it met these criteria, although I did find it hard to understand/calculate the relative probability of waiting, and would've benefited from further detail/equations |
+| STRESS-DES 1.3 Experimentation aims. If the model has been used for experimentation, state the objectives that it was used to investigate. (A) Scenario based analysis – Provide a name and description for each scenario, providing a rationale for the choice of scenarios and ensure that item 2.3 (below) is completed. |I feel the paper does describe the scenarios clearly - my only hesitation is that I have been unable to successfully implement the exclusive use scenario - but that feels like a coding issue rather than a description issue? As, on the face of it, the article describes everything I need to know. |
+| STRESS-DES 3.2 Pre-processing. Provide details of any data manipulation that has taken place before its use in the simulation, e.g. interpolation to account for missing data or the removal of outliers. | None provided, so presumed not applicable - but hard to say, as maybe there was just unmentioned. But as not possible to know either way, assumed not-applicable |
+| ISPOR SDM 15 Is the model generalizability issue discussed? | Not sure if it is partially or fully met? |
+| 12 Is cross validation performed and reported | Is it not met or not applicable? `Introduction`: "In contrast to other healthcare fields, a resource-use optimization model has not been implemented
+for comprehensive stroke services." @huang_optimizing_2019 |
+
+## 13.19-13.33, 13.39-13.43: DES checklist derived from ISPOR-SDM
+
+-
+
+## Timings for evaluation
+
+```{python, python.reticulate = FALSE}
+import sys
+sys.path.append('../')
+from timings import calculate_times
+
+# Minutes used prior to today
+used_to_date = 0
+
+# Times from today
+times = [
+    ('10.58', '11.06'),
+    ('11.07', '11.16'),
+    ('11.26', '11.51'),
+    ('12.00', '12.17'),
+    ('13.04', '13.18'),
+    ('13.19', '13.33'),
+    ('13.39', '13.43')]
+
+calculate_times(used_to_date, times, limit=False)
 ```
