@@ -46,6 +46,13 @@ path_baseline_f3_seed700 <- file.path(folder, "fig3_baseline_seed700.csv.gz")
 path_twoangio_f3_seed500 <- file.path(folder, "fig3_twoangio_seed500.csv.gz")
 path_twoangio_f3_seed700 <- file.path(folder, "fig3_twoangio_seed700.csv.gz")
 
+path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
+path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
+path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
+
+path_double_sup <- file.path(folder, "sup_baseline_double.csv.gz")
+path_triple_sup <- file.path(folder, "sup_baseline_triple.csv.gz")
+
 path_txt2 <- file.path(folder, "txt2.csv")
 path_txt3 <- file.path(folder, "txt3.csv")
 path_txt3_seeds <- file.path(folder, "txt3_seeds.csv")
@@ -55,6 +62,8 @@ path_fig2a_cloudes <- file.path(folder, "fig2a_cloudes.png")
 path_fig2a_seeds <- file.path(folder, "fig2a_seeds.png")
 path_fig3 <- file.path(folder, "fig3.png")
 path_fig4 <- file.path(folder, "fig4.png")
+path_fig5 <- file.path(folder, "fig5.png")
+path_supfig <- file.path(folder, "supplementary_figure.png")
 ```
 
 ## Functions
@@ -66,6 +75,7 @@ run_model <- function(angio_inr = 1,
                       ed_staff = 10,
                       angio_staff = 6,
                       ed_pt = 107700,
+                      ecr_pt = 58,
                       inr_pt = 104,
                       eir_pt= 468,
                       ir_pt = 3805,
@@ -74,7 +84,8 @@ run_model <- function(angio_inr = 1,
                       nsim = 30,
                       exclusive_use = FALSE,
                       seed = 42,
-                      ed_triage = c(20,10)) {
+                      ed_triage = c(20,10),
+                      fig5 = FALSE) {
   #' Run model and get results
   #' 
   #' @param angio_inr number of AngioINR machines
@@ -83,6 +94,7 @@ run_model <- function(angio_inr = 1,
   #' @param ed_staff number of emergency department staff on 24h shift
   #' @param angio_staff number of angiography staff on day shift
   #' @param ed_pt number of ED patients
+  #' @param ecr_pt number of ECR patients
   #' @param inr_pt number of elective INR patients
   #' @param eir_pt number of emergency IR patients
   #' @param ir_pt number of elective IR patients
@@ -95,6 +107,8 @@ run_model <- function(angio_inr = 1,
   #' replication (e.g. run 1 is seed+=1, run 2 is seed+=2)
   #' @param ed_triage tuple with mean and SD of normal distribution for
   #'sampling the length of the emergency department triage
+  #'@param fig5 boolean indicating whether to filter the results as normal or
+  #'differently (as different for Figure 5)
 
   # Run the model
   list_containing_output <- simulate_nav(
@@ -104,6 +118,7 @@ run_model <- function(angio_inr = 1,
     ed_staff = ed_staff,
     angio_staff = angio_staff,
     ed_pt = ed_pt,
+    ecr_pt = ecr_pt,
     inr_pt = inr_pt,
     eir_pt = eir_pt,
     ir_pt = ir_pt,
@@ -114,14 +129,20 @@ run_model <- function(angio_inr = 1,
     seed = seed,
     ed_triage = ed_triage
   )
+
   # Get arrivals (not interested in resources - list_containing_output[[2]]))
   # Filter to the relevant results (ED + resource and wait_time)
-  arrivals <- data.frame(list_containing_output[[1]]) %>%
-    filter(category == "ed") %>%
-    select(resource, wait_time)
+  # OR just return the raw output
+  if (isTRUE(fig5)) {
+   result <- copy(list_containing_output[[2]]) %>%
+     filter(resource=="angio_inr")
+  } else {
+    result <- data.frame(list_containing_output[[1]]) %>%
+      filter(category == "ed") %>%
+      select(resource, wait_time)
+  }
 
-  # Return list with two dataframes
-  return(arrivals)
+  return(result)
 }
 ```
 
@@ -238,6 +259,38 @@ if (isTRUE(run)) {
 }
 ```
 
+Re-run models but return different output from standard hours for use in Figure 5
+
+```{r}
+if (isTRUE(run)) {
+  baseline_f5 <- run_model(seed = SEED, fig5=TRUE)
+  exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)
+  twoangio_f5 <- run_model(angio_inr = 2, angio_ir=0, seed = SEED, fig5=TRUE)
+}
+```
+```{r}
+if (isTRUE(run)) {
+  data.table::fwrite(baseline_f5, path_baseline_f5)
+  data.table::fwrite(exclusive_f5, path_exclusive_f5)
+  data.table::fwrite(twoangio_f5, path_twoangio_f5)
+}
+```
+
+Run baseline with double and triple the number of ECR patients, for the supplementary figure.
+
+```{r}
+if (isTRUE(run)) {
+  baseline_sup2 <- run_model(seed = SEED, ecr_pt = 58*2)
+  baseline_sup3 <- run_model(seed = SEED, ecr_pt = 58*3)
+}
+```
+```{r}
+if (isTRUE(run)) {
+  data.table::fwrite(baseline_sup2, path_double_sup)
+  data.table::fwrite(baseline_sup3, path_triple_sup)
+}
+```
+
 Run baseline and double angioINR with varying hours and seeds.
 
 ```{r}
@@ -308,7 +361,7 @@ if (isTRUE(run)) {
 
 Run baseline with several different seeds
 
-```{r}
+```{r baseline_seeds}
 baseline_seeds <- function(seed, run, folder) {
   #' Run baseline model with different seeds
   #' 
@@ -363,6 +416,13 @@ two_f3_s500 <- import_results(path_twoangio_f3_seed500,
                               "Two AngioINRs (seed 500)")
 two_f3_s700  <- import_results(path_twoangio_f3_seed700,
                                "Two AngioINRs (seed 700)")
+
+base_f5 <- data.table::fread(path_baseline_f5)
+exc_f5 <- data.table::fread(path_exclusive_f5)
+two_f5 <- data.table::fread(path_twoangio_f5)
+
+base_sup_double <- import_results(path_double_sup, "Baseline (double)")
+base_sup_triple <- import_results(path_triple_sup, "Baseline (triple)")
 ```
 
 ## In-text results
@@ -586,6 +646,64 @@ ggplot(fig4, aes(x=scenario_lab, y=dis_free_gain)) +
   xlab("Scenarios") +
   ylab("Mean disability-free life added (days)")
 ggsave(path_fig4, width=5, height=3)
+```
+
+## Figure 5
+
+Currently depends on simmer.plot() function that doesn't work on the imported results from the csv file, so need to allow to run model to produce this plot.
+
+```{r fig5}
+if (isTRUE(run)) {
+  baseline_f5 <- run_model(seed = SEED, fig5=TRUE)
+  exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)
+  twoangio_f5 <- run_model(angio_inr = 2, angio_ir=0, seed = SEED, fig5=TRUE)
+  
+  # Replace resource (which has been filtered to angioINR) with scenario
+  baseline_f5$resource <- "Baseline"
+  exclusive_f5$resource <-"Exclusive-use"
+  twoangio_f5$resource <- "Two angio INRs"
+  
+  # Combine into single object
+  fig5_df <- dplyr::bind_rows(baseline_f5, exclusive_f5, twoangio_f5)
+  
+  # Create figure using simmer's plot
+  p <- plot(fig5_df, metric="utilization") +
+    xlab("Scenarios") +
+    ylab("Utilisation") +
+    scale_y_continuous(labels = scales::percent, limits=c(0, 0.4)) +
+    ggtitle("") +
+    geom_text(aes(label=round(.data$Q50*100)), vjust=-1)
+  p
+  
+  # Save to provided path
+  ggsave(path_fig5)
+}
+```
+
+## Supplementary figure
+
+```{r supplementary_figure}
+# Create sub-plots
+p1 <- create_plot(base_f2,
+                  group="resource",
+                  title="Baseline",
+                  ylab="Standardised density of patient in queue")
+p2 <- create_plot(base_sup_double,
+                  group="resource",
+                  title="Doubling ECR patients",
+                  xlab="Patient wait time (min)",
+                  xlim=c(0, 300),
+                  breaks_width=100)
+p3 <- create_plot(base_sup_triple,
+                  group="resource",
+                  title="Tripling ECR patients",
+                  xlim=c(0, 300))
+
+# Arrange in a single figure
+ggarrange(p1, p2, p3, nrow=1,
+          common.legend=TRUE, legend="bottom",
+          labels=c("A", "B", "C"))
+ggsave(path_supfig)
 ```
 
 ## Time elapsed
