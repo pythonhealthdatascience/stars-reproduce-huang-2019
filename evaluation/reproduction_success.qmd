@@ -1,5 +1,7 @@
 ---
 title: "Reproduction success"
+echo: False
+bibliography: ../quarto_site/references.bib
 ---
 
 <!-- TODO: Remove this warning once completed assessment -->
@@ -8,6 +10,8 @@ title: "Reproduction success"
 <!-- TODO: Use skeleton to create page describing reproduction success. If it is subjective (e.g. comparing figures), be sure to explain how you decided that the figure was now successfully reproduced or not -->
 
 Of the X items in the scope, X% (X out of X) were considered to be **successfully reproduced**.
+
+As cited throughout, images on this page are sourced from @huang_optimizing_2019.
 
 ## Time-to-completion
 
@@ -26,7 +30,7 @@ time_list = [
     [np.nan, 'Figure 2'],
     [np.nan, 'Figure 3'],
     [np.nan, 'Figure 4'],
-    [np.nan, 'Figure 5'],
+    [1228, 'Figure 5'],
     [np.nan, 'Supplementary figure'],
     [np.nan, 'In-text result 3']]
 ```
@@ -123,13 +127,85 @@ fig.show(config={'displayModeBar': False})
 
 ## Reproduction of items from the scope
 
-## Figure X
+### Figure 2
 
-Original figure:
+Original (@huang_optimizing_2019):
 
-<!-- Image, e.g.
-![](../original_study/article_fig2.png){width=70% fig-align="center"} -->
+![](../original_study/fig2.jpg){width=80% fig-align="center" .lightbox}
 
 Reproduction:
 
-<!-- Image -->
+![](../reproduction/outputs/fig2.png){width=80% fig-align="center" .lightbox}
+
+### Figure 3
+
+Original (@huang_optimizing_2019):
+
+![](../original_study/fig3.jpg){width=80% fig-align="center" .lightbox}
+
+Reproduction:
+
+![](../reproduction/outputs/fig3.png){width=80% fig-align="center" .lightbox}
+
+### Figure 4
+
+Original (@huang_optimizing_2019):
+
+![](../original_study/fig4.jpg){width=80% fig-align="center" .lightbox}
+
+Reproduction:
+
+![](../reproduction/outputs/fig4.png){width=80% fig-align="center" .lightbox}
+
+### Figure 5
+
+Original (@huang_optimizing_2019):
+
+![](../original_study/fig5.jpg){width=80% fig-align="center" .lightbox}
+
+Reproduction:
+
+![](../reproduction/outputs/fig5.png){width=80% fig-align="center" .lightbox}
+
+### Supplementary figure
+
+Original (@huang_optimizing_2019):
+
+![](../original_study/supp.jpg){width=80% fig-align="center" .lightbox}
+
+Reproduction:
+
+![](../reproduction/outputs/supplementary_figure.png){width=80% fig-align="center" .lightbox}
+
+### In-text result 1
+
+"Exclusive-Use Scenario. In this scenario, the overall wait time probability at angioINR was reduced compared to baseline (red line in Figure 2B compared to Figure 2A). This represents a **decrease in ECR patient wait time for angioINR by an average of 6 min**." @huang_optimizing_2019
+
+Reproduction:
+
+```{python}
+txt12 = pd.read_csv('../reproduction/outputs/txt2.csv')
+txt12[txt12['scenario'].isin(['Baseline', 'Exclusive use'])]
+```
+
+### In-text result 2
+
+"Two angioINRs Scenario. This scenario simulates the effect a facility upgrade to two biplane angiographic suites, but without additional staff changes. The wait time probability at angioINR was reduced compared to baseline (Figure 2C). The reduction represents an **average of 4 min less in queue for angioINR**." @huang_optimizing_2019
+
+Reproduction:
+
+```{python}
+pd.read_csv('../reproduction/outputs/txt2.csv')
+txt12[txt12['scenario'].isin(['Baseline', 'Two AngioINRs'])]
+```
+
+### In-text result 3
+
+"Extended Schedule Scenario. The wait time probability at angioINR in the exclusive- use scenario was further reduced by extended work hours (Figure 3B). In contrast, work extension did not affect baseline or the 2 angioINRs scenario (Figures 3A,C). For the baseline scenario, 1 and 2 h of extra work resulted in an **average wait time of 1.7 and 0.9 min reduction, respectively**. For the 2 angioINRs scenario, 1 and 2 h of extra work resulted in an **average wait time gain of 1 and 0.3 min, respectively**." @huang_optimizing_2019
+
+Reproduction:
+
+```{python}
+txt3 = pd.read_csv('../reproduction/outputs/txt3.csv')
+txt3[txt3['scenario'].isin(['Baseline', 'Two AngioINRs'])]
+```
