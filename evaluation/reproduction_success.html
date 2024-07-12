@@ -20,41 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -74,6 +60,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -226,8 +215,17 @@ require(['plotly'], function(Plotly) {
    
   <ul>
   <li><a href="#time-to-completion" id="toc-time-to-completion" class="nav-link active" data-scroll-target="#time-to-completion">Time-to-completion</a></li>
-  <li><a href="#reproduction-of-items-from-the-scope" id="toc-reproduction-of-items-from-the-scope" class="nav-link" data-scroll-target="#reproduction-of-items-from-the-scope">Reproduction of items from the scope</a></li>
-  <li><a href="#figure-x" id="toc-figure-x" class="nav-link" data-scroll-target="#figure-x">Figure X</a></li>
+  <li><a href="#reproduction-of-items-from-the-scope" id="toc-reproduction-of-items-from-the-scope" class="nav-link" data-scroll-target="#reproduction-of-items-from-the-scope">Reproduction of items from the scope</a>
+  <ul class="collapse">
+  <li><a href="#figure-2" id="toc-figure-2" class="nav-link" data-scroll-target="#figure-2">Figure 2</a></li>
+  <li><a href="#figure-3" id="toc-figure-3" class="nav-link" data-scroll-target="#figure-3">Figure 3</a></li>
+  <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">Figure 4</a></li>
+  <li><a href="#figure-5" id="toc-figure-5" class="nav-link" data-scroll-target="#figure-5">Figure 5</a></li>
+  <li><a href="#supplementary-figure" id="toc-supplementary-figure" class="nav-link" data-scroll-target="#supplementary-figure">Supplementary figure</a></li>
+  <li><a href="#in-text-result-1" id="toc-in-text-result-1" class="nav-link" data-scroll-target="#in-text-result-1">In-text result 1</a></li>
+  <li><a href="#in-text-result-2" id="toc-in-text-result-2" class="nav-link" data-scroll-target="#in-text-result-2">In-text result 2</a></li>
+  <li><a href="#in-text-result-3" id="toc-in-text-result-3" class="nav-link" data-scroll-target="#in-text-result-3">In-text result 3</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/evaluation/reproduction_success.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -257,86 +255,11 @@ require(['plotly'], function(Plotly) {
 <p><strong>Please note: This is a template page and has not yet been completed</strong></p>
 <!-- TODO: Use skeleton to create page describing reproduction success. If it is subjective (e.g. comparing figures), be sure to explain how you decided that the figure was now successfully reproduced or not -->
 <p>Of the X items in the scope, X% (X out of X) were considered to be <strong>successfully reproduced</strong>.</p>
+<p>As cited throughout, images on this page are sourced from <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>.</p>
 <section id="time-to-completion" class="level2">
 <h2 class="anchored" data-anchor-id="time-to-completion">Time-to-completion</h2>
-<div id="70bcaa4c" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mtick</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> graph_objects <span class="im">as</span> go</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># List of time to complete each item ------------------------------------------</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>time_list <span class="op">=</span> [</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">516</span>, <span class="st">'In-text result 1'</span>],</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1193</span>, <span class="st">'In-text result 2'</span>],</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'Figure 2'</span>],</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'Figure 3'</span>],</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'Figure 4'</span>],</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'Figure 5'</span>],</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'Supplementary figure'</span>],</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    [np.nan, <span class="st">'In-text result 3'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="7f9bc3ec" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create times dataframe...</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to dataframe</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> pd.DataFrame(time_list, columns<span class="op">=</span>[<span class="st">'time'</span>, <span class="st">'item'</span>])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by 'time' to correctly plot the ECDF</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>times_clean <span class="op">=</span> times.sort_values(by<span class="op">=</span><span class="st">'time'</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the ECDF values</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>times_clean[<span class="st">'ecdf'</span>] <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(times_clean) <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(times_clean) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># AMEND figure 2 set ecdf to that of the last item</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = np.nan</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = 25</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert the starting point (0, 0) in the ECDF</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>times_clean.loc[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> [<span class="dv">0</span>, <span class="st">'Start'</span>, <span class="dv">0</span>]</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>times_clean.index <span class="op">=</span> times_clean.index <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>times_clean <span class="op">=</span> times_clean.sort_index()</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert time to hours</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>times_clean[<span class="st">'hours'</span>] <span class="op">=</span> times_clean[<span class="st">'time'</span>]<span class="op">/</span><span class="dv">60</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="5f8b173c" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add points for the 90 degree turns in the line...</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust index so it goes 0 2 4 6...</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>times_original <span class="op">=</span> times_clean.copy()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>times_original.index <span class="op">=</span> times_clean.index<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>times_extra <span class="op">=</span> times_clean.copy()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get result from row 1 to final, and add another row with np.nan</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>next_result <span class="op">=</span> times_clean[<span class="st">'time'</span>][<span class="dv">1</span>:].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>next_result[<span class="bu">len</span>(next_result)] <span class="op">=</span> np.nan</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace time with those values (i.e. the value from the row below)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>times_extra[<span class="st">'time'</span>] <span class="op">=</span> next_result</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>times_extra[<span class="st">'item'</span>] <span class="op">=</span> np.nan</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Then adjust index so it goes 1 3 5 7...</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>times_extra.index <span class="op">=</span> (times_extra.index<span class="op">*</span><span class="dv">2</span>)<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine (so have alternating rows from each due to odd and even indexes)</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt_times <span class="op">=</span> pd.concat([times_original, times_extra]).sort_index()</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert time to hours</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt_times[<span class="st">'hours'</span>] <span class="op">=</span> plt_times[<span class="st">'time'</span>]<span class="op">/</span><span class="dv">60</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>Non-interactive plot:</p>
-<div id="39578976" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create non-interactive plot with matplotlib...</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ax.plot(plt_times[<span class="st">'hours'</span>], plt_times[<span class="st">'ecdf'</span>], marker<span class="op">=</span><span class="st">'.'</span>, markevery<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">40</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time elapsed (hours)'</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Percentage of items reproduced'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mtick.PercentFormatter())</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="83adb393" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -346,32 +269,11 @@ require(['plotly'], function(Plotly) {
 </div>
 </div>
 <p>Interactive plot:</p>
-<div id="c9e79c4b" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create interactive plot with plotly express...</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot using combination of scatter and line</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>plt_times[<span class="st">'hours'</span>], y<span class="op">=</span>plt_times[<span class="st">'ecdf'</span>], mode<span class="op">=</span><span class="st">'lines'</span>, hoverinfo<span class="op">=</span><span class="st">'skip'</span>))</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>times_clean[<span class="st">'hours'</span>], y<span class="op">=</span>times_clean[<span class="st">'ecdf'</span>],</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">'markers'</span>, marker<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">'blue'</span>, size<span class="op">=</span><span class="dv">6</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    hovertext<span class="op">=</span>times_clean[<span class="st">'item'</span>], hoverlabel<span class="op">=</span><span class="bu">dict</span>(namelength<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    hovertemplate <span class="op">=</span> (</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'%</span><span class="sc">{hovertext}</span><span class="st">&lt;br&gt;Time: %</span><span class="sc">{x:.1f}</span><span class="st"> hours&lt;br&gt;Completion: %</span><span class="sc">{y:.1f}</span><span class="st">%'</span>)))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Amend appearance</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>fig.update_layout(xaxis_range<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">40</span>], yaxis_range<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">100</span>],</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                  showlegend<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Show plot, hiding toolbar and not allowing zoom</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>fig.layout.xaxis.fixedrange <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fig.layout.yaxis.fixedrange <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>fig.show(config<span class="op">=</span>{<span class="st">'displayModeBar'</span>: <span class="va">False</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="96341d62" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<div>                            <div id="c99a9b4b-afc3-4cf0-858e-479b7d766479" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c99a9b4b-afc3-4cf0-858e-479b7d766479")) {                    Plotly.newPlot(                        "c99a9b4b-afc3-4cf0-858e-479b7d766479",                        [{"hoverinfo":"skip","mode":"lines","x":[0.0,8.6,8.6,19.883333333333333,19.883333333333333,null,null,null,null,null,null,null,null,null,null,null,null,null],"y":[0.0,0.0,12.5,12.5,25.0,25.0,37.5,37.5,50.0,50.0,62.5,62.5,75.0,75.0,87.5,87.5,100.0,100.0],"type":"scatter"},{"hoverlabel":{"namelength":0},"hovertemplate":"%{hovertext}\u003cbr\u003eTime: %{x:.1f} hours\u003cbr\u003eCompletion: %{y:.1f}%","hovertext":["Start","In-text result 1","In-text result 2","Figure 2","Figure 3","Figure 4","Figure 5","Supplementary figure","In-text result 3"],"marker":{"color":"blue","size":6},"mode":"markers","x":[0.0,8.6,19.883333333333333,null,null,null,null,null,null],"y":[0.0,12.5,25.0,37.5,50.0,62.5,75.0,87.5,100.0],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"range":[0,40],"fixedrange":true},"yaxis":{"range":[0,100],"fixedrange":true},"showlegend":false},                        {"displayModeBar": false, "responsive": true}                    ).then(function(){
+<div>                            <div id="2a20fe9e-fcf9-4dea-b605-d7c924f6b99f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("2a20fe9e-fcf9-4dea-b605-d7c924f6b99f")) {                    Plotly.newPlot(                        "2a20fe9e-fcf9-4dea-b605-d7c924f6b99f",                        [{"hoverinfo":"skip","mode":"lines","x":[0.0,8.6,8.6,19.883333333333333,19.883333333333333,20.466666666666665,20.466666666666665,null,null,null,null,null,null,null,null,null,null,null],"y":[0.0,0.0,12.5,12.5,25.0,25.0,37.5,37.5,50.0,50.0,62.5,62.5,75.0,75.0,87.5,87.5,100.0,100.0],"type":"scatter"},{"hoverlabel":{"namelength":0},"hovertemplate":"%{hovertext}\u003cbr\u003eTime: %{x:.1f} hours\u003cbr\u003eCompletion: %{y:.1f}%","hovertext":["Start","In-text result 1","In-text result 2","Figure 5","Figure 2","Figure 3","Figure 4","Supplementary figure","In-text result 3"],"marker":{"color":"blue","size":6},"mode":"markers","x":[0.0,8.6,19.883333333333333,20.466666666666665,null,null,null,null,null],"y":[0.0,12.5,25.0,37.5,50.0,62.5,75.0,87.5,100.0],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"range":[0,40],"fixedrange":true},"yaxis":{"range":[0,100],"fixedrange":true},"showlegend":false},                        {"displayModeBar": false, "responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('c99a9b4b-afc3-4cf0-858e-479b7d766479');
+var gd = document.getElementById('2a20fe9e-fcf9-4dea-b605-d7c924f6b99f');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -399,19 +301,242 @@ if (outputEl) {{
 </section>
 <section id="reproduction-of-items-from-the-scope" class="level2">
 <h2 class="anchored" data-anchor-id="reproduction-of-items-from-the-scope">Reproduction of items from the scope</h2>
-</section>
-<section id="figure-x" class="level2">
-<h2 class="anchored" data-anchor-id="figure-x">Figure X</h2>
-<p>Original figure:</p>
-<!-- Image, e.g.
-![](../original_study/article_fig2.png){width=70% fig-align="center"} -->
+<section id="figure-2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2">Figure 2</h3>
+<p>Original (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig2.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../original_study/fig2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
 <p>Reproduction:</p>
-<!-- Image -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../reproduction/outputs/fig2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../reproduction/outputs/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="figure-3" class="level3">
+<h3 class="anchored" data-anchor-id="figure-3">Figure 3</h3>
+<p>Original (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig3.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../original_study/fig3.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Reproduction:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../reproduction/outputs/fig3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../reproduction/outputs/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="figure-4" class="level3">
+<h3 class="anchored" data-anchor-id="figure-4">Figure 4</h3>
+<p>Original (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig4.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../original_study/fig4.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Reproduction:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../reproduction/outputs/fig4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../reproduction/outputs/fig4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="figure-5" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5">Figure 5</h3>
+<p>Original (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/fig5.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../original_study/fig5.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Reproduction:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../reproduction/outputs/fig5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../reproduction/outputs/fig5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="supplementary-figure" class="level3">
+<h3 class="anchored" data-anchor-id="supplementary-figure">Supplementary figure</h3>
+<p>Original (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>):</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../original_study/supp.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../original_study/supp.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Reproduction:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../reproduction/outputs/supplementary_figure.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../reproduction/outputs/supplementary_figure.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="in-text-result-1" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-result-1">In-text result 1</h3>
+<p>“Exclusive-Use Scenario. In this scenario, the overall wait time probability at angioINR was reduced compared to baseline (red line in Figure 2B compared to Figure 2A). This represents a <strong>decrease in ECR patient wait time for angioINR by an average of 6 min</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+<p>Reproduction:</p>
+<div id="a581e500" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">scenario</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">diff_from_baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Baseline</td>
+<td>13.958269</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Exclusive use</td>
+<td>8.117729</td>
+<td>-5.84</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="in-text-result-2" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-result-2">In-text result 2</h3>
+<p>“Two angioINRs Scenario. This scenario simulates the effect a facility upgrade to two biplane angiographic suites, but without additional staff changes. The wait time probability at angioINR was reduced compared to baseline (Figure 2C). The reduction represents an <strong>average of 4 min less in queue for angioINR</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+<p>Reproduction:</p>
+<div id="09f33fc2" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">scenario</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">diff_from_baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Baseline</td>
+<td>13.958269</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Two AngioINRs</td>
+<td>9.621122</td>
+<td>-4.34</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="in-text-result-3" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-result-3">In-text result 3</h3>
+<p>“Extended Schedule Scenario. The wait time probability at angioINR in the exclusive- use scenario was further reduced by extended work hours (Figure 3B). In contrast, work extension did not affect baseline or the 2 angioINRs scenario (Figures 3A,C). For the baseline scenario, 1 and 2 h of extra work resulted in an <strong>average wait time of 1.7 and 0.9 min reduction, respectively</strong>. For the 2 angioINRs scenario, 1 and 2 h of extra work resulted in an <strong>average wait time gain of 1 and 0.3 min, respectively</strong>.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
+<p>Reproduction:</p>
+<div id="73aa9826" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">scenario</th>
+<th data-quarto-table-cell-role="th">shift</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">diff_from_5pm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Baseline</td>
+<td>5pm</td>
+<td>13.958269</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Baseline</td>
+<td>6pm</td>
+<td>12.486042</td>
+<td>-1.47</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Baseline</td>
+<td>7pm</td>
+<td>12.491421</td>
+<td>-1.47</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Two AngioINRs</td>
+<td>5pm</td>
+<td>9.621122</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Two AngioINRs</td>
+<td>6pm</td>
+<td>9.216435</td>
+<td>-0.40</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Two AngioINRs</td>
+<td>7pm</td>
+<td>8.699223</td>
+<td>-0.92</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
+Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -858,6 +983,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

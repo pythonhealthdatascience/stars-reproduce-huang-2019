@@ -242,6 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</a></li>
   <li><a href="#evaluating-in-text-result-3" id="toc-evaluating-in-text-result-3" class="nav-link" data-scroll-target="#evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</a></li>
   <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">13.45-13.54, 14.00-14.21: Figure 4</a></li>
+  <li><a href="#figure-5" id="toc-figure-5" class="nav-link" data-scroll-target="#figure-5">15.32-16.31, 16.35-17.00: Figure 5</a></li>
   <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -263,7 +264,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TBC. Total time used: TBC. (TBC.).</p>
+<p>Reproduced Figure 5 and working on Figures 2 and 4. Total time used: 23h 29m (58.7%).</p>
 </div>
 </div>
 <section id="running-model-with-30-replications-and-various-seeds" class="level2">
@@ -385,9 +386,15 @@ Note
 </figure>
 </div>
 </section>
+<section id="figure-5" class="level2">
+<h2 class="anchored" data-anchor-id="figure-5">15.32-16.31, 16.35-17.00: Figure 5</h2>
+<p>Don’t save full model results due to file size, so had to re-run the three basic model scenarios, and then combined and saved the utilisation from angioINR.</p>
+<p>I realised that the plot looks very similar to those from the <a href="https://r-simmer.org/extensions/plot/reference/plot.mon">simmer documentation</a>, so followed those guidelines to produce it (and see code for that function <code>plot.resources.utilization</code> <a href="https://github.com/r-simmer/simmer.plot/blob/51aa1cf442b4923ab95ad3822408c139898731b5/R/plot.resources.R#L95">at this link</a>). However, ordinary import using data.table creates a data.table data.frame, whilst the original from the model is a resources data.frame. This appears to be a custom simmer class, and the plot function does not work otherwise. As I couldn’t figure a way to resolve this, I set it to run the model for this function only, for now, since the original simmer.plot code is not under an open license.</p>
+<p>I think the result is very similar to the original - the only difference is that baseline has 24% utilisation instead of 26% - but I feel that is close enough to mark this as successfully reproduced.</p>
+</section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="3a195ca9" class="cell" data-execution_count="1">
+<div id="42d85402" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -398,14 +405,22 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.45'</span>, <span class="st">'11.00'</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.35'</span>, <span class="st">'11.45'</span>)]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.35'</span>, <span class="st">'11.45'</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.00'</span>, <span class="st">'12.17'</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.20'</span>, <span class="st">'12.24'</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.13'</span>, <span class="st">'13.29'</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.39'</span>, <span class="st">'13.44'</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.45'</span>, <span class="st">'13.54'</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.00'</span>, <span class="st">'14.21'</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.32'</span>, <span class="st">'16.31'</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.35'</span>, <span class="st">'17.00'</span>)]</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 25m, or 0h 25m
-Total used to date: 1253m, or 20h 53m
-Time remaining: 1147m, or 19h 7m
-Used 52.2% of 40 hours max</code></pre>
+<pre><code>Time spent today: 181m, or 3h 1m
+Total used to date: 1409m, or 23h 29m
+Time remaining: 991m, or 16h 31m
+Used 58.7% of 40 hours max</code></pre>
 </div>
 </div>
 
