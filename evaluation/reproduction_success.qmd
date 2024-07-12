@@ -22,7 +22,7 @@ from plotly import graph_objects as go
 time_list = [
     [516, 'In-text result 1'],
     [1193, 'In-text result 2'],
-    [np.nan, 'Figure 2'],
+    [1450, 'Figure 2'],
     [np.nan, 'Figure 3'],
     [np.nan, 'Figure 4'],
     [1228, 'Figure 5'],
@@ -42,9 +42,8 @@ times_clean = times.sort_values(by='time').reset_index(drop=True)
 # Compute the ECDF values
 times_clean['ecdf'] = np.arange(1, len(times_clean) + 1) / len(times_clean) * 100
 
-# AMEND figure 2 set ecdf to that of the last item
-#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = np.nan
-#times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = 25
+# AMEND Figure 2 to NaN (as not completed, but use time to show when stopped)
+times_clean.loc[times_clean['item'] == 'Figure 2', 'ecdf'] = np.nan
 
 # Insert the starting point (0, 0) in the ECDF
 times_clean.loc[-1] = [0, 'Start', 0]
@@ -111,8 +110,17 @@ fig.add_trace(go.Scatter(
         '%{hovertext}<br>Time: %{x:.1f} hours<br>Completion: %{y:.1f}%')))
 
 # Amend appearance
-fig.update_layout(xaxis_range=[0, 40], yaxis_range=[0, 100],
-                  showlegend=False)
+fig.update_layout(
+    xaxis=dict(
+        title='Time elapsed (hours)',
+        range=[0, 40]
+    ),
+    yaxis=dict(
+        title='Percentage of items reproduced',
+        range=[0, 100],
+        ticksuffix='%'
+    ),
+    showlegend=False)
 
 # Show plot, hiding toolbar and not allowing zoom
 fig.layout.xaxis.fixedrange = True
