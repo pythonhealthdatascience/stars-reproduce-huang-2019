@@ -17,6 +17,7 @@ Reproduced Figure 5 and working on Figures 2 and 4. Total time used: 23h 29m (58
 Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.
 
 ![Figure 2A with different seeds](fig2a_seeds.png)
+
 ## 12.00-12.17: Working on Figure 2B
 
 Figures 2A and 2C have lower angioINR wait times but are otherwise fairly similar to the scope. However, Figure 2B is very different. It should have higher angioINR and angio staff wait times.
