@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Amy Heather">
-<meta name="dcterms.date" content="2024-07-12">
+<meta name="dcterms.date" content="2024-07-15">
 
-<title>Reproducing Huang et al.&nbsp;2019 - Day 8</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 9</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -223,7 +189,7 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Day 8</h1>
+      <h1 class="title">Day 9</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">reproduce</div>
               </div>
@@ -243,7 +209,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 12, 2024</p>
+        <p class="date">July 15, 2024</p>
       </div>
     </div>
     
@@ -259,21 +225,9 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#working-on-the-supplementary-figure" id="toc-working-on-the-supplementary-figure" class="nav-link active" data-scroll-target="#working-on-the-supplementary-figure">09.00-09.07, 09.14-09.24, 09.36-09.40: Working on the supplementary figure</a></li>
-  <li><a href="#untimed-consensus-on-reproduction-success" id="toc-untimed-consensus-on-reproduction-success" class="nav-link" data-scroll-target="#untimed-consensus-on-reproduction-success">Untimed: Consensus on reproduction success</a></li>
-  <li><a href="#tidy-and-email-author" id="toc-tidy-and-email-author" class="nav-link" data-scroll-target="#tidy-and-email-author">10.30-10.50: Tidy and email author</a></li>
-  <li><a href="#timings-for-reproduction" id="toc-timings-for-reproduction" class="nav-link" data-scroll-target="#timings-for-reproduction">Timings for reproduction</a></li>
-  <li><a href="#badges" id="toc-badges" class="nav-link" data-scroll-target="#badges">10.58-11.06: Badges</a></li>
-  <li><a href="#stars-framework" id="toc-stars-framework" class="nav-link" data-scroll-target="#stars-framework">11.07-11.16: STARS Framework</a></li>
-  <li><a href="#stress-des" id="toc-stress-des" class="nav-link" data-scroll-target="#stress-des">11.26-11.51, 12.00-12.17, 13.04-13.18: STRESS-DES</a>
-  <ul class="collapse">
-  <li><a href="#uncertain" id="toc-uncertain" class="nav-link" data-scroll-target="#uncertain">Uncertain</a></li>
-  </ul></li>
-  <li><a href="#des-checklist-derived-from-ispor-sdm" id="toc-des-checklist-derived-from-ispor-sdm" class="nav-link" data-scroll-target="#des-checklist-derived-from-ispor-sdm">13.19-13.33, 13.39-13.43: DES checklist derived from ISPOR-SDM</a></li>
-  <li><a href="#timings-for-evaluation" id="toc-timings-for-evaluation" class="nav-link" data-scroll-target="#timings-for-evaluation">Timings for evaluation</a></li>
-  <li><a href="#untimed-working-on-research-compendium-stage" id="toc-untimed-working-on-research-compendium-stage" class="nav-link" data-scroll-target="#untimed-working-on-research-compendium-stage">Untimed: Working on research compendium stage</a></li>
+  <li><a href="#pulled-together-uncertain-and-unmet-evaluation-components" id="toc-pulled-together-uncertain-and-unmet-evaluation-components" class="nav-link active" data-scroll-target="#pulled-together-uncertain-and-unmet-evaluation-components">08.22-08.30: Pulled together uncertain and unmet evaluation components</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_12/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -292,165 +246,76 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Supplementary figure then evaluation against guideliens. Total time used for reproduction: 24h 10m (60.4%).</p>
+<p>TBC.</p>
 </div>
 </div>
-<section id="working-on-the-supplementary-figure" class="level2">
-<h2 class="anchored" data-anchor-id="working-on-the-supplementary-figure">09.00-09.07, 09.14-09.24, 09.36-09.40: Working on the supplementary figure</h2>
-<p>The supplementary figure consists of doubling and tripling the number of ECR patients.</p>
-<blockquote class="blockquote">
-<p>“Since acquiring data for this study, the demands for ECR at our Comprehensive Stroke Service has doubled between 2018 and 19 and is predicted to triple by the end of 2019. We simulated these increased demands on the resource. As expected, the patient wait times do become longer, but the patterns of resource utilization remained unchanged, suggesting that the same bottlenecks affect throughput” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></p>
-</blockquote>
-<p>I’ve assumed this to mean we double and triple the number of ED arrivals (<code>ed_pt</code>, e.g.<code>ed_pt=107700*2</code>), but the output plots looked vastly different to the paper!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="supplementary_figure.png" class="img-fluid figure-img"></p>
-<figcaption>Wrong supplementary figure</figcaption>
-</figure>
-</div>
-<p>I then realised I was mistaken, and that perhaps I should have interpreted this as being double and triple the <code>ecr_pt</code> (which is used when model decides whether patient needs ECR: <code>PROB_ECR = ecr_pt / ais_pt</code>). This looked right, and very similar to the paper, with the exception that my angioINR wait times curves peak much lower.</p>
-</section>
-<section id="untimed-consensus-on-reproduction-success" class="level2">
-<h2 class="anchored" data-anchor-id="untimed-consensus-on-reproduction-success">Untimed: Consensus on reproduction success</h2>
-<p>Shared with Tom and Alison. Tom and Alison both agreed with decisions (reproduced Figure 5 and in-text 1 and 2, and not other items).</p>
-</section>
-<section id="tidy-and-email-author" class="level2">
-<h2 class="anchored" data-anchor-id="tidy-and-email-author">10.30-10.50: Tidy and email author</h2>
-<p>Did a little bit of tidying (e.g.&nbsp;removed some old scenarioes from <code>reproduction.qmd</code>), and then emailed the corresponding author, to let them know the progress with this work, and to ask for any advice re: discrepancies, and whether they might have and be happy to share code that produces these figures.</p>
-</section>
-<section id="timings-for-reproduction" class="level2">
-<h2 class="anchored" data-anchor-id="timings-for-reproduction">Timings for reproduction</h2>
-<div id="3b2c16c4" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">1409</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.00'</span>, <span class="st">'09.07'</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.14'</span>, <span class="st">'09.24'</span>),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'09.36'</span>, <span class="st">'09.40'</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.30'</span>, <span class="st">'10.50'</span>)]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 41m, or 0h 41m
-Total used to date: 1450m, or 24h 10m
-Time remaining: 950m, or 15h 50m
-Used 60.4% of 40 hours max</code></pre>
-</div>
-</div>
-</section>
-<section id="badges" class="level2">
-<h2 class="anchored" data-anchor-id="badges">10.58-11.06: Badges</h2>
-<p>As mentioned in prior logbook entry, will now move on to evaluation stage.</p>
-<p>Notes on the unmet (and why)</p>
+<section id="pulled-together-uncertain-and-unmet-evaluation-components" class="level2">
+<h2 class="anchored" data-anchor-id="pulled-together-uncertain-and-unmet-evaluation-components">08.22-08.30: Pulled together uncertain and unmet evaluation components</h2>
+<p>Pulled together to share with Tom and Alison, to get a second opinion on these, and emailed over a link.</p>
+<p><strong>Badges</strong>:</p>
 <ul>
-<li><strong>archive</strong> and <strong>id</strong> - only on GitHub</li>
-<li><strong>complete</strong> - didn’t have the scenario and figure code</li>
-<li><strong>structure</strong> - not sufficient to facilitate reuse (i.e.&nbsp;would want more commenting/docstrings/dcoumentation), and as structure was designed for application (but had to extract code to make the paper results)</li>
-<li><strong>documentation_…</strong> - no documentation provided</li>
-<li><strong>regenerated</strong> - wasn’t able to reproduce all the items</li>
-<li><strong>hour</strong> - took longer than an hour</li>
+<li><a href="https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html" class="uri">https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html</a></li>
+<li>No uncertainties</li>
+<li>9 unmet criteria</li>
 </ul>
-</section>
-<section id="stars-framework" class="level2">
-<h2 class="anchored" data-anchor-id="stars-framework">11.07-11.16: STARS Framework</h2>
-</section>
-<section id="stress-des" class="level2">
-<h2 class="anchored" data-anchor-id="stress-des">11.26-11.51, 12.00-12.17, 13.04-13.18: STRESS-DES</h2>
-<section id="uncertain" class="level3">
-<h3 class="anchored" data-anchor-id="uncertain">Uncertain</h3>
+<p><strong>STARS framework</strong>:</p>
+<ul>
+<li><a href="https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/artefacts.html" class="uri">https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/artefacts.html</a></li>
+<li>No uncertainities</li>
+<li>9 unmet criteria</li>
+</ul>
+<p><strong>Reporting guidelines</strong>:</p>
+<ul>
+<li><a href="https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reporting.html" class="uri">https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reporting.html</a></li>
+<li>Five uncertainities as below.</li>
+<li>4 + 7 unmet criteria</li>
+</ul>
 <table class="table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Item</th>
 <th>My comments</th>
+<th>Thoughts from Tom/Alison</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>STRESS-DES 1.2 Model outputs. Define all quantitative performance measures that are reported, using equations where necessary. Specify how and when they are calculated during the model run along with how any measures of error such as confidence intervals are calculated.</td>
 <td>It does describe the measures, and how these are calculated, and so I have said it met these criteria, although I did find it hard to understand/calculate the relative probability of waiting, and would’ve benefited from further detail/equations</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>STRESS-DES 1.3 Experimentation aims. If the model has been used for experimentation, state the objectives that it was used to investigate. (A) Scenario based analysis – Provide a name and description for each scenario, providing a rationale for the choice of scenarios and ensure that item 2.3 (below) is completed.</td>
 <td>I feel the paper does describe the scenarios clearly - my only hesitation is that I have been unable to successfully implement the exclusive use scenario - but that feels like a coding issue rather than a description issue? As, on the face of it, the article describes everything I need to know.</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>STRESS-DES 3.2 Pre-processing. Provide details of any data manipulation that has taken place before its use in the simulation, e.g.&nbsp;interpolation to account for missing data or the removal of outliers.</td>
 <td>None provided, so presumed not applicable - but hard to say, as maybe there was just unmentioned. But as not possible to know either way, assumed not-applicable</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>ISPOR SDM 15 Is the model generalizability issue discussed?</td>
 <td>Not sure if it is partially or fully met?</td>
+<td></td>
 </tr>
 <tr class="odd">
-<td>12 Is cross validation performed and reported</td>
+<td>ISPOR SDM 12 Is cross validation performed and reported</td>
 <td>Is it not met or not applicable? <code>Introduction</code>: “In contrast to other healthcare fields, a resource-use optimization model has not been implemented</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>for comprehensive stroke services.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></td>
 <td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="des-checklist-derived-from-ispor-sdm" class="level2">
-<h2 class="anchored" data-anchor-id="des-checklist-derived-from-ispor-sdm">13.19-13.33, 13.39-13.43: DES checklist derived from ISPOR-SDM</h2>
-</section>
-<section id="timings-for-evaluation" class="level2">
-<h2 class="anchored" data-anchor-id="timings-for-evaluation">Timings for evaluation</h2>
-<div id="f32fe522" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.58'</span>, <span class="st">'11.06'</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.07'</span>, <span class="st">'11.16'</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.26'</span>, <span class="st">'11.51'</span>),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.00'</span>, <span class="st">'12.17'</span>),</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.04'</span>, <span class="st">'13.18'</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.19'</span>, <span class="st">'13.33'</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.39'</span>, <span class="st">'13.43'</span>)]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times, limit<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 91m, or 1h 31m
-Total used to date: 91m, or 1h 31m</code></pre>
-</div>
-</div>
-</section>
-<section id="untimed-working-on-research-compendium-stage" class="level2">
-<h2 class="anchored" data-anchor-id="untimed-working-on-research-compendium-stage">Untimed: Working on research compendium stage</h2>
-<p>Some tidying up and sorting for research compendium stage inc.</p>
-<ul>
-<li>Working on README for reproduction</li>
-<li>Looking into options for unit testing in R…
-<ul>
-<li>Package <code>testthat</code></li>
-<li><code>use_testthat()</code>. This initializes the unit testing machinery for your package. It adds Suggests: testthat to DESCRIPTION, creates the directory tests/testthat/, and adds the script tests/testthat.R.</li>
-<li><code>use_test("functionname")</code> to create matching testfile.</li>
-<li><code>library(testthat)</code>, <code>load_all()</code>, <code>test()</code> to run the test. Tests will also run whenever check() package</li>
-<li><code>rename_files("strsplit1", "str_split_one")</code> to rename the R file and will also rename testthat file (which we also edit with new function name), to fit with convention of filename matching function name</li>
-<li>Can use <code>expect_equal()</code> to compare two dataframes</li>
-<li>File structure: <code>tests/</code>, <code>testthat.R</code>, <code>testthat</code>, <code>helper_func1.R</code>, <code>helper_func2.R</code>, <code>test_name.R</code></li>
-<li>Test files prefixed <code>test_</code>, keep data in files prefixed <code>helper_</code></li>
-</ul></li>
-</ul>
 
 
 
@@ -894,7 +759,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_12/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -25,60 +25,64 @@
     <lastmod>2024-07-12T08:46:53.616Z</lastmod>
   </url>
   <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reproduction_report.html</loc>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/logbook/logbook.html</loc>
     <lastmod>2024-07-03T11:37:23.934Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/scope.html</loc>
-    <lastmod>2024-07-04T13:53:30.113Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reproduction_success.html</loc>
-    <lastmod>2024-07-12T13:16:58.659Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/artefacts.html</loc>
-    <lastmod>2024-07-12T10:15:58.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/study_publication.html</loc>
-    <lastmod>2024-07-04T14:45:18.063Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/reproduction_readme.html</loc>
-    <lastmod>2024-07-03T11:37:23.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/CHANGELOG.html</loc>
-    <lastmod>2024-07-04T14:48:17.374Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/index.html</loc>
-    <lastmod>2024-07-03T11:37:23.934Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/license.html</loc>
-    <lastmod>2024-07-03T11:37:23.942Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/reproduction/reproduction.html</loc>
-    <lastmod>2024-07-12T09:37:59.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reporting.html</loc>
-    <lastmod>2024-07-12T12:42:38.457Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html</loc>
-    <lastmod>2024-07-12T10:09:35.297Z</lastmod>
   </url>
   <url>
     <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reflections.html</loc>
     <lastmod>2024-07-03T11:37:23.934Z</lastmod>
   </url>
   <url>
-    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/logbook/logbook.html</loc>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html</loc>
+    <lastmod>2024-07-12T10:09:35.297Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reporting.html</loc>
+    <lastmod>2024-07-12T12:42:38.457Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/reproduction/reproduction.html</loc>
+    <lastmod>2024-07-12T09:37:59.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/license.html</loc>
+    <lastmod>2024-07-03T11:37:23.942Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/index.html</loc>
     <lastmod>2024-07-03T11:37:23.934Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/CHANGELOG.html</loc>
+    <lastmod>2024-07-04T14:48:17.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/reproduction_readme.html</loc>
+    <lastmod>2024-07-03T11:37:23.942Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/quarto_site/study_publication.html</loc>
+    <lastmod>2024-07-04T14:45:18.063Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/artefacts.html</loc>
+    <lastmod>2024-07-12T10:15:58.709Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reproduction_success.html</loc>
+    <lastmod>2024-07-12T13:16:58.659Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/scope.html</loc>
+    <lastmod>2024-07-04T13:53:30.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/reproduction_report.html</loc>
+    <lastmod>2024-07-03T11:37:23.934Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/logbook/posts/2024_07_13/index.html</loc>
+    <lastmod>2024-07-15T07:30:16.747Z</lastmod>
   </url>
   <url>
     <loc>https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/logbook/posts/2024_07_08/index.html</loc>
