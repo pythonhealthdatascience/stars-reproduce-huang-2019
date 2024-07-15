@@ -259,8 +259,10 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pulled-together-uncertain-and-unmet-evaluation-components" id="toc-pulled-together-uncertain-and-unmet-evaluation-components" class="nav-link active" data-scroll-target="#pulled-together-uncertain-and-unmet-evaluation-components">08.22-08.30, 08.37-08.41: Pulled together uncertain and unmet evaluation components</a></li>
+  <li><a href="#consensus-on-evaluation" id="toc-consensus-on-evaluation" class="nav-link active" data-scroll-target="#consensus-on-evaluation">08.22-08.30, 08.37-08.41, 10.53-10.55: Consensus on evaluation</a></li>
   <li><a href="#timings-for-evaluation" id="toc-timings-for-evaluation" class="nav-link" data-scroll-target="#timings-for-evaluation">Timings for evaluation</a></li>
+  <li><a href="#untimed-revisiting-r-dependency-management-options" id="toc-untimed-revisiting-r-dependency-management-options" class="nav-link" data-scroll-target="#untimed-revisiting-r-dependency-management-options">Untimed: Revisiting R dependency management options</a></li>
+  <li><a href="#untimed-recording-troubleshooting-and-reflections" id="toc-untimed-recording-troubleshooting-and-reflections" class="nav-link" data-scroll-target="#untimed-recording-troubleshooting-and-reflections">Untimed: Recording troubleshooting and reflections</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -284,9 +286,9 @@ Note
 <p>TBC.</p>
 </div>
 </div>
-<section id="pulled-together-uncertain-and-unmet-evaluation-components" class="level2">
-<h2 class="anchored" data-anchor-id="pulled-together-uncertain-and-unmet-evaluation-components">08.22-08.30, 08.37-08.41: Pulled together uncertain and unmet evaluation components</h2>
-<p>Pulled together to share with Tom and Alison, to get a second opinion on these, and emailed over a link.</p>
+<section id="consensus-on-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="consensus-on-evaluation">08.22-08.30, 08.37-08.41, 10.53-10.55: Consensus on evaluation</h2>
+<p>Pulled together to share with Tom and Alison, to get a second opinion on these, and emailed over a link. Later, input responses below. Agreed with all decisions, so no changes required.</p>
 <p><strong>Badges</strong>:</p>
 <ul>
 <li><a href="https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html" class="uri">https://pythonhealthdatascience.github.io/stars-reproduce-huang-2019/evaluation/badges.html</a></li>
@@ -315,41 +317,41 @@ Note
 <tr class="header">
 <th>Item</th>
 <th>My comments</th>
-<th>Thoughts from Tom/Alison</th>
+<th>Thoughts from Tom</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>STRESS-DES 1.2 Model outputs. Define all quantitative performance measures that are reported, using equations where necessary. Specify how and when they are calculated during the model run along with how any measures of error such as confidence intervals are calculated.</td>
 <td>It does describe the measures, and how these are calculated, and so I have said it met these criteria, although I did find it hard to understand/calculate the relative probability of waiting, and would’ve benefited from further detail/equations. Currently marked as fully met.</td>
-<td></td>
+<td>Agree with decision.</td>
 </tr>
 <tr class="even">
 <td>STRESS-DES 1.3 Experimentation aims. If the model has been used for experimentation, state the objectives that it was used to investigate. (A) Scenario based analysis – Provide a name and description for each scenario, providing a rationale for the choice of scenarios and ensure that item 2.3 (below) is completed.</td>
-<td>I feel the paper does describe the scenarios clearly - my only hesitation is that I have been unable to successfully implement the exclusive use scenario - but that feels like a coding issue rather than a description issue? As, on the face of it, the article describes everything I need to know. CUrrently marked as fully met.</td>
-<td></td>
+<td>I feel the paper does describe the scenarios clearly - my only hesitation is that I have been unable to successfully implement the exclusive use scenario - but that feels like a coding issue rather than a description issue? As, on the face of it, the article describes everything I need to know. Currently marked as fully met.</td>
+<td>Agree with decision. Argue that description in article is a reasonable explanation of the logic in play - “First, in the “exclusive-use” scenario, angioINR is not available for elective IR patients. Its use is restricted to stroke, elective INR and emergency IR patients”” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></td>
 </tr>
 <tr class="odd">
 <td>STRESS-DES 3.2 Pre-processing. Provide details of any data manipulation that has taken place before its use in the simulation, e.g.&nbsp;interpolation to account for missing data or the removal of outliers.</td>
 <td>None provided, so presumed not applicable - but hard to say, as maybe there was pre-processing that simply wasn’t mentioned. But as not possible to know either way, assumed not-applicable</td>
-<td></td>
+<td>Agree with decision. Give benefit of the doubt by its absence - although ideally they would state no data pre-processing was used.</td>
 </tr>
 <tr class="even">
 <td>ISPOR SDM 12 Is cross validation performed and reported</td>
 <td>Wasn’t certain whether to mark this is unmet (❌) or not applicable (N/A)? Currently set as unmet.<br><br>Evidence - stating there is a gap in the <code>Introduction</code>: “In contrast to other healthcare fields, a resource-use optimization model has not been implemented for comprehensive stroke services.” <span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></td>
-<td></td>
+<td>Agree with decision.</td>
 </tr>
 <tr class="odd">
 <td>ISPOR SDM 15 Is the model generalizability issue discussed?</td>
 <td>Not sure if it is partially (🟡) or fully met (✅)? Currently marked as fully.<br><br>Evidence - <code>Discussion</code>: “The quality of the ECR service appears to be robust to important parameters, such as the number of radiologists. The simulation findings apply to ECR services that can be represented by the model in this study. As such, utilization of this model to its maximum capacity requires tailoring the model to local needs, as institutional bottlenecks differ between providers. We specifically developed this model using an open source programming language so that the source code can serve as a basis for future model refinement and modification.”<br><br><span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span></td>
-<td></td>
+<td>Agree with decision.</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="timings-for-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="timings-for-evaluation">Timings for evaluation</h2>
-<div id="0b535462" class="cell" data-execution_count="1">
+<div id="12912fe4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -360,20 +362,27 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'08.22'</span>, <span class="st">'08.30'</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'08.37'</span>, <span class="st">'08.41'</span>)]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times, limit<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'08.37'</span>, <span class="st">'08.41'</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.53'</span>, <span class="st">'10.55'</span>)]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times, limit<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 12m, or 0h 12m
-Total used to date: 103m, or 1h 43m</code></pre>
+<pre><code>Time spent today: 14m, or 0h 14m
+Total used to date: 105m, or 1h 45m</code></pre>
 </div>
 </div>
+</section>
+<section id="untimed-revisiting-r-dependency-management-options" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-revisiting-r-dependency-management-options">Untimed: Revisiting R dependency management options</h2>
+</section>
+<section id="untimed-recording-troubleshooting-and-reflections" class="level2">
+
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Untimed: Recording troubleshooting and reflections</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
 Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
 </div>

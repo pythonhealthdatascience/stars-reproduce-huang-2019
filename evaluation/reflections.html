@@ -173,6 +173,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#what-would-have-helped-facilitate-this-reproduction" id="toc-what-would-have-helped-facilitate-this-reproduction" class="nav-link active" data-scroll-target="#what-would-have-helped-facilitate-this-reproduction">What would have helped facilitate this reproduction?</a></li>
+  <li><a href="#what-did-help-facilitate-it" id="toc-what-did-help-facilitate-it" class="nav-link" data-scroll-target="#what-did-help-facilitate-it">What did help facilitate it?</a></li>
   <li><a href="#full-list-of-troubleshooting-steps" id="toc-full-list-of-troubleshooting-steps" class="nav-link" data-scroll-target="#full-list-of-troubleshooting-steps">Full list of troubleshooting steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/evaluation/reflections.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -199,17 +200,49 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- TODO: Remove this warning once completed assessment -->
-<p><strong>Please note: This is a template page and has not yet been completed</strong></p>
 <p>This page contains reflections on the facilitators and barriers to this reproduction, as well as a full list of the troubleshooting steps taken to reproduce this work.</p>
 <section id="what-would-have-helped-facilitate-this-reproduction" class="level2">
 <h2 class="anchored" data-anchor-id="what-would-have-helped-facilitate-this-reproduction">What would have helped facilitate this reproduction?</h2>
-<!-- TODO: Add reflections. Example:
-**Provide environment (packages and versions)**
-
-* Not all packages needed will be listed in the imports (e.g. greenlet, pathlib)
-* Didn't work with latest package versions, had to backdate it for it to work
--->
+<p><strong>Provide environment</strong></p>
+<ul>
+<li>List all packages required</li>
+</ul>
+<p><strong>Provide code that produces results from the paper</strong></p>
+<ul>
+<li>The provided code could easily get up and running to produce the application, but the paper was not focused on that, and was instead focussed on some specific scenarios. It took alot of work modifying and writing code to change it from producing an app to producing the paper results (running scenarios, saving results, processing results, creating figures).</li>
+<li>Often made mistakes in my interpretation for the implementation of scenarios, which could be avoided if code for those scenarios was provided</li>
+<li>For one of the figures, it would have been handy if informed that plot was produced by a simmer function (as didn’t initially realise this)</li>
+</ul>
+<p><strong>Provide all model parameters in the paper</strong></p>
+<ul>
+<li>In this case, patient arrivals and resource numbers were listed in the paper, and there were several discprenancies between this and the provided code. However, for many of the model parameters like length of appointment, these were not mentioned in the paper, and so it was not possible to confirm whether or not those were correct.</li>
+</ul>
+<p><strong>Add comments/docstrings to code</strong></p>
+<ul>
+<li>Took some time to decipher and ensure I have correctly understood code as uses lots of abbreviations</li>
+</ul>
+<p><strong>Explain calculations</strong> (or provide the code)</p>
+<ul>
+<li>It took a bit of time for me to work out how to transform the Figure axes as this was not mentioned in the paper (and no code was provided for these)</li>
+<li>It was also unclear and a bit tricky to work out how to standardise the density in the figures (since it is only described in the text and no formula/calculations are provided there or in the code)</li>
+</ul>
+<p><strong>Use seeds</strong></p>
+<ul>
+<li>It does not appear that the original authors used seeds (not mentioned in paper or provided in code). This would be an issue, as it means variation between scenarios could be just due to randomness (although its possible they might have used them and just not mentioned/included anymore)</li>
+<li>For reproducibility, providing seeds would’ve been beneficial, as then I could be sure that my results do not differ from the original simply due to randomness</li>
+</ul>
+<p><strong>Note:</strong> Didn’t end up needing to have older/similar versions of R and packages for it to work, and ended up using latest versions, due to challenges in installing older versions.</p>
+</section>
+<section id="what-did-help-facilitate-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-did-help-facilitate-it">What did help facilitate it?</h2>
+<p><strong>Not hard coding some parameters</strong></p>
+<ul>
+<li>The model was set up as a function with several of the parameters provided as inputs to that function, which made it really easy to implement some of the scenarios programmatically.</li>
+</ul>
+<p><strong>Parameters in paper being in the format as needed to input to the model</strong></p>
+<ul>
+<li>The calculations for inter-arrival times were provided in the code, and the inputs to the code were the number of arrivals, as reported in the paper, and so making it easy to compare those parameters and check if numbers were correct or not.</li>
+</ul>
 </section>
 <section id="full-list-of-troubleshooting-steps" class="level2">
 <h2 class="anchored" data-anchor-id="full-list-of-troubleshooting-steps">Full list of troubleshooting steps</h2>
@@ -226,13 +259,88 @@ View list
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Troubleshooting steps are grouped by theme, and the day these occurred is given in brackets at the end of each bullet.</p>
-<!-- TODO: Add full list of troubleshooting steps. Example:
-
-### Environment
-
-* No environment file, and no versions for Python or Salabim in paper (2)
-* Dependencies based on PHC.py and package versions on or prior to 14th March 2021 (2)
--->
+<p>I want to note that, disregarding my attempts to backdate R and the packages, the provided code was actually quite simple to get up and running as a shiny app. However, as the article is not about the app and instead focuses on results from particular scenarios, there was still work to be done to alter the code to get those results (rather than to get the app).</p>
+<section id="environment" class="level3">
+<h3 class="anchored" data-anchor-id="environment">Environment</h3>
+<p>Packages required:</p>
+<ul>
+<li>No environment file (2)</li>
+<li>Dependencies based on <code>server.R</code> (2)</li>
+<li>Add some extra dependencies to environment (not listed as import but appear when try to run - plyr, shiny) (3)</li>
+<li>Add packages for creating the figures (ggpubr (which required <code>sudo apt install cmake</code>)) (4)</li>
+</ul>
+<p>Versions required (tried to use same versions of R and packages as they might have used, but couldn’t get this to work, and ended up using most recent):</p>
+<ul>
+<li>Mentions version of Simmer in the paper (4.1.0) (2)</li>
+<li>Initially tried with package versions on or prior to 27th May 2019 (2)</li>
+<li>Attempted to use renv to build an environment with those package versions. Had error installing older versions of packages (e.g.&nbsp;“ERROR: compilation failed for packager ‘simmer’”)</li>
+<li>After some trial-and-error, manager to switch to the older version of R (2+3)</li>
+<li>Then attempting to install the specific package versions, I got more erors (e.g.&nbsp;“Warning: failed to find source for ‘simmer.plot 0.1.15’ in package repositories.”) (3)</li>
+<li>I tried installing them with the older version of R with no specific versions. Simmer install fine but simmer.plot failed as “Error: package ‘evaluate’ is not available” (3)</li>
+<li>Decided to just try switching to the latest version of R and installing the latest versions of all the packages (3)</li>
+<li>Had issues adding the model to the quarto site as they were using different renv, and decided just to merge the quarto site dependencies into the model renv (3)</li>
+<li>Although using the latest versions of packages and R, I don’t feel discrepancies are likely due to this, as I would expect issues from environment to be more along the lines of code not running or quite minor differences (5)</li>
+</ul>
+</section>
+<section id="get-model-code" class="level3">
+<h3 class="anchored" data-anchor-id="get-model-code">Get model code</h3>
+<ul>
+<li>Model set-up to run as a shiny app - so extracted the <code>simulate_nav()</code> and <code>plot_nav()</code> functions from the shiny app and removed a few lines of code that were still calling shiny, so that these could run in a simple .Rmd file. (3)</li>
+</ul>
+</section>
+<section id="get-model-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="get-model-parameters">Get model parameters</h3>
+<ul>
+<li>Several parameters differed between provided code and paper, so identified correct parameters based on paper’s Table 1 (3)</li>
+<li>Initially made a mistake with the INR staffing as had assumed to set <code>inr_night</code> = 0 as that is one INR staff 24 hours, but then realised they were on schedule so needs <code>inr</code>=1 and <code>inr_night</code>=1 to make one 24 hour staff member (3)</li>
+</ul>
+</section>
+<section id="run-scenarios" class="level3">
+<h3 class="anchored" data-anchor-id="run-scenarios">Run scenarios</h3>
+<ul>
+<li>Created .Rmd file to programmatically run model scenarios. A facilitator for this was that the model was already set up as a function with many of the required parameters already set as inputs to that function - e.g.&nbsp;two angioINRs easy to change (3)</li>
+<li>No code was provided for the “exclusive use” scenario, so add some to the model based on my understanding from the paper of that scenario (3)</li>
+<li>Initially, made a mistake in implementation of two angioINRs (human error) as double the machines rather than replacing the angioIR (6)</li>
+<li>Initially, also misinterpreted the supplementary figure scenario, as increased ED arrivals, instead of just directly changing the ECR numbers (7)</li>
+<li>Had issues getting same results for scenarios, and tried out various things including -
+<ul>
+<li>Changing how INR staff are in model (no impact) (5)</li>
+<li>Using default parameters from the code (rather than parameters from paper) (6)</li>
+<li>Confirming calculated inter-arrival times match up with paper (6)</li>
+<li>Went carefully over each trajectory, identifying the distributions used and lengths of resources. Not possible to check many of them though, as the paper only mentions arrivals (and not e.g.&nbsp;sampling for length of appointment) (6)</li>
+<li>Searching for pre-prints (6)</li>
+<li>Using ED triage time from model on CLOUDES (6)</li>
+<li>Checking outcome from non-ED categories (6)</li>
+<li>Varying parameters to see how that alters results - e.g.&nbsp;length of resources, number of arrivals, number of resources,, changing which patients can use machines, and running with lots of different seeds (6+7)</li>
+</ul></li>
+</ul>
+</section>
+<section id="creating-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="creating-outputs">Creating outputs</h3>
+<ul>
+<li>Add code to model to save results to CSV so don’t have to re-run each time (4)</li>
+<li>Add code to get mean waiting times (3+)
+<ul>
+<li>Identify that should filter to <code>ed</code> results (3)</li>
+<li>Identify that these are mean and not median times (3)</li>
+</ul></li>
+<li>Add code to create figures (3+)
+<ul>
+<li>Took a while to figure out what transformations had been done to the Figure axes as this isn’t mentioned anyway - eventually realised it was a square root transformation (4)</li>
+<li>Initially struggled with understanding how to standardise the density, as it is an unfamiliar calculation and just described in the article. After some trial and error, I managed to get a similar-ish plot by scaling to a maximum of 1 using the built in ..scaled.. values from <code>geom_density()</code>. (4)</li>
+<li>Then tried doing it manually again, diving density at each time by density from wait time 0, and this matched up with results from <code>geom_density()</code> scaled, and hence giving me reassurance that the calculation is likely correct. (5)</li>
+<li>For a while, didn’t realise <code>angio_staff</code> line in plots was being hidden under <code>inr</code> (6)</li>
+<li>For figure 5, realised it was being created with a simmer function <code>plot.resources.utilization</code> (7)</li>
+</ul></li>
+</ul>
+</section>
+<section id="seeds" class="level3">
+<h3 class="anchored" data-anchor-id="seeds">Seeds</h3>
+<ul>
+<li>Results could vary quite a lot between seeds. Original paper does not have any control of seeds, but when I re-ran several times, could see alot of change in mean waiting times (4+5) - but not much for other outputs like FI=igure 2 (5)</li>
+<li>Add seeds (initially tried with simEd, but too slow, so switched to simpler option of just setting a single seed without controlling seeds) (4)</li>
+</ul>
+</section>
 </div>
 </div>
 </div>

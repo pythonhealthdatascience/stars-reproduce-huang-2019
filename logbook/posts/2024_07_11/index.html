@@ -240,6 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</a></li>
+  <li><a href="#working-on-figure-2b" id="toc-working-on-figure-2b" class="nav-link" data-scroll-target="#working-on-figure-2b">12.00-12.17: Working on Figure 2B</a></li>
   <li><a href="#evaluating-in-text-result-3" id="toc-evaluating-in-text-result-3" class="nav-link" data-scroll-target="#evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</a></li>
   <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">13.45-13.54, 14.00-14.21: Figure 4</a></li>
   <li><a href="#figure-5" id="toc-figure-5" class="nav-link" data-scroll-target="#figure-5">15.32-16.31, 16.35-17.00: Figure 5</a></li>
@@ -270,7 +271,15 @@ Note
 <section id="running-model-with-30-replications-and-various-seeds" class="level2">
 <h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</h2>
 <p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.</p>
-<p><img src="fig2a_seeds.png" class="img-fluid" alt="Figure 2A with different seeds"> ## 12.00-12.17: Working on Figure 2B</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig2a_seeds.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2A with different seeds</figcaption>
+</figure>
+</div>
+</section>
+<section id="working-on-figure-2b" class="level2">
+<h2 class="anchored" data-anchor-id="working-on-figure-2b">12.00-12.17: Working on Figure 2B</h2>
 <p>Figures 2A and 2C have lower angioINR wait times but are otherwise fairly similar to the scope. However, Figure 2B is very different. It should have higher angioINR and angio staff wait times.</p>
 <p>I tried a few variants to see how they impacted results, although none got us what we are hoping for:</p>
 <ul>
@@ -394,7 +403,7 @@ Note
 </section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="62484104" class="cell" data-execution_count="1">
+<div id="27c66109" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
