@@ -2,13 +2,13 @@
 title: "Day 9"
 author: "Amy Heather"
 date: "2024-07-15"
-categories: [reproduce]
+categories: [guidelines, compendium]
 bibliography: ../../../quarto_site/references.bib
 ---
 
 ::: {.callout-note}
 
-TBC.
+Consensus on evaluation + reflections + research compendium. Total evaluation time: 1h 45m.
 
 :::
 
@@ -63,4 +63,27 @@ calculate_times(used_to_date, times, limit=False)
 
 ## Untimed: Revisiting R dependency management options
 
+Did some further research into options for dependency management in R.
+
 ## Untimed: Recording troubleshooting and reflections
+
+Completed `reflections`.qmd.
+
+## Untimed: Revisiting GitHub actions issues
+
+Tried forking and running actions from existing repositories that render and publish an R-based Quarto book on GitHub pages.
+
+* <https://github.com/ddotta/cookbook-rpolars> - build failed due to unexpected value to function in one of the .qmd files
+* <https://github.com/b-rodrigues/rap4all> - add workflow_dispatch to action and ran it but it failed as no gh-pages branch. Hence, copied that also (which successfully deployed) and ran the action again. This worked! Hurrah! 😁
+
+Then updated my action to be similar to the `rap4all` actions and tried it.
+
+## Untimed: Research compendium
+
+Some further work on the research compendium stage
+
+Links:
+
+* Another good resource for tests in R: <https://raps-with-r.dev/testing.html>
+* A good resource for Docker and R: <https://raps-with-r.dev/repro_cont.html>
+* Tom's R dockerfile: <https://github.com/TomMonks/reproducible_r_docker/blob/main/Dockerfile>
