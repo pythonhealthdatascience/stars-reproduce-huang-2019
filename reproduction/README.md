@@ -14,6 +14,8 @@ The model is created using R Simmer.
 
 The paper explores waiting times and resource utilisation - particularly focussing on the biplane angiographic suite (angioINR). A few scenarios are tried to help examine why the wait times are so high for the angioINR.
 
+Model structure from Huang et al. 2019:
+
 ![Process flow diagram from Huang et al. 2019](../original_study/fig1.jpg)
 
 ## Scope of the reproduction
