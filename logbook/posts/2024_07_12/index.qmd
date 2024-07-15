@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-Supplementary figure then evaluation against guideliens. Total time used for reproduction: 24h 10m (60.4%).
+Supplementary figure then evaluation against guidelines. Reproduction: 24h 10m (60.4%). Evaluation: 1h 31m.
 
 :::
 
