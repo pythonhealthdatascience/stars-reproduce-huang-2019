@@ -2,19 +2,49 @@
 title: "Reflections"
 ---
 
-<!-- TODO: Remove this warning once completed assessment -->
-**Please note: This is a template page and has not yet been completed**
-
 This page contains reflections on the facilitators and barriers to this reproduction, as well as a full list of the troubleshooting steps taken to reproduce this work.
 
 ## What would have helped facilitate this reproduction?
 
-<!-- TODO: Add reflections. Example:
-**Provide environment (packages and versions)**
+**Provide environment**
 
-* Not all packages needed will be listed in the imports (e.g. greenlet, pathlib)
-* Didn't work with latest package versions, had to backdate it for it to work
--->
+* List all packages required
+
+**Provide code that produces results from the paper**
+
+* The provided code could easily get up and running to produce the application, but the paper was not focused on that, and was instead focussed on some specific scenarios. It took alot of work modifying and writing code to change it from producing an app to producing the paper results (running scenarios, saving results, processing results, creating figures).
+* Often made mistakes in my interpretation for the implementation of scenarios, which could be avoided if code for those scenarios was provided
+* For one of the figures, it would have been handy if informed that plot was produced by a simmer function (as didn't initially realise this)
+
+**Provide all model parameters in the paper**
+
+* In this case, patient arrivals and resource numbers were listed in the paper, and there were several discprenancies between this and the provided code. However, for many of the model parameters like length of appointment, these were not mentioned in the paper, and so it was not possible to confirm whether or not those were correct.
+
+**Add comments/docstrings to code**
+
+* Took some time to decipher and ensure I have correctly understood code as uses lots of abbreviations
+
+**Explain calculations** (or provide the code)
+
+* It took a bit of time for me to work out how to transform the Figure axes as this was not mentioned in the paper (and no code was provided for these)
+* It was also unclear and a bit tricky to work out how to standardise the density in the figures (since it is only described in the text and no formula/calculations are provided there or in the code)
+
+**Use seeds**
+
+* It does not appear that the original authors used seeds (not mentioned in paper or provided in code). This would be an issue, as it means variation between scenarios could be just due to randomness (although its possible they might have used them and just not mentioned/included anymore)
+* For reproducibility, providing seeds would've been beneficial, as then I could be sure that my results do not differ from the original simply due to randomness
+
+**Note:** Didn't end up needing to have older/similar versions of R and packages for it to work, and ended up using latest versions, due to challenges in installing older versions.
+
+## What did help facilitate it?
+
+**Not hard coding some parameters**
+
+* The model was set up as a function with several of the parameters provided as inputs to that function, which made it really easy to implement some of the scenarios programmatically.
+
+**Parameters in paper being in the format as needed to input to the model**
+
+* The calculations for inter-arrival times were provided in the code, and the inputs to the code were the number of arrivals, as reported in the paper, and so making it easy to compare those parameters and check if numbers were correct or not.
 
 ## Full list of troubleshooting steps
 
@@ -23,12 +53,70 @@ This page contains reflections on the facilitators and barriers to this reproduc
 
 Troubleshooting steps are grouped by theme, and the day these occurred is given in brackets at the end of each bullet.
 
-<!-- TODO: Add full list of troubleshooting steps. Example:
+I want to note that, disregarding my attempts to backdate R and the packages, the provided code was actually quite simple to get up and running as a shiny app. However, as the article is not about the app and instead focuses on results from particular scenarios, there was still work to be done to alter the code to get those results (rather than to get the app).
 
 ### Environment
 
-* No environment file, and no versions for Python or Salabim in paper (2)
-* Dependencies based on PHC.py and package versions on or prior to 14th March 2021 (2)
--->
+Packages required:
+
+* No environment file (2)
+* Dependencies based on `server.R` (2)
+* Add some extra dependencies to environment (not listed as import but appear when try to run - plyr, shiny) (3)
+* Add packages for creating the figures (ggpubr (which required `sudo apt install cmake`)) (4)
+
+Versions required (tried to use same versions of R and packages as they might have used, but couldn't get this to work, and ended up using most recent):
+
+* Mentions version of Simmer in the paper (4.1.0) (2)
+* Initially tried with package versions on or prior to 27th May 2019 (2)
+* Attempted to use renv to build an environment with those package versions. Had error installing older versions of packages (e.g. "ERROR: compilation failed for packager 'simmer'")
+* After some trial-and-error, manager to switch to the older version of R (2+3)
+* Then attempting to install the specific package versions, I got more erors (e.g. "Warning: failed to find source for 'simmer.plot 0.1.15' in package repositories.") (3)
+* I tried installing them with the older version of R with no specific versions. Simmer install fine but simmer.plot failed as "Error: package 'evaluate' is not available" (3)
+* Decided to just try switching to the latest version of R and installing the latest versions of all the packages (3)
+* Had issues adding the model to the quarto site as they were using different renv, and decided just to merge the quarto site dependencies into the model renv (3)
+* Although using the latest versions of packages and R, I don't feel discrepancies are likely due to this, as I would expect issues from environment to be more along the lines of code not running or quite minor differences (5)
+
+### Get model code
+
+* Model set-up to run as a shiny app - so extracted the `simulate_nav()` and `plot_nav()` functions from the shiny app and removed a few lines of code that were still calling shiny, so that these could run in a simple .Rmd file. (3)
+
+### Get model parameters
+
+* Several parameters differed between provided code and paper, so identified correct parameters based on paper's Table 1 (3)
+* Initially made a mistake with the INR staffing as had assumed to set `inr_night` = 0 as that is one INR staff 24 hours, but then realised they were on schedule so needs `inr`=1 and `inr_night`=1 to make one 24 hour staff member (3)
+
+### Run scenarios
+
+* Created .Rmd file to programmatically run model scenarios. A facilitator for this was that the model was already set up as a function with many of the required parameters already set as inputs to that function - e.g. two angioINRs easy to change (3)
+* No code was provided for the "exclusive use" scenario, so add some to the model based on my understanding from the paper of that scenario (3)
+* Initially, made a mistake in implementation of two angioINRs (human error) as double the machines rather than replacing the angioIR (6)
+* Initially, also misinterpreted the supplementary figure scenario, as increased ED arrivals, instead of just directly changing the ECR numbers (7)
+* Had issues getting same results for scenarios, and tried out various things including -
+    * Changing how INR staff are in model (no impact) (5)
+    * Using default parameters from the code (rather than parameters from paper) (6)
+    * Confirming calculated inter-arrival times match up with paper (6)
+    * Went carefully over each trajectory, identifying the distributions used and lengths of resources. Not possible to check many of them though, as the paper only mentions arrivals (and not e.g. sampling for length of appointment) (6)
+    * Searching for pre-prints (6)
+    * Using ED triage time from model on CLOUDES (6)
+    * Checking outcome from non-ED categories (6)
+    * Varying parameters to see how that alters results - e.g. length of resources, number of arrivals, number of resources,, changing which patients can use machines, and running with lots of different seeds (6+7)
+
+### Creating outputs
+
+* Add code to model to save results to CSV so don't have to re-run each time (4)
+* Add code to get mean waiting times (3+)
+    * Identify that should filter to `ed` results (3)
+    * Identify that these are mean and not median times (3)
+* Add code to create figures (3+)
+    * Took a while to figure out what transformations had been done to the Figure axes as this isn't mentioned anyway - eventually realised it was a square root transformation (4)
+    * Initially struggled with understanding how to standardise the density, as it is an unfamiliar calculation and just described in the article. After some trial and error, I managed to get a similar-ish plot by scaling to a maximum of 1 using the built in ..scaled.. values from `geom_density()`. (4)
+    * Then tried doing it manually again, diving density at each time by density from wait time 0, and this matched up with results from `geom_density()` scaled, and hence giving me reassurance that the calculation is likely correct. (5)
+    * For a while, didn't realise `angio_staff` line in plots was being hidden under `inr` (6)
+    * For figure 5, realised it was being created with a simmer function `plot.resources.utilization` (7)
+
+### Seeds
+
+* Results could vary quite a lot between seeds. Original paper does not have any control of seeds, but when I re-ran several times, could see alot of change in mean waiting times (4+5) - but not much for other outputs like FI=igure 2 (5)
+* Add seeds (initially tried with simEd, but too slow, so switched to simpler option of just setting a single seed without controlling seeds) (4)
 
 :::
