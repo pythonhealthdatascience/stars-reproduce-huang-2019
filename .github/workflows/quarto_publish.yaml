@@ -16,9 +16,6 @@ jobs:
     permissions:
       contents: write
 
-    # Temporary disable
-    # if: false
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
