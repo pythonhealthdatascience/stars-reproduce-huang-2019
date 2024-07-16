@@ -60,4 +60,11 @@ inputs=list(seed=200)
 result <- do.call(run_model, inputs)
 ```
 
-* I realised the issue was that the expect result included a column `shift` where value throughout was `5pm`. This was likely due to changing it at some point but not having re-run the whole script since, so I did that (and timed it!). I removed some of the model variants that aren't to produce results from the paper (E.g. varying seeds)
+* I realised the issue was that the expected result included a column `shift` where value throughout was `5pm`. This was likely due to changing it at some point but not having re-run the whole script since, so I did that (and timed it!). I removed some of the model variants that aren't to produce results from the paper (E.g. varying seeds)
+  * It takes a while to run and, midway through, the R session encountered a fatal error and aborted. Tried again, and it failed again on `exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)`.
+  * I'm suspecting this might be due to the size of the dataframes produced? So tried removing them from the environment after saving and ran again - but it still crashed, this time on the next `run_model()` statement
+  * I considered trying again with parallelisation but, given I hadn't had much luck with that before, and given that the issue here is with R crashing (and so parallelisation actually may not help), I decided to instead split up `reproduction.rmd` into a few smaller files.
+
+Docker
+
+* Used the [RStudio documentation](https://rstudio.github.io/renv/articles/docker.html) and [this tutorial](https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette) to write a Dockerfile.
