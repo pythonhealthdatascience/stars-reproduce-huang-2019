@@ -1,0 +1,95 @@
+---
+title: Reproduce Figure 5
+---
+
+Run time: 6.165 minutes (will vary between machines)
+
+## Set up
+
+```{r}
+# Clear environment
+rm(list=ls())
+
+# Start timer
+start.time <- Sys.time()
+
+# Disable scientific notation
+options(scipen=999)
+
+# Get the model and helper functions (but hide loading warnings for each package)
+suppressMessages(source("model.R"))
+suppressMessages(source("helpers.R"))
+
+# Import other required libraries (if not otherwise import in R scripts below)
+library(ggpubr)
+library(tidyr, include.only = c("pivot_wider"))
+```
+
+```{r}
+# Set the seed and default dimensions for figures
+SEED = 200
+DEFAULT_WIDTH = 7
+DEFAULT_HEIGHT = 4
+
+# Set file paths to save results
+
+folder = "../outputs"
+
+path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
+path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
+path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
+
+path_fig5 <- file.path(folder, "fig5.png")
+```
+
+## Run models
+
+```{r run}
+run <- FALSE
+```
+
+```{r models}
+if (isTRUE(run)) {
+  baseline_f5 <- run_model(seed = SEED, fig5=TRUE)
+  exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)
+  twoangio_f5 <- run_model(angio_inr = 2, angio_ir=0, seed = SEED, fig5=TRUE)
+}
+```
+
+## Create figure
+
+Currently depends on simmer.plot() function that doesn't work on the imported results from the csv file, so need to allow to run model to produce this plot!
+
+```{r fig}
+if (isTRUE(run)) {
+  # Replace resource (which has been filtered to angioINR) with scenario
+  baseline_f5$resource <- "Baseline"
+  exclusive_f5$resource <-"Exclusive-use"
+  twoangio_f5$resource <- "Two angio INRs"
+  
+  # Combine into single object
+  fig5_df <- dplyr::bind_rows(baseline_f5, exclusive_f5, twoangio_f5)
+  
+  # Create figure using simmer's plot
+  p <- plot(fig5_df, metric="utilization") +
+    xlab("Scenarios") +
+    ylab("Utilisation") +
+    scale_y_continuous(labels = scales::percent, limits=c(0, 0.4)) +
+    ggtitle("") +
+    geom_text(aes(label=round(.data$Q50*100)), vjust=-1)
+  p
+  
+  # Save to provided path
+  ggsave(path_fig5, width=5, height=2.5)
+}
+```
+
+## Time elapsed
+
+```{r timer}
+if (isTRUE(run)) {
+  end.time <- Sys.time()
+  elapsed.time <- round((end.time - start.time), 3)
+  elapsed.time
+}
+```
