@@ -76,11 +76,15 @@ Tried forking and running actions from existing repositories that render and pub
 * <https://github.com/ddotta/cookbook-rpolars> - build failed due to unexpected value to function in one of the .qmd files
 * <https://github.com/b-rodrigues/rap4all> - add workflow_dispatch to action and ran it but it failed as no gh-pages branch. Hence, copied that also (which successfully deployed) and ran the action again. This worked! Hurrah! 😁
 
-Then updated my action to be similar to the `rap4all` actions and tried it.
+Then updated my action to be similar to the `rap4all` actions and tried it. This failed - "configuration failed because libcurl was not found". I add installation of libcurl and ran it again, but this all failed just like before, with the error `there is no package called 'rmarkdown'`.
 
 ## Untimed: Research compendium
 
-Some further work on the research compendium stage
+Some further work on the research compendium stage.
+
+* Add `testthat` to environment
+* Wrote basic test but to run it, RStudio had prompt that it required update of devtools. Selected "yes" and then saved another `renv::snapshot()` once it completed. However, I cancelled it as realised could run without devtools (and devtools would be alot of extra dependencies!)
+* Ran test with `testthat::test_dir("tests")`
 
 Links:
 
