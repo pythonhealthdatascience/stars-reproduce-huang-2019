@@ -44,10 +44,6 @@ path_twoangio_f2 <- file.path(folder, "fig2_twoangio.csv.gz")
 path_baseline_f3 <- file.path(folder, "fig3_baseline.csv.gz")
 path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
 path_twoangio_f3 <- file.path(folder, "fig3_twoangio.csv.gz")
-path_baseline_f3_seed500 <- file.path(folder, "fig3_baseline_seed500.csv.gz")
-path_baseline_f3_seed700 <- file.path(folder, "fig3_baseline_seed700.csv.gz")
-path_twoangio_f3_seed500 <- file.path(folder, "fig3_twoangio_seed500.csv.gz")
-path_twoangio_f3_seed700 <- file.path(folder, "fig3_twoangio_seed700.csv.gz")
 
 path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
 path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
@@ -56,11 +52,9 @@ path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
 path_double_sup <- file.path(folder, "sup_baseline_double.csv.gz")
 path_triple_sup <- file.path(folder, "sup_baseline_triple.csv.gz")
 
-path_txt2 <- file.path(folder, "txt2.csv")
+path_txt2 <- file.path(folder, "txt2.csv") # Used for results 1 and 2
 path_txt3 <- file.path(folder, "txt3.csv")
-path_txt3_seeds <- file.path(folder, "txt3_seeds.csv")
 path_fig2 <- file.path(folder, "fig2.png")
-path_fig2a_seeds <- file.path(folder, "fig2a_seeds.png")
 path_fig3 <- file.path(folder, "fig3.png")
 path_fig4 <- file.path(folder, "fig4.png")
 path_fig5 <- file.path(folder, "fig5.png")
@@ -68,6 +62,12 @@ path_supfig <- file.path(folder, "supplementary_figure.png")
 ```
 
 ## Run models
+
+Set to true or false, depending on whether you want to run everything.
+
+```{r}
+run <- TRUE
+```
 
 Run model scenarios.
 
@@ -134,71 +134,6 @@ if (isTRUE(run)) {
 }
 ```
 
-Run baseline and double angioINR with varying hours and seeds.
-
-```{r}
-if (isTRUE(run)) {
-  # Baseline with varying hours and seed 500
-  s500_baseline <- run_model(seed = 500)
-  s500_baseline_6pm <- run_model(shifts = c(8,18), seed = 500)
-  s500_baseline_7pm <- run_model(shifts = c(8,19), seed = 500)
-
-  # Baseline with varying hours and seed 700
-  s700_baseline <- run_model(seed = 700)
-  s700_baseline_6pm <- run_model(shifts = c(8,18), seed = 700)
-  s700_baseline_7pm <- run_model(shifts = c(8,19), seed = 700)
-
-  # Double AngioINR with varying hours and seed 500
-  s500_twoangio <- run_model(angio_inr = 2, angio_ir=0, seed = 500)
-  s500_twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, angio_ir=0, seed = 500)
-  s500_twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, angio_ir=0, seed = 500)
-
-  # Double AngioINR with varying hours and seed 700
-  s700_twoangio <- run_model(angio_inr = 2, angio_ir=0, seed = 700)
-  s700_twoangio_6pm <- run_model(shifts = c(8,18), angio_inr = 2, angio_ir=0, seed = 700)
-  s700_twoangio_7pm <- run_model(shifts = c(8,19), angio_inr = 2, angio_ir=0, seed = 700)
-}
-```
-```{r}
-# Save results (in seperate cell to above as otherwise seemed to crash)
-if (isTRUE(run)) {
-  process_f3_data(s500_baseline, s500_baseline_6pm, s500_baseline_7pm,
-                  path_baseline_f3_seed500)
-  process_f3_data(s700_baseline, s700_baseline_6pm, s700_baseline_7pm,
-                  path_baseline_f3_seed700)
-  process_f3_data(s500_twoangio, s500_twoangio_6pm, s500_twoangio_7pm,
-                  path_twoangio_f3_seed500)
-  process_f3_data(s700_twoangio, s700_twoangio_6pm, s700_twoangio_7pm,
-                  path_twoangio_f3_seed700)
-}
-```
-
-Run baseline with several different seeds
-
-```{r baseline_seeds}
-baseline_seeds <- function(seed, run, folder) {
-  #' Run baseline model with different seeds
-  #' 
-  #' @param seed integer, starting seed for replications
-  #' @param run boolean, whether to run model
-  #' @param folder string, folder to store results in
-  if (isTRUE(run)) {
-    seed_baseline <- run_model(seed = seed)
-    seed_path <- file.path(folder, paste(
-      "fig2_baseline_seed", seed, ".csv.gz", sep=""))
-    data.table::fwrite(seed_baseline, seed_path)
-  }
-}
-
-baseline_seeds(0, run, folder)
-baseline_seeds(50, run, folder)
-baseline_seeds(100, run, folder)
-baseline_seeds(150, run, folder)
-baseline_seeds(450, run, folder)
-baseline_seeds(700, run, folder)
-baseline_seeds(750, run, folder)
-```
-
 ## Import results
 
 Import the results, adding a column to each to indicate the scenario.
@@ -217,15 +152,6 @@ exc_f3 <- import_results(path_exclusive_f3,
                          "Exclusive use")
 two_f3 <- import_results(path_twoangio_f3,
                          "Two AngioINRs")
-
-base_f3_s500  <- import_results(path_baseline_f3_seed500,
-                                "Baseline (seed 500)")
-base_f3_s700  <- import_results(path_baseline_f3_seed700,
-                                "Baseline (seed 700)")
-two_f3_s500 <- import_results(path_twoangio_f3_seed500,
-                              "Two AngioINRs (seed 500)")
-two_f3_s700  <- import_results(path_twoangio_f3_seed700,
-                               "Two AngioINRs (seed 700)")
 
 base_f5 <- data.table::fread(path_baseline_f5)
 exc_f5 <- data.table::fread(path_exclusive_f5)
@@ -263,43 +189,6 @@ txt3 <- dplyr::bind_rows(base_f3, exc_f3, two_f3) %>%
 # Save and display result
 data.table::fwrite(txt3, path_txt3)
 txt3
-```
-
-### Demonstrate variation between model runs
-
-We can see the importance of seed control here. For example, with seed 700, we see a broader range of results, with the result for 6pm (13.32) is much higher than for the other two seeds and, compared with their 5pm results, we would've seen less of a reduction. Similarly, if we compared the 5pm seed 700 result with the 6pm seed 500 result, we would see a much greater reduction.
-
-The same applies to the prior scenarios for Figure 2. I've held the seeds still between them, so the only change is the scenario.
-
-However, as we are not sure, it is also reasonable to assume that a seed might have been used for the paper, but just not mentioned in the article or included in the code.
-
-```{r variation}
-# Dataframes to analyse
-var_list <- c(list(base_f3, base_f3_s500, base_f3_s700),
-              list(two_f3, two_f3_s500, two_f3_s700))
-
-# For loop through those two lists
-df_seeds_list <- list()
-i <- 0
-for (l in var_list) {
-  i <- i + 1
-
-  # Process results
-  df_seeds <- dplyr::bind_rows(l) %>%
-    filter(resource=="angio_inr") %>%
-    group_by(scenario, shift) %>%
-    summarize(mean = round(mean(wait_time),2)) %>%
-    ungroup()
-  
-  # Convert to wide format and display
-  df_seeds_list[[i]] <- pivot_wider(df_seeds, id_cols="scenario",
-                                    values_from=c("mean"), names_from="shift")
-}
-
-# Combine into single dataframe, save and display
-combined_seeds <- dplyr::bind_rows(df_seeds_list)
-data.table::fwrite(combined_seeds, path_txt3_seeds)
-combined_seeds
 ```
 
 ## Figure 2
@@ -356,28 +245,6 @@ for (c in no_wait$colour) {
   n_total <- nrow(d)
   print(sprintf("%s out of %s results match", n_match, n_total))
 }
-```
-
-### Figure 2 (baseline only) with various different seeds
-
-This imports the files too (as several files)
-
-```{r figa2a_seeds}
-plot_list <- list()
-i <- 0
-seeds <- c(0, 50, 100, 150, 450, 700, 750)
-for (s in seeds) {
-  i <- i + 1
-  seed_path <- file.path(folder, paste(
-      "fig2_baseline_seed", s, ".csv.gz", sep=""))
-  seed_baseline <- import_results(seed_path, "Baseline")
-  plot_list[[i]] <- create_plot(seed_baseline, group="resource", title=s)
-}
-```
-
-```{r fig2a_seeds_arrange}
-ggarrange(plotlist=plot_list, common.legend=TRUE, legend="bottom")
-ggsave(path_fig2a_seeds, width=13, height=20)
 ```
 
 ## Figure 3
