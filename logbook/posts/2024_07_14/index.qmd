@@ -23,3 +23,26 @@ Working on research compendium stage
   * Moved scripts into a `scripts/` folder
   * Moved help functions from `reproduction.Rmd` into seperate R script (primarily so can reuse in tests more easily)
 * Set `ggsave()` image width as realised it otherwise varied with window size when running
+* Create tests to check model results are consistent
+  * Started with creating a basic test saving tempfile csv and loading it to compare to another dataframe
+  * Then made a test with two example models being run for 3 replications and comparing results
+  * Then, set up with two files, as testthat can run files in parallel, and configured parallel processing. This involved:
+    * Adding `Config/testthat/parallel: true` to DESCRIPTION
+    * Create project-specific environment file with `nano reproduction/.Renviron` and setting `TESTTHAT_CPUS=4`
+    * Ran `testthat::test_dir("tests")`, although seemed to just run sequentially. Confirmed by checking `testthat::isparallel()` which returned `FALSE`.
+    * Tried adding `Config/testthat/start-first: shifts, model` to `DESCRIPTION` and it ignored the order, so it appears the issue is it is not using info from the `DESCRIPTION` file
+    * Checked version and it is correct for running in parallel (testthat>=3.0.0)
+    * Tried instead running `testthat::test_local()`, and moving tests into a folder `testthat/`, and this returned an error `Could not find a root 'DESCRIPTION' file that starts with '^Package' in /home/amy/Documents/stars/stars-reproduce-huang-2019/reproduction.`
+    * Changed `DESCRIPTION` to add `Package` and re-run - but this had error that `installation of renv failed`. Same error occurs if run `testthat::test_dir()`. It says to `Try removing ‘/home/amy/.cache/R/renv/library/reproduction-0912b448/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/00LOCK-renv’`. I deleted this file (navigated there than `rm -r 00LOCK-renv`) then re-ran. However, this kept getting the same error message with that same file being created.
+    * Tried removing `Package` from `DESCRIPTION` and running `testthat::test_dir("tests/testthat", load_package="none")` - but that ignores the order in `DESCRIPTION`
+    * Tried `testthat::test_dir("tests/testthat", load_package="source")` which had error that `Field 'Version' not found`. Once I had this and re-ran, it ran the tests in the specified order! From `Config/testthat/start-first: shifts, model`
+    * I then add in `Config/testthat/parallel: true` and `Config/testthat/edition: 3` but it had the same `renv` error as before
+    * Then decided to just run without parallel for now, so removed those lines from `DESCRIPTION`, deleted the `.Renviron` file, and put tests in a single file. Created function to simplify testing, then wrote tests for all scenarios, and ran all scenarios with 3 reps to use as expected results
+    
+```
+Package: huang2019
+Version: 0.1
+Config/testthat/start-first: shifts, model
+Config/testthat/parallel: true
+Config/testthat/edition: 3
+```
