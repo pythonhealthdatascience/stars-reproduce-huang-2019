@@ -22,7 +22,7 @@ website:
         menu:
           - text: README
             href: quarto_site/reproduction_readme.qmd
-          - href: reproduction/reproduction.qmd
+          - href: reproduction/scripts/reproduction.qmd
       - text: Evaluation
         menu:
           - evaluation/scope.qmd
