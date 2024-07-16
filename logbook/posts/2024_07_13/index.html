@@ -161,7 +161,7 @@ div.csl-indent {
  <span class="dropdown-text">README</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../reproduction/reproduction.html">
+    <a class="dropdown-item" href="../../../reproduction/scripts/reproduction.html">
  <span class="dropdown-text">Reproduction</span></a>
   </li>  
     </ul>
@@ -225,7 +225,8 @@ div.csl-indent {
     <div class="quarto-title column-body">
       <h1 class="title">Day 9</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">reproduce</div>
+                <div class="quarto-category">guidelines</div>
+                <div class="quarto-category">compendium</div>
               </div>
                   </div>
   </div>
@@ -263,6 +264,8 @@ div.csl-indent {
   <li><a href="#timings-for-evaluation" id="toc-timings-for-evaluation" class="nav-link" data-scroll-target="#timings-for-evaluation">Timings for evaluation</a></li>
   <li><a href="#untimed-revisiting-r-dependency-management-options" id="toc-untimed-revisiting-r-dependency-management-options" class="nav-link" data-scroll-target="#untimed-revisiting-r-dependency-management-options">Untimed: Revisiting R dependency management options</a></li>
   <li><a href="#untimed-recording-troubleshooting-and-reflections" id="toc-untimed-recording-troubleshooting-and-reflections" class="nav-link" data-scroll-target="#untimed-recording-troubleshooting-and-reflections">Untimed: Recording troubleshooting and reflections</a></li>
+  <li><a href="#untimed-revisiting-github-actions-issues" id="toc-untimed-revisiting-github-actions-issues" class="nav-link" data-scroll-target="#untimed-revisiting-github-actions-issues">Untimed: Revisiting GitHub actions issues</a></li>
+  <li><a href="#untimed-research-compendium" id="toc-untimed-research-compendium" class="nav-link" data-scroll-target="#untimed-research-compendium">Untimed: Research compendium</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_13/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -283,7 +286,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TBC.</p>
+<p>Consensus on evaluation + reflections + research compendium. Total evaluation time: 1h 45m.</p>
 </div>
 </div>
 <section id="consensus-on-evaluation" class="level2">
@@ -351,7 +354,7 @@ Note
 </section>
 <section id="timings-for-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="timings-for-evaluation">Timings for evaluation</h2>
-<div id="12912fe4" class="cell" data-execution_count="1">
+<div id="45245e84" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
@@ -374,15 +377,41 @@ Total used to date: 105m, or 1h 45m</code></pre>
 </section>
 <section id="untimed-revisiting-r-dependency-management-options" class="level2">
 <h2 class="anchored" data-anchor-id="untimed-revisiting-r-dependency-management-options">Untimed: Revisiting R dependency management options</h2>
+<p>Did some further research into options for dependency management in R.</p>
 </section>
 <section id="untimed-recording-troubleshooting-and-reflections" class="level2">
-
+<h2 class="anchored" data-anchor-id="untimed-recording-troubleshooting-and-reflections">Untimed: Recording troubleshooting and reflections</h2>
+<p>Completed <code>reflections</code>.qmd.</p>
+</section>
+<section id="untimed-revisiting-github-actions-issues" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-revisiting-github-actions-issues">Untimed: Revisiting GitHub actions issues</h2>
+<p>Tried forking and running actions from existing repositories that render and publish an R-based Quarto book on GitHub pages.</p>
+<ul>
+<li><a href="https://github.com/ddotta/cookbook-rpolars" class="uri">https://github.com/ddotta/cookbook-rpolars</a> - build failed due to unexpected value to function in one of the .qmd files</li>
+<li><a href="https://github.com/b-rodrigues/rap4all" class="uri">https://github.com/b-rodrigues/rap4all</a> - add workflow_dispatch to action and ran it but it failed as no gh-pages branch. Hence, copied that also (which successfully deployed) and ran the action again. This worked! Hurrah! 😁</li>
+</ul>
+<p>Then updated my action to be similar to the <code>rap4all</code> actions and tried it. This failed - “configuration failed because libcurl was not found”. I add installation of libcurl and ran it again, but this all failed just like before, with the error <code>there is no package called 'rmarkdown'</code>.</p>
+</section>
+<section id="untimed-research-compendium" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-research-compendium">Untimed: Research compendium</h2>
+<p>Some further work on the research compendium stage.</p>
+<ul>
+<li>Add <code>testthat</code> to environment</li>
+<li>Wrote basic test but to run it, RStudio had prompt that it required update of devtools. Selected “yes” and then saved another <code>renv::snapshot()</code> once it completed. However, I cancelled it as realised could run without devtools (and devtools would be alot of extra dependencies!)</li>
+<li>Ran test with <code>testthat::test_dir("tests")</code></li>
+</ul>
+<p>Links:</p>
+<ul>
+<li>Another good resource for tests in R: <a href="https://raps-with-r.dev/testing.html" class="uri">https://raps-with-r.dev/testing.html</a></li>
+<li>A good resource for Docker and R: <a href="https://raps-with-r.dev/repro_cont.html" class="uri">https://raps-with-r.dev/repro_cont.html</a></li>
+<li>Tom’s R dockerfile: <a href="https://github.com/TomMonks/reproducible_r_docker/blob/main/Dockerfile" class="uri">https://github.com/TomMonks/reproducible_r_docker/blob/main/Dockerfile</a></li>
+</ul>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Untimed: Recording troubleshooting and reflections</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-huang_optimizing_2019" class="csl-entry" role="listitem">
 Huang, Shiwei, Julian Maingard, Hong Kuan Kok, Christen D. Barras, Vincent Thijs, Ronil V. Chandra, Duncan Mark Brooks, and Hamed Asadi. 2019. <span>“Optimizing <span>Resources</span> for <span>Endovascular</span> <span>Clot</span> <span>Retrieval</span> for <span>Acute</span> <span>Ischemic</span> <span>Stroke</span>, a <span>Discrete</span> <span>Event</span> <span>Simulation</span>.”</span> <em>Frontiers in Neurology</em> 10 (June). <a href="https://doi.org/10.3389/fneur.2019.00653">https://doi.org/10.3389/fneur.2019.00653</a>.
 </div>
