@@ -19,26 +19,14 @@ options(scipen=999)
 # Get the model and helper functions (but hide loading warnings for each package)
 suppressMessages(source("model.R"))
 suppressMessages(source("helpers.R"))
-
-# Import other required libraries (if not otherwise import in R scripts below)
-library(ggpubr)
-library(tidyr, include.only = c("pivot_wider"))
 ```
 
 ```{r}
 # Set the seed and default dimensions for figures
 SEED = 200
-DEFAULT_WIDTH = 7
-DEFAULT_HEIGHT = 4
 
 # Set file paths to save results
-
 folder = "../outputs"
-
-path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
-path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
-path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
-
 path_fig5 <- file.path(folder, "fig5.png")
 ```
 
