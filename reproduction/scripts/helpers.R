@@ -1,4 +1,6 @@
 # Helper functions for reproduction.qmd
+library(ggplot2)
+library(data.table)
 
 
 run_model <- function(angio_inr = 1,
