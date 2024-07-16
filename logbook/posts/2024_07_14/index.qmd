@@ -1,0 +1,25 @@
+---
+title: "Day 10"
+author: "Amy Heather"
+date: "2024-07-16"
+categories: [compendium]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+Working on research compendium stage
+
+:::
+
+## Untimed: Research compendium
+
+* Tried adding parallel processing in `model.R` to speed it up
+  * Add `future.apply` to the environment
+  * `plan(multisession, workers=max(availableCores()-5, 1))`
+  * `future_lapply()`
+  * However, it took longer than usual! So I removed it
+* Reorganising
+  * Moved scripts into a `scripts/` folder
+  * Moved help functions from `reproduction.Rmd` into seperate R script (primarily so can reuse in tests more easily)
+* Set `ggsave()` image width as realised it otherwise varied with window size when running
