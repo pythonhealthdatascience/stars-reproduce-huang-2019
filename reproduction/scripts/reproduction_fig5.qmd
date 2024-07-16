@@ -2,6 +2,8 @@
 title: Reproduce Figure 5
 ---
 
+This is run in a separate script from the other figures due to issues with RStudio crashing when all scenarios were run from a single script.
+
 Run time: 6.165 minutes (will vary between machines)
 
 ## Set up

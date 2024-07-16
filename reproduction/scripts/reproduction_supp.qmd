@@ -52,7 +52,7 @@ path_supfig <- file.path(folder, "supplementary_figure.png")
 Set to true or false, depending on whether you want to run everything.
 
 ```{r}
-run <- TRUE
+run <- FALSE
 ```
 
 Run baseline with double and triple the number of ECR patients, for the supplementary figure.

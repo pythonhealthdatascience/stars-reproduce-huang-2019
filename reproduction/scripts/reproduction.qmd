@@ -6,6 +6,8 @@ The majority of the items in the model scope are reproduced in this file, but Fi
 
 This decision was primarily due to issues with RStudio crashing when running all scenarios from a single `.Rmd file`.
 
+Run time: 18.024 minutes (will vary between machines)
+
 ## Set up
 
 ```{r}
@@ -45,16 +47,11 @@ path_baseline_f3 <- file.path(folder, "fig3_baseline.csv.gz")
 path_exclusive_f3 <- file.path(folder, "fig3_exclusive.csv.gz")
 path_twoangio_f3 <- file.path(folder, "fig3_twoangio.csv.gz")
 
-path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
-path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
-path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
-
 path_txt2 <- file.path(folder, "txt2.csv") # Used for results 1 and 2
 path_txt3 <- file.path(folder, "txt3.csv")
 path_fig2 <- file.path(folder, "fig2.png")
 path_fig3 <- file.path(folder, "fig3.png")
 path_fig4 <- file.path(folder, "fig4.png")
-path_fig5 <- file.path(folder, "fig5.png")
 ```
 
 ## Run models
@@ -62,7 +59,7 @@ path_fig5 <- file.path(folder, "fig5.png")
 Set to true or false, depending on whether you want to run everything.
 
 ```{r}
-run <- TRUE
+run <- FALSE
 ```
 
 Run model scenarios.
@@ -103,27 +100,6 @@ if (isTRUE(run)) {
 }
 ```
 
-Re-run models but return different output from standard hours for use in Figure 5
-
-```{r}
-if (isTRUE(run)) {
-  baseline_f5 <- run_model(seed = SEED, fig5=TRUE)
-  exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)
-  twoangio_f5 <- run_model(angio_inr = 2, angio_ir=0, seed = SEED, fig5=TRUE)
-}
-```
-```{r}
-if (isTRUE(run)) {
-  # Save results
-  data.table::fwrite(baseline_f5, path_baseline_f5)
-  data.table::fwrite(exclusive_f5, path_exclusive_f5)
-  data.table::fwrite(twoangio_f5, path_twoangio_f5)
-
-  # Remove the dataframes from environment
-  rm(baseline_f5, exclusive_f5, twoangio_f5)
-}
-```
-
 ## Import results
 
 Import the results, adding a column to each to indicate the scenario.
@@ -142,10 +118,6 @@ exc_f3 <- import_results(path_exclusive_f3,
                          "Exclusive use")
 two_f3 <- import_results(path_twoangio_f3,
                          "Two AngioINRs")
-
-base_f5 <- data.table::fread(path_baseline_f5)
-exc_f5 <- data.table::fread(path_exclusive_f5)
-two_f5 <- data.table::fread(path_twoangio_f5)
 ```
 
 ## In-text results
