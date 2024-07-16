@@ -1,6 +1,10 @@
 ---
-title: Reproduction
+title: Reproduce Figures 2-4 and in-text results 1-3
 ---
+
+The majority of the items in the model scope are reproduced in this file, but Figure 5 and the supplementary figure are created in seperate `.qmd` files.
+
+This decision was primarily due to issues with RStudio crashing when running all scenarios from a single `.Rmd file`.
 
 ## Set up
 
@@ -14,22 +18,18 @@ start.time <- Sys.time()
 # Disable scientific notation
 options(scipen=999)
 
-# Import required libraries (if not otherwise import in model.R)
-library(ggplot2)
-library(data.table)
+# Import required libraries (if not otherwise import in R scripts below)
 library(ggpubr)
 library(tidyr, include.only = c("pivot_wider"))
 
-# Get the model and helper functiosn (but hide loading warnings for each package)
+# Get the model and helper functions (but hide loading warnings for each package)
 suppressMessages(source("model.R"))
-source("helpers.R")
+suppressMessages(source("helpers.R"))
 ```
 
 ```{r}
-# Set the seed
+# Set the seed and default dimensions for figures
 SEED = 200
-
-# Set default dimensions for figures
 DEFAULT_WIDTH = 7
 DEFAULT_HEIGHT = 4
 
@@ -49,16 +49,12 @@ path_baseline_f5 <- file.path(folder, "fig5_baseline.csv.gz")
 path_exclusive_f5 <- file.path(folder, "fig5_exclusive.csv.gz")
 path_twoangio_f5 <- file.path(folder, "fig5_twoangio.csv.gz")
 
-path_double_sup <- file.path(folder, "sup_baseline_double.csv.gz")
-path_triple_sup <- file.path(folder, "sup_baseline_triple.csv.gz")
-
 path_txt2 <- file.path(folder, "txt2.csv") # Used for results 1 and 2
 path_txt3 <- file.path(folder, "txt3.csv")
 path_fig2 <- file.path(folder, "fig2.png")
 path_fig3 <- file.path(folder, "fig3.png")
 path_fig4 <- file.path(folder, "fig4.png")
 path_fig5 <- file.path(folder, "fig5.png")
-path_supfig <- file.path(folder, "supplementary_figure.png")
 ```
 
 ## Run models
@@ -99,6 +95,11 @@ if (isTRUE(run)) {
   process_f3_data(baseline, baseline_6pm, baseline_7pm, path_baseline_f3)
   process_f3_data(exclusive, exclusive_6pm, exclusive_7pm, path_exclusive_f3)
   process_f3_data(twoangio, twoangio_6pm, twoangio_7pm, path_twoangio_f3)
+
+  # Remove the dataframes from environment
+  rm(baseline, baseline_6pm, baseline_7pm,
+     exclusive, exclusive_6pm, exclusive_7pm,
+     twoangio, twoangio_6pm, twoangio_7pm)
 }
 ```
 
@@ -113,24 +114,13 @@ if (isTRUE(run)) {
 ```
 ```{r}
 if (isTRUE(run)) {
+  # Save results
   data.table::fwrite(baseline_f5, path_baseline_f5)
   data.table::fwrite(exclusive_f5, path_exclusive_f5)
   data.table::fwrite(twoangio_f5, path_twoangio_f5)
-}
-```
 
-Run baseline with double and triple the number of ECR patients, for the supplementary figure.
-
-```{r}
-if (isTRUE(run)) {
-  baseline_sup2 <- run_model(seed = SEED, ecr_pt = 58*2)
-  baseline_sup3 <- run_model(seed = SEED, ecr_pt = 58*3)
-}
-```
-```{r}
-if (isTRUE(run)) {
-  data.table::fwrite(baseline_sup2, path_double_sup)
-  data.table::fwrite(baseline_sup3, path_triple_sup)
+  # Remove the dataframes from environment
+  rm(baseline_f5, exclusive_f5, twoangio_f5)
 }
 ```
 
@@ -156,9 +146,6 @@ two_f3 <- import_results(path_twoangio_f3,
 base_f5 <- data.table::fread(path_baseline_f5)
 exc_f5 <- data.table::fread(path_exclusive_f5)
 two_f5 <- data.table::fread(path_twoangio_f5)
-
-base_sup_double <- import_results(path_double_sup, "Baseline (double)")
-base_sup_triple <- import_results(path_triple_sup, "Baseline (triple)")
 ```
 
 ## In-text results
@@ -299,64 +286,6 @@ ggplot(fig4, aes(x=scenario_lab, y=dis_free_gain)) +
   xlab("Scenarios") +
   ylab("Mean disability-free life added (days)")
 ggsave(path_fig4, width=5, height=3)
-```
-
-## Figure 5
-
-Currently depends on simmer.plot() function that doesn't work on the imported results from the csv file, so need to allow to run model to produce this plot.
-
-```{r fig5}
-if (isTRUE(run)) {
-  baseline_f5 <- run_model(seed = SEED, fig5=TRUE)
-  exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)
-  twoangio_f5 <- run_model(angio_inr = 2, angio_ir=0, seed = SEED, fig5=TRUE)
-  
-  # Replace resource (which has been filtered to angioINR) with scenario
-  baseline_f5$resource <- "Baseline"
-  exclusive_f5$resource <-"Exclusive-use"
-  twoangio_f5$resource <- "Two angio INRs"
-  
-  # Combine into single object
-  fig5_df <- dplyr::bind_rows(baseline_f5, exclusive_f5, twoangio_f5)
-  
-  # Create figure using simmer's plot
-  p <- plot(fig5_df, metric="utilization") +
-    xlab("Scenarios") +
-    ylab("Utilisation") +
-    scale_y_continuous(labels = scales::percent, limits=c(0, 0.4)) +
-    ggtitle("") +
-    geom_text(aes(label=round(.data$Q50*100)), vjust=-1)
-  p
-  
-  # Save to provided path
-  ggsave(path_fig5, width=5, height=2.5)
-}
-```
-
-## Supplementary figure
-
-```{r supplementary_figure}
-# Create sub-plots
-p1 <- create_plot(base_f2,
-                  group="resource",
-                  title="Baseline",
-                  ylab="Standardised density of patient in queue")
-p2 <- create_plot(base_sup_double,
-                  group="resource",
-                  title="Doubling ECR patients",
-                  xlab="Patient wait time (min)",
-                  xlim=c(0, 300),
-                  breaks_width=100)
-p3 <- create_plot(base_sup_triple,
-                  group="resource",
-                  title="Tripling ECR patients",
-                  xlim=c(0, 300))
-
-# Arrange in a single figure
-ggarrange(p1, p2, p3, nrow=1,
-          common.legend=TRUE, legend="bottom",
-          labels=c("A", "B", "C"))
-ggsave(path_supfig, width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT)
 ```
 
 ## Time elapsed
