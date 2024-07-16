@@ -286,9 +286,9 @@ simulate_nav <- function(ct = 2, angio_inr = 1, angio_ir = 1,
               totalEmergIr = sum(category == "eir")
     )
 
-  print(arrivalsCounts)
-  print(arrivalsAngioInr)
-  print(arrivalsAngioIr)
+  # print(arrivalsCounts)
+  # print(arrivalsAngioInr)
+  # print(arrivalsAngioIr)
   print("")
 
   list_containing_output <- list(arrivals, resources)
