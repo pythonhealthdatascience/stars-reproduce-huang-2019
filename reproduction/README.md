@@ -73,13 +73,36 @@ To run all the model scenarios, open and execute the provided `.qmd` files in `s
 
 #### Option B: Testthat
 
-A few of the model configurations have been included as tests within `tests/testthat`
+Three of the model scenarios have been included as tests within `tests/testthat`. You can run these tests by running the following command from your R console whilst in the `reproduction/` directory:
 
-<!-- TODO: Finished adding instructions! -->
+`testthat::test_dir("tests/testthat")`
+
+This will run the three scenarios, save the results as temporary files, and compare the results against those we have saved. Although this will not produce any figures from the paper, and will not run all the scenarios, it will allow you to check if you are getting results consistent with our reproduction, on your own machine.
+
+As the tests run, you will see the counter increments on your screen (with the column indicating whether the test is successful). For example, if tests are successul, you will see it increment in the "OK" column:
+
+```
+✔ | F W  S  OK | Context
+⠏ |          0 | model                                               [1] ""
+⠋ |          1 | model                                               [1] ""
+```
+
+Each test will take about 2 minutes (for the machine specs given below). Once all three tests are complete, the run time and results will display:
+
+```
+══ Results ══════════════════════════════════════════════════════════
+Duration: 371.9 s
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]
+```
 
 ## Reproduction specs and runtime
 
-This reproduction was conducted on an Intel Core i7-12700H with 32GB RAM running Ubuntu 22.04.4 Linux. On this machine, the reproduction run time was 29 minutes 10 seconds (18.024 + 6.165 + 4.975 minutes).
+This reproduction was conducted on an Intel Core i7-12700H with 32GB RAM running Ubuntu 22.04.4 Linux.
+
+On this machine, the reproduction run time was 29 minutes 10 seconds. This was the total time from executing all the `.qmd` files that run the model and attempt to produce the figures/results (18.024 + 6.165 + 4.975 minutes).
+
+The run time for the tests (which only include a few model scenarios) was 6 minutes 12 seconds.
 
 ## Citation
 
