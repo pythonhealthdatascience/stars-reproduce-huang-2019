@@ -73,9 +73,19 @@ I briefly tried adding `containerit` to my `renv` to try that and see if it was 
 
 I add `libicu-dev` and tried again. This failed with the same error as before.
 
-Looking at the [rocker rstudio image](https://hub.docker.com/layers/rocker/rstudio/4.4/images/sha256-853bc686c132b6f07ec024142612d7d01ea4d2a0716fe269d36adf4d4487c19c?context=explore), it runs on `ubunutu 22.04`. [Posit](https://docs.posit.co/connect/admin/r/dependencies/) lists system dependencies for ubunutu 22.04 as `apt install -y libcairo2-dev libssl-dev make libcurl4-openssl-dev libmysqlclient-dev unixodbc-dev libnode-dev default-jdk libxml2-dev git libfontconfig1-dev libfreetype6-dev libssh2-1-dev zlib1g-dev libglpk-dev libjpeg-dev imagemagick libmagick++-dev gsfonts cmake libpng-dev libtiff-dev python3 libglu1-mesa-dev libgl1-mesa-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libsodium-dev libicu-dev tcl tk tk-dev tk-table libfribidi-dev libharfbuzz-dev libudunits2-dev`. I replaced the line in my Dockerfile and tried again. This failed with the same error as before.
+Looking at the [rocker rstudio image](https://hub.docker.com/layers/rocker/rstudio/4.4/images/sha256-853bc686c132b6f07ec024142612d7d01ea4d2a0716fe269d36adf4d4487c19c?context=explore), it runs on `ubunutu 22.04`. [Posit](https://docs.posit.co/connect/admin/r/dependencies/) lists system dependencies for ubunutu 22.04 as `apt install -y libcairo2-dev libssl-dev make libcurl4-openssl-dev libmysqlclient-dev unixodbc-dev libnode-dev default-jdk libxml2-dev git libfontconfig1-dev libfreetype6-dev libssh2-1-dev zlib1g-dev libglpk-dev libjpeg-dev imagemagick libmagick++-dev gsfonts cmake libpng-dev libtiff-dev python3 libglu1-mesa-dev libgl1-mesa-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libsodium-dev libicu-dev tcl tk tk-dev tk-table libfribidi-dev libharfbuzz-dev libudunits2-dev`. I replaced the line in my Dockerfile and tried again. This failed with the same error as before (so returned it to the simpler list).
 
-I found [this issue](https://github.com/Bioconductor/bioconductor_docker/issues/59) with the same error, where it appears there is an issue with the stringr binary being built for the wrong Ubunutu since `libicui18n.so.66` is for 20.04, although the fix appeared to be that they fixed the bioconductor container, and it wasn't super clear to me what I should do.
+I found [this issue](https://github.com/Bioconductor/bioconductor_docker/issues/59) with the same error, where it appears there is an issue with the stringi binary being built for the wrong Ubunutu since `libicui18n.so.66` is for 20.04, although the fix appeared to be that they fixed the bioconductor container, and it wasn't super clear to me what I should do.
+
+Based on [this example](https://gist.github.com/aforsythe/b588c950965d5a6b4810bed4cf85873b) linked from [this issue](https://forum.posit.co/t/restore-renv-lock-file-without-redownloading-packages/102690/9), I tried switching `libicu-dev` to `libicu`. However, this returned error `Unable to locate package libicu`. I then instead tried adding `RUN R -e "install.packages('stringi')"` before `renv::restore()`. That ran successfully, but hit a new error:
+
+```
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/home/code/renv/staging/2/openssl/libs/openssl.so':
+  libssl.so.1.1: cannot open shared object file: No such file or directory
+```
+
+`libssl` is in the list of system dependencies that were being installed. A quick google shows there are issues related to `libssl.so.1.1` on `Ubuntu 22.04`. I tried doing the simplest solution first - installing it seperately (as that worked for `stringi` above).
 
 ### Fix Quarto GitHub action
 
