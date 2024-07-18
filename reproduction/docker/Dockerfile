@@ -13,19 +13,15 @@ RUN apt-get update && \
 # Install the latest release of renv from CRAN
 RUN R -e "install.packages('renv', repos = c(CRAN = 'https://cloud.r-project.org'))"
 
-# Create and set working directory for container
-RUN mkdir /home/code
-WORKDIR /home/code
-
 # Copy files (including lockfile!) into the image
 # Thanks to .dockerignore, should not copy over renv/ (which is very large)
-COPY . /home/code
+COPY . /home/rstudio
 
 # Copy renv auto-loader tools
 RUN mkdir -p renv
-COPY .Rprofile .Rprofile
-COPY renv/activate.R renv/activate.R
-COPY renv/settings.json renv/settings.json
+COPY .Rprofile /home/rstudio/.Rprofile
+COPY renv/activate.R /home/rstudio/renv/activate.R
+COPY renv/settings.json /home/rstudio/renv/settings.json
 
 # Install stringi seperately due to issue with not detecting libicu
 RUN R -e "install.packages(\"stringi\")"
@@ -36,4 +32,4 @@ RUN R -e "install.packages(\"openssl\")"
 # Restore packages when image is created
 # (and hence, new containers created from this image will have R packages
 # installed and visible at run time)
-RUN R -e "renv::restore(repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"
+RUN R -e "renv::restore(lockfile=\"/home/rstudio/renv.lock\", repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"
