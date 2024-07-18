@@ -24,7 +24,7 @@ However, these were then all successful! Included instructions to run these test
 
 ### Docker
 
-#### Troubleshooting errors when attempting to build the image
+#### Troubleshooting installation of packages when building images
 
 Ran `sudo docker build --tag huang2019 . -f ./docker/Dockerfile` from `reproduction/` (which is where the `renv` is located). Hit an error:
 
@@ -89,15 +89,43 @@ Error in dyn.load(file, DLLpath = DLLpath, ...) :
 
 `libssl` is in the list of system dependencies that were being installed. A quick google shows there are issues related to `libssl.so.1.1` on `Ubuntu 22.04`. I tried doing the simplest solution first - installing it seperately (as that worked for `stringi` above).
 
-The docker image then built successfully!
+The docker image then **built successfully**!
 
-#### Testing the image
+#### Troubleshooting empty container
 
 Having successfully built the image (`sudo docker build --tag huang2019 . -f ./docker/Dockerfile`), I then tried creating a container. After some trial and error with the command (and using `sudo docker rm huang2019_docker` to remove and recreate container)), I got to:
 
-`(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -rm -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019` (with `rm` to auto-remove when exit with `Ctrl+C`, and `it` to run in interactive mode).
+`(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019`
 
-This opened up RStudio - although there were no files and none of the libraries I had added were listed in the packages (e.g. no simmer). I searched for suggestions on this issue, but struggled to find anything.
+This opened up RStudio - although there were no files and none of the libraries I had added were listed in the packages (e.g. no simmer)
+
+I spent quite a while searching for and trying suggestions on this issue, with little success. E.g.
+
+* I tried running `sudo docker inspect huang2019` but couldn't spot anything amiss.
+* Based on [this post](https://stackoverflow.com/questions/32997269/copying-a-file-in-a-dockerfile-no-such-file-or-directory), I checked my `.dockerignore`, which has `**/renv/`, which should just be preventing upload of `renv`.
+
+I then tried copying everything into `/home/rstudio` rather than making a new directory in the `Dockerfile` and remaking the image. Got error `This project does not contain a lockfile`, so add path to `renv::restore()`. This built successfully, so I used the command above to create a container and open RStudio. This **successfully included all the files**!
+
+#### Troubleshooting renv in the container
+
+On opening RStudio, the console now showed a long list of packages that `are missing entries in the cache`, saying `These packages will need to be reinstalled`. It then says `Project '~/' loaded. [renv 1.0.7]` and `The following package(s) have broken symlinks into the cache`, with the same list of packages again, and `Use renv::repair() to try and reinstall these packages.`.
+
+Running `renv::repair()`, we get the following message:
+
+```
+# Library cache links ---------------------------------------------
+renv appears to be unable to access the requested library path:
+- /home/rstudio/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu
+Check that the 'rstudio' user has read / write access to this directory.
+
+Do you want to proceed? [Y/n]
+```
+
+Selecting to proceed, it installs the packages from CRAN.
+
+I tried making another container without disabling authentication - `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e PASSWORD=password --name  huang2019_docker huang2019`, then login with username `rstudio` password `password` - but had the same issue.
+
+Looking in the `renv/` folder, it appears to only contain the package `renv`.
 
 ### Fix Quarto GitHub action
 
