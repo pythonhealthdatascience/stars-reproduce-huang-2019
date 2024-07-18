@@ -22,6 +22,30 @@ Having re-ran all the scenarios from scratch, I replaced the files in `tests/tes
 
 However, these were then all successful! Included instructions to run these tests, run time, and what you might expect to see, to the reproduction `README`.
 
+### Docker
+
+Ran `sudo docker build --tag huang2019 . -f ./docker/Dockerfile` from `reproduction/` (which is where the `renv` is located). Hit an error:
+
+```
+15.45 Warning: failed to find source for 'Matrix 1.7-0' in package repositories
+15.45 Warning: error downloading 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz']
+15.45 Error: failed to retrieve package 'Matrix@1.7-0'
+
+...
+
+ERROR: failed to solve: process "/bin/sh -c R -e \"renv::restore()\"" did not complete successfully: exit code: 1
+```
+
+I looked to the address, and found that 1.7-0 was indeed not in the Archive, but it is the latest version of the package. It is available at <https://cran.r-project.org/src/contrib/Matrix_1.7-0.tar.gz> or at <https://cloud.r-project.org/src/contrib/Matrix_1.7-0.tar.gz>. This was only the second package it tried to install - the first was MASS 7.3-60.2, and that wasn't the latest version. Looking at other packages, it seems common that the latest version is not on CRAN archive.
+
+I tried out a bunch of things, but the same issue persisted throughout:
+
+* I [found a post](https://github.com/rstudio/renv/issues/209) with the same issue - that renv() only looks in CRAN archive in a Docker image. They suggested `renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))`.
+  * I changed the Dockerfie (but used single quotes for URL) and re-ran - `RUN R -e "renv::restore(repos = c(CRAN = 'https://cloud.r-project.org'))"`
+  * I tried with double quotes as above, but including `\` to escape the inner quotes - `RUN R -e "renv::restore(repos = c(CRAN = \"https://cloud.r-project.org\"))"`
+* Based on some online posts, I wondered if this might be to do with system dependencies. Based on [this post](https://mdneuzerling.com/post/determining-system-dependencies-for-r-projects/), I opened a fresh R session (so not in renv) and tried to install `getsysreqs` although it was not available for my version of R. The RStudio Package Manager (RSPM) was recommended. I also stumbled across `containerit` which can make a Dockerfile for you and would include the system dependencies. However, I decided first to try the simplest option, which is to just install a fairly standard list of some linux libraries that R packages need, [like here](http://haines-lab.com/post/2022-01-23-automating-computational-reproducibility-with-r-using-renv-docker-and-github-actions/).
+* Based on [this issue](https://github.com/rstudio/renv/issues/1767), I add `ENV RENV_WATCHDOG_ENABLED FALSE` to disable the renv watchdog.
+
 ### Fix Quarto GitHub action
 
 Returned to the broken Quarto render action (which fails to find `rmarkdown` despite it having been installed with `setup-renv`). Some ideas:
