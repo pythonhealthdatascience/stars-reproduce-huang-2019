@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Amy Heather">
-<meta name="dcterms.date" content="2024-07-16">
+<meta name="dcterms.date" content="2024-07-18">
 
-<title>Reproducing Huang et al.&nbsp;2019 - Day 10</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 11</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -177,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Day 10</h1>
+      <h1 class="title">Day 11</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">compendium</div>
               </div>
@@ -197,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 16, 2024</p>
+        <p class="date">July 18, 2024</p>
       </div>
     </div>
     
@@ -213,9 +213,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#untimed-research-compendium" id="toc-untimed-research-compendium" class="nav-link active" data-scroll-target="#untimed-research-compendium">Untimed: Research compendium</a></li>
+  <li><a href="#untimed-research-compendium" id="toc-untimed-research-compendium" class="nav-link active" data-scroll-target="#untimed-research-compendium">Untimed: Research compendium</a>
+  <ul class="collapse">
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
+  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
+  <li><a href="#fix-quarto-github-action" id="toc-fix-quarto-github-action" class="nav-link" data-scroll-target="#fix-quarto-github-action">Fix Quarto GitHub action</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_14/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_18/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -234,73 +239,65 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Working on research compendium stage</p>
+<p>Finishing up with research compendium stage</p>
 </div>
 </div>
 <section id="untimed-research-compendium" class="level2">
 <h2 class="anchored" data-anchor-id="untimed-research-compendium">Untimed: Research compendium</h2>
+<section id="tests" class="level3">
+<h3 class="anchored" data-anchor-id="tests">Tests</h3>
+<p>Having re-ran all the scenarios from scratch, I replaced the files in <code>tests/testthat/expected_results/</code> and then ran <code>testthat::test_dir("tests/testthat")</code>.</p>
+<p><code>is_true(compare)</code> returned error <code>Error in</code>is_true(compare)<code>: unused argument (compare)</code> so switched back to <code>expect_equal()</code>.</p>
+<p>However, these were then all successful! Included instructions to run these tests, run time, and what you might expect to see, to the reproduction <code>README</code>.</p>
+</section>
+<section id="docker" class="level3">
+<h3 class="anchored" data-anchor-id="docker">Docker</h3>
+<p>Ran <code>sudo docker build --tag huang2019 . -f ./docker/Dockerfile</code> from <code>reproduction/</code> (which is where the <code>renv</code> is located). Hit an error:</p>
+<pre><code>15.45 Warning: failed to find source for 'Matrix 1.7-0' in package repositories
+15.45 Warning: error downloading 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz']
+15.45 Error: failed to retrieve package 'Matrix@1.7-0'
+
+...
+
+ERROR: failed to solve: process "/bin/sh -c R -e \"renv::restore()\"" did not complete successfully: exit code: 1</code></pre>
+<p>I looked to the address, and found that 1.7-0 was indeed not in the Archive, but it is the latest version of the package. It is available at <a href="https://cran.r-project.org/src/contrib/Matrix_1.7-0.tar.gz" class="uri">https://cran.r-project.org/src/contrib/Matrix_1.7-0.tar.gz</a> or at <a href="https://cloud.r-project.org/src/contrib/Matrix_1.7-0.tar.gz" class="uri">https://cloud.r-project.org/src/contrib/Matrix_1.7-0.tar.gz</a>. This was only the second package it tried to install - the first was MASS 7.3-60.2, and that wasn’t the latest version. Looking at other packages, it seems common that the latest version is not on CRAN archive.</p>
+<p>I tried out a bunch of things, but the same issue persisted throughout:</p>
 <ul>
-<li>Tried adding parallel processing in <code>model.R</code> to speed it up
+<li>I <a href="https://github.com/rstudio/renv/issues/209">found a post</a> with the same issue - that renv() only looks in CRAN archive in a Docker image. They suggested <code>renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))</code>.
 <ul>
-<li>Add <code>future.apply</code> to the environment</li>
-<li><code>plan(multisession, workers=max(availableCores()-5, 1))</code></li>
-<li><code>future_lapply()</code></li>
-<li>However, it took longer than usual! So I removed it</li>
+<li>I changed the Dockerfie (but used single quotes for URL) and re-ran - <code>RUN R -e "renv::restore(repos = c(CRAN = 'https://cloud.r-project.org'))"</code></li>
+<li>I tried with double quotes as above, but including <code>\</code> to escape the inner quotes - <code>RUN R -e "renv::restore(repos = c(CRAN = \"https://cloud.r-project.org\"))"</code></li>
 </ul></li>
-<li>Reorganising
-<ul>
-<li>Moved scripts into a <code>scripts/</code> folder</li>
-<li>Moved help functions from <code>reproduction.Rmd</code> into seperate R script (primarily so can reuse in tests more easily)</li>
-</ul></li>
-<li>Set <code>ggsave()</code> image width as realised it otherwise varied with window size when running</li>
+<li>Based on some online posts, I wondered if this might be to do with system dependencies. Based on <a href="https://mdneuzerling.com/post/determining-system-dependencies-for-r-projects/">this post</a>, I opened a fresh R session (so not in renv) and tried to install <code>getsysreqs</code> although it was not available for my version of R. The RStudio Package Manager (RSPM) was recommended. I also stumbled across <code>containerit</code> which can make a Dockerfile for you and would include the system dependencies. However, I decided first to try the simplest option, which is to just install a fairly standard list of some linux libraries that R packages need, <a href="http://haines-lab.com/post/2022-01-23-automating-computational-reproducibility-with-r-using-renv-docker-and-github-actions/">like here</a>.</li>
+<li>Based on <a href="https://github.com/rstudio/renv/issues/1767">this issue</a>, I add <code>ENV RENV_WATCHDOG_ENABLED FALSE</code> to disable the renv watchdog.</li>
 </ul>
-<p>Create tests to check model results are consistent</p>
+<p>Based on <a href="https://github.com/TomMonks/reproducible_r_docker/blob/main/Dockerfile">Tom’s Dockerfile</a> which is from Peter Solymos, I tried changing the CRAN source <code>RUN R -e "renv::restore(repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"</code>. This resolved the issue, as it was able to download Matrix from CRAN. <strong>All packages successfully downloaded</strong>, but I then hit an issue <strong>installing</strong> the packages:</p>
+<pre><code>ERROR: this R is version 4.1.1, package 'MASS' requires R &gt;= 4.4.0
+install of package 'MASS' failed [error code 1]`.</code></pre>
+<p>I then realised I had accidentally put R 4.1.1, when I meant to put R 4.4.1! I changed this and re-ran. This was successful until attempting to install <code>igraph</code>, at which it hit an error:</p>
+<pre><code>Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/home/code/renv/staging/2/igraph/libs/igraph.so':
+  libglpk.so.40: cannot open shared object file: No such file or directory</code></pre>
+<p>I add <code>libglpk-dev</code> to the list of system dependencies to install then tried again. It did eventually failed again with another similar issue.</p>
+<pre><code>Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/home/code/renv/staging/2/stringi/libs/stringi.so':
+  libicui18n.so.66: cannot open shared object file: No such file or directory</code></pre>
+<p>I briefly tried adding <code>containerit</code> to my <code>renv</code> to try that and see if it was simpler, although decided to pause on that and remove it and keep trying as before, as I kept getting errors and it wasn’t a quick-fix. I removed it from <code>DESCRIPTION</code> then ran <code>renv::clean()</code>, <code>renv::snapshot()</code>.</p>
+<p>I add <code>libicu-dev</code> and tried again. This failed with the same error as before.</p>
+<p>Looking at the <a href="https://hub.docker.com/layers/rocker/rstudio/4.4/images/sha256-853bc686c132b6f07ec024142612d7d01ea4d2a0716fe269d36adf4d4487c19c?context=explore">rocker rstudio image</a>, it runs on <code>ubunutu 22.04</code>. <a href="https://docs.posit.co/connect/admin/r/dependencies/">Posit</a> lists system dependencies for ubunutu 22.04 as <code>apt install -y libcairo2-dev libssl-dev make libcurl4-openssl-dev libmysqlclient-dev unixodbc-dev libnode-dev default-jdk libxml2-dev git libfontconfig1-dev libfreetype6-dev libssh2-1-dev zlib1g-dev libglpk-dev libjpeg-dev imagemagick libmagick++-dev gsfonts cmake libpng-dev libtiff-dev python3 libglu1-mesa-dev libgl1-mesa-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libsodium-dev libicu-dev tcl tk tk-dev tk-table libfribidi-dev libharfbuzz-dev libudunits2-dev</code>. I replaced the line in my Dockerfile and tried again. This failed with the same error as before.</p>
+<p>I found <a href="https://github.com/Bioconductor/bioconductor_docker/issues/59">this issue</a> with the same error, where it appears there is an issue with the stringi binary being built for the wrong Ubunutu since <code>libicui18n.so.66</code> is for 20.04, although the fix appeared to be that they fixed the bioconductor container, and it wasn’t super clear to me what I should do.</p>
+</section>
+<section id="fix-quarto-github-action" class="level3">
+<h3 class="anchored" data-anchor-id="fix-quarto-github-action">Fix Quarto GitHub action</h3>
+<p>Returned to the broken Quarto render action (which fails to find <code>rmarkdown</code> despite it having been installed with <code>setup-renv</code>). Some ideas:</p>
 <ul>
-<li>Started with creating a basic test saving tempfile csv and loading it to compare to another dataframe</li>
-<li>Then made a test with two example models being run for 3 replications and comparing results</li>
-<li>Then, set up with two files, as testthat can run files in parallel, and configured parallel processing. This involved:
-<ul>
-<li>Adding <code>Config/testthat/parallel: true</code> to DESCRIPTION</li>
-<li>Create project-specific environment file with <code>nano reproduction/.Renviron</code> and setting <code>TESTTHAT_CPUS=4</code></li>
-</ul></li>
-<li>Ran <code>testthat::test_dir("tests")</code>, although seemed to just run sequentially. Confirmed by checking <code>testthat::isparallel()</code> which returned <code>FALSE</code>.</li>
-<li>Tried adding <code>Config/testthat/start-first: shifts, model</code> to <code>DESCRIPTION</code> and it ignored the order, so it appears the issue is it is not using info from the <code>DESCRIPTION</code> file</li>
-<li>Checked version and it is correct for running in parallel (testthat&gt;=3.0.0)</li>
-<li>Tried instead running <code>testthat::test_local()</code>, and moving tests into a folder <code>testthat/</code>, and this returned an error <code>Could not find a root 'DESCRIPTION' file that starts with '^Package' in /home/amy/Documents/stars/stars-reproduce-huang-2019/reproduction.</code></li>
-<li>Changed <code>DESCRIPTION</code> to add <code>Package</code> and re-run - but this had error that <code>installation of renv failed</code>. Same error occurs if run <code>testthat::test_dir()</code>. It says to <code>Try removing ‘/home/amy/.cache/R/renv/library/reproduction-0912b448/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/00LOCK-renv’</code>. I deleted this file (navigated there than <code>rm -r 00LOCK-renv</code>) then re-ran. However, this kept getting the same error message with that same file being created.</li>
-<li>Tried removing <code>Package</code> from <code>DESCRIPTION</code> and running <code>testthat::test_dir("tests/testthat", load_package="none")</code> - but that ignores the order in <code>DESCRIPTION</code></li>
-<li>Tried <code>testthat::test_dir("tests/testthat", load_package="source")</code> which had error that <code>Field 'Version' not found</code>. Once I had this and re-ran, it ran the tests in the specified order! From <code>Config/testthat/start-first: shifts, model</code></li>
-<li>I then add in <code>Config/testthat/parallel: true</code> and <code>Config/testthat/edition: 3</code> but it had the same <code>renv</code> error as before</li>
-<li>Then decided to just run without parallel for now, so removed those lines from <code>DESCRIPTION</code>, deleted the <code>.Renviron</code> file, and put tests in a single file</li>
-</ul>
-<pre><code>Package: huang2019
-Version: 0.1
-Config/testthat/start-first: shifts, model
-Config/testthat/parallel: true
-Config/testthat/edition: 3</code></pre>
-<ul>
-<li>Created function to simplify testing, then wrote tests fora selection of scenarios (not all scenarios, to minimise run time).</li>
-<li>Test was failing with error of <code>Length mismatch: comparison on first 2 components</code>. I tried changing from <code>expect_equal</code> to using <code>all.equal()</code> and then <code>expect_true(is_true())</code> on result. But this returned the same error!</li>
-<li>I tried running everything manually in the console so I could inspect the dataframes myself.</li>
-</ul>
-<pre><code>file = "tests/testthat/expected_results/fig2_baseline.csv.gz"
-exp &lt;- as.data.frame(data.table::fread(file))
-inputs=list(seed=200)
-result &lt;- do.call(run_model, inputs)</code></pre>
-<ul>
-<li>I realised the issue was that the expected result included a column <code>shift</code> where value throughout was <code>5pm</code>. This was likely due to changing it at some point but not having re-run the whole script since, so I did that (and timed it!). I removed some of the model variants that aren’t to produce results from the paper (E.g. varying seeds)
-<ul>
-<li>It takes a while to run and, midway through, the R session encountered a fatal error and aborted. Tried again, and it failed again on <code>exclusive_f5 &lt;- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)</code>.</li>
-<li>I’m suspecting this might be due to the size of the dataframes produced? So tried removing them from the environment after saving and ran again - but it still crashed, this time on the next <code>run_model()</code> statement</li>
-<li>I considered trying again with parallelisation but, given I hadn’t had much luck with that before, and given that the issue here is with R crashing (and so parallelisation actually may not help), I decided to instead split up <code>reproduction.rmd</code> into a few smaller files.</li>
-</ul></li>
-</ul>
-<p>Docker</p>
-<ul>
-<li>Used the <a href="https://rstudio.github.io/renv/articles/docker.html">RStudio documentation</a> and <a href="https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette">this tutorial</a> to write a Dockerfile.</li>
+<li><a href="https://github.com/pommevilla/quarto-action-tests/blob/main/.github/workflows/quarto-render.yml">Example GitHub action</a> for book with Python and R - although a few years old</li>
+<li><a href="https://github.com/nrennie/wbs-summer-school-2024-data-viz/blob/main/.github/workflows/publish.yml">Example GitHub action</a> where they installed packages directly</li>
+<li><a href="https://rstudio.github.io/renv/articles/ci.html#using-the-github-actions-cache-with-renv">RStudio tutorial</a> for custom GitHub action workflow</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -737,7 +734,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_14/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_18/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

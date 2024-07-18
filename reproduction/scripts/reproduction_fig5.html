@@ -244,6 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This is run in a separate script from the other figures due to issues with RStudio crashing when all scenarios were run from a single script.</p>
+<p>Currently depends on simmer.plot() function that doesn’t work on the imported results from the csv file, so need to allow to run model to produce this plot! Hence, you will only see results if <code>run &lt;- TRUE</code>. Ordinarily, we leave as <code>FALSE</code> so that quarto site is still built quickly.</p>
 <p>Run time: 6.165 minutes (will vary between machines)</p>
 <section id="set-up" class="level2">
 <h2 class="anchored" data-anchor-id="set-up">Set up</h2>
@@ -285,7 +286,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="create-figure" class="level2">
 <h2 class="anchored" data-anchor-id="create-figure">Create figure</h2>
-<p>Currently depends on simmer.plot() function that doesn’t work on the imported results from the csv file, so need to allow to run model to produce this plot!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace resource (which has been filtered to angioINR) with scenario</span></span>

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Amy Heather">
-<meta name="dcterms.date" content="2024-07-11">
+<meta name="dcterms.date" content="2024-07-16">
 
-<title>Reproducing Huang et al.&nbsp;2019 - Day 7</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 10</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -211,9 +177,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Day 7</h1>
+      <h1 class="title">Day 10</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">reproduce</div>
+                <div class="quarto-category">compendium</div>
               </div>
                   </div>
   </div>
@@ -231,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 11, 2024</p>
+        <p class="date">July 16, 2024</p>
       </div>
     </div>
     
@@ -247,14 +213,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#running-model-with-30-replications-and-various-seeds" id="toc-running-model-with-30-replications-and-various-seeds" class="nav-link active" data-scroll-target="#running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</a></li>
-  <li><a href="#working-on-figure-2b" id="toc-working-on-figure-2b" class="nav-link" data-scroll-target="#working-on-figure-2b">12.00-12.17: Working on Figure 2B</a></li>
-  <li><a href="#evaluating-in-text-result-3" id="toc-evaluating-in-text-result-3" class="nav-link" data-scroll-target="#evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</a></li>
-  <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">13.45-13.54, 14.00-14.21: Figure 4</a></li>
-  <li><a href="#figure-5" id="toc-figure-5" class="nav-link" data-scroll-target="#figure-5">15.32-16.31, 16.35-17.00: Figure 5</a></li>
-  <li><a href="#timings" id="toc-timings" class="nav-link" data-scroll-target="#timings">Timings</a></li>
+  <li><a href="#untimed-research-compendium" id="toc-untimed-research-compendium" class="nav-link active" data-scroll-target="#untimed-research-compendium">Untimed: Research compendium</a>
+  <ul class="collapse">
+  <li><a href="#parallel-processing" id="toc-parallel-processing" class="nav-link" data-scroll-target="#parallel-processing">Parallel processing</a></li>
+  <li><a href="#reorganising" id="toc-reorganising" class="nav-link" data-scroll-target="#reorganising">Reorganising</a></li>
+  <li><a href="#fix-image-size" id="toc-fix-image-size" class="nav-link" data-scroll-target="#fix-image-size">Fix image size</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
+  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_16/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -273,175 +241,83 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Reproduced Figure 5 and working on Figures 2 and 4. Total time used: 23h 29m (58.7%).</p>
+<p>Working on research compendium stage.</p>
 </div>
 </div>
-<section id="running-model-with-30-replications-and-various-seeds" class="level2">
-<h2 class="anchored" data-anchor-id="running-model-with-30-replications-and-various-seeds">10.45-11.00, 11.35-11.45: Running model with 30 replications and various seeds</h2>
-<p>Intermittently (condensed to 15 minutes, but was over a longer time) ran the baseline model with several different seeds, but 30 replications. However, we can see this has a fairly minimal impact on the results, with a fairly low peak observed for the AngioINR waiting times in all.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="fig2a_seeds.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 2A with different seeds</figcaption>
-</figure>
-</div>
-</section>
-<section id="working-on-figure-2b" class="level2">
-<h2 class="anchored" data-anchor-id="working-on-figure-2b">12.00-12.17: Working on Figure 2B</h2>
-<p>Figures 2A and 2C have lower angioINR wait times but are otherwise fairly similar to the scope. However, Figure 2B is very different. It should have higher angioINR and angio staff wait times.</p>
-<p>I tried a few variants to see how they impacted results, although none got us what we are hoping for:</p>
+<section id="untimed-research-compendium" class="level2">
+<h2 class="anchored" data-anchor-id="untimed-research-compendium">Untimed: Research compendium</h2>
+<section id="parallel-processing" class="level3">
+<h3 class="anchored" data-anchor-id="parallel-processing">Parallel processing</h3>
+<p>Tried adding parallel processing in <code>model.R</code> to speed it up</p>
 <ul>
-<li>Changing the number of angioINR machines</li>
-<li>Excluding emergency IR patients</li>
-<li>Doubling the number of ED arrivals</li>
-<li>Reducing the number of angio staff (did bring up the curves, but too high, and as they are normally requested as 3 at a time, as soon as go to 6, the wait times drop again)</li>
-<li>Reducing the number of ED staff</li>
-<li>Increasing the INR angioINR appointment length to mean 120 SD 60 (from mean 60 SD 30)</li>
-<li>Force emergency IR to only use angioINR (and not angioIR)</li>
+<li>Add <code>future.apply</code> to the environment</li>
+<li><code>plan(multisession, workers=max(availableCores()-5, 1))</code></li>
+<li><code>future_lapply()</code></li>
+<li>However, it took longer than usual! So I removed it</li>
 </ul>
 </section>
-<section id="evaluating-in-text-result-3" class="level2">
-<h2 class="anchored" data-anchor-id="evaluating-in-text-result-3">12.20-12.24, 13.13-13.29, 13.39-13.44: Evaluating in-text result 3</h2>
-<p>Given that in-text result 2 now matches up due to the fix to the double angioINR scenario, I also checked the results for in-text result 3. These complement figure 3, but provide the reduced wait times for some of the scenarios (excludes exclusive use). These are changes to wait time in min.</p>
-<p>The fix to the model has definitely improved the two angioINR results (previously -2.1 and -2.2) but still are both dissimilar to the paper.</p>
-<p>I have previously tried running different seeds for baseline, which caused alot of fluctation in results (and although not similar to the original, I do think it could be possible to get closer if I just tried some more different seeds!). I tried also running the seed variants for the angioINR scenarios, to see what sort of fluctuation we get in those results - as if that looked to get us slightly closer, then I’d be convinced to try some more seeds for both of them (takes a little while to run, so was only planning to do if looked hopeful).</p>
-<p>However, they do all still look rather different, with nothing very similar to the paper. Hence, feel there might be another underlying cause for the differences (beyond seeds) (particularly as haven’t got related figure to match).</p>
-<table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Scenario</th>
-<th>Paper reduction</th>
-<th>My reduction (seed 200)</th>
-<th>(seed 500)</th>
-<th>(seed 700)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Baseline 1h extra</td>
-<td>-1.7</td>
-<td>-1.47</td>
-<td>-1.8</td>
-<td>-2.2</td>
-</tr>
-<tr class="even">
-<td>Baseline 2h extra</td>
-<td>-0.9</td>
-<td>-1.47</td>
-<td>-1.8</td>
-<td>-3.2</td>
-</tr>
-<tr class="odd">
-<td>AngioINR 1h extra</td>
-<td>+1</td>
-<td>-0.4</td>
-<td>-0.57</td>
-<td>-0.43</td>
-</tr>
-<tr class="even">
-<td>AngioINR 2h extra</td>
-<td>+0.3</td>
-<td>-0·92</td>
-<td>-1.1</td>
-<td>-0.76</td>
-</tr>
-</tbody>
-</table>
+<section id="reorganising" class="level3">
+<h3 class="anchored" data-anchor-id="reorganising">Reorganising</h3>
+<ul>
+<li>Moved scripts into a <code>scripts/</code> folder</li>
+<li>Moved help functions from <code>reproduction.Rmd</code> into seperate R script (primarily so can reuse in tests more easily)</li>
+</ul>
 </section>
-<section id="figure-4" class="level2">
-<h2 class="anchored" data-anchor-id="figure-4">13.45-13.54, 14.00-14.21: Figure 4</h2>
-<p>This figure uses the reduction in patient wait times (from baseline) from three scenarios, multiplying the minutes saved by 4.2. With a seed 200 and so average wait for baseline of 14 minutes…</p>
-<table class="table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Scenario</th>
-<th>Wait time</th>
-<th>Reduction from baseline (14 min)</th>
-<th>Disability-life years added</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Exclusive use</td>
-<td>8.12</td>
-<td>- 5.84</td>
-<td>24.528</td>
-</tr>
-<tr class="even">
-<td>Two angioINRs</td>
-<td>9.62</td>
-<td>-4.34</td>
-<td>18.23</td>
-</tr>
-<tr class="odd">
-<td>Exclusive use + 1 hour</td>
-<td>7.80</td>
-<td>-6.20</td>
-<td>26.04</td>
-</tr>
-</tbody>
-</table>
-<p>Although the exclusive use results look a bit lower than the figure, the pattern is similar and it’s somewhat close, so I worked to create a plot of this within <code>reproduction.Rmd</code>.</p>
-<p>Looking at the plot, I think the results are reasonably similar (middle one definite!), but the right bar may just be a bit too different (-5 ish).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="fig4.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 4</figcaption>
-</figure>
-</div>
+<section id="fix-image-size" class="level3">
+<h3 class="anchored" data-anchor-id="fix-image-size">Fix image size</h3>
+<p>Set <code>ggsave()</code> image width as realised it otherwise varied with window size when running</p>
 </section>
-<section id="figure-5" class="level2">
-<h2 class="anchored" data-anchor-id="figure-5">15.32-16.31, 16.35-17.00: Figure 5</h2>
-<p>Don’t save full model results due to file size, so had to re-run the three basic model scenarios, and then combined and saved the utilisation from angioINR.</p>
-<p>I realised that the plot looks very similar to those from the <a href="https://r-simmer.org/extensions/plot/reference/plot.mon">simmer documentation</a>, so followed those guidelines to produce it (and see code for that function <code>plot.resources.utilization</code> <a href="https://github.com/r-simmer/simmer.plot/blob/51aa1cf442b4923ab95ad3822408c139898731b5/R/plot.resources.R#L95">at this link</a>). However, ordinary import using data.table creates a data.table data.frame, whilst the original from the model is a resources data.frame. This appears to be a custom simmer class, and the plot function does not work otherwise. As I couldn’t figure a way to resolve this, I set it to run the model for this function only, for now, since the original simmer.plot code is not under an open license.</p>
-<p>I think the result is very similar to the original - the only difference is that baseline has 24% utilisation instead of 26% - but I feel that is close enough to mark this as successfully reproduced.</p>
+<section id="tests" class="level3">
+<h3 class="anchored" data-anchor-id="tests">Tests</h3>
+<p>Create tests to check model results are consistent</p>
+<ul>
+<li>Started with creating a basic test saving tempfile csv and loading it to compare to another dataframe</li>
+<li>Then made a test with two example models being run for 3 replications and comparing results</li>
+<li>Then, set up with two files, as testthat can run files in parallel, and configured parallel processing. This involved:
+<ul>
+<li>Adding <code>Config/testthat/parallel: true</code> to DESCRIPTION</li>
+<li>Create project-specific environment file with <code>nano reproduction/.Renviron</code> and setting <code>TESTTHAT_CPUS=4</code></li>
+</ul></li>
+<li>Ran <code>testthat::test_dir("tests")</code>, although seemed to just run sequentially. Confirmed by checking <code>testthat::isparallel()</code> which returned <code>FALSE</code>.</li>
+<li>Tried adding <code>Config/testthat/start-first: shifts, model</code> to <code>DESCRIPTION</code> and it ignored the order, so it appears the issue is it is not using info from the <code>DESCRIPTION</code> file</li>
+<li>Checked version and it is correct for running in parallel (testthat&gt;=3.0.0)</li>
+<li>Tried instead running <code>testthat::test_local()</code>, and moving tests into a folder <code>testthat/</code>, and this returned an error <code>Could not find a root 'DESCRIPTION' file that starts with '^Package' in /home/amy/Documents/stars/stars-reproduce-huang-2019/reproduction.</code></li>
+<li>Changed <code>DESCRIPTION</code> to add <code>Package</code> and re-run - but this had error that <code>installation of renv failed</code>. Same error occurs if run <code>testthat::test_dir()</code>. It says to <code>Try removing ‘/home/amy/.cache/R/renv/library/reproduction-0912b448/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/00LOCK-renv’</code>. I deleted this file (navigated there than <code>rm -r 00LOCK-renv</code>) then re-ran. However, this kept getting the same error message with that same file being created.</li>
+<li>Tried removing <code>Package</code> from <code>DESCRIPTION</code> and running <code>testthat::test_dir("tests/testthat", load_package="none")</code> - but that ignores the order in <code>DESCRIPTION</code></li>
+<li>Tried <code>testthat::test_dir("tests/testthat", load_package="source")</code> which had error that <code>Field 'Version' not found</code>. Once I had this and re-ran, it ran the tests in the specified order! From <code>Config/testthat/start-first: shifts, model</code></li>
+<li>I then add in <code>Config/testthat/parallel: true</code> and <code>Config/testthat/edition: 3</code> but it had the same <code>renv</code> error as before</li>
+<li>Then decided to just run without parallel for now, so removed those lines from <code>DESCRIPTION</code>, deleted the <code>.Renviron</code> file, and put tests in a single file</li>
+</ul>
+<pre><code>Package: huang2019
+Version: 0.1
+Config/testthat/start-first: shifts, model
+Config/testthat/parallel: true
+Config/testthat/edition: 3</code></pre>
+<ul>
+<li>Created function to simplify testing, then wrote tests fora selection of scenarios (not all scenarios, to minimise run time).</li>
+<li>Test was failing with error of <code>Length mismatch: comparison on first 2 components</code>. I tried changing from <code>expect_equal</code> to using <code>all.equal()</code> and then <code>expect_true(is_true())</code> on result. But this returned the same error!</li>
+<li>I tried running everything manually in the console so I could inspect the dataframes myself.</li>
+</ul>
+<pre><code>file = "tests/testthat/expected_results/fig2_baseline.csv.gz"
+exp &lt;- as.data.frame(data.table::fread(file))
+inputs=list(seed=200)
+result &lt;- do.call(run_model, inputs)</code></pre>
+<ul>
+<li>I realised the issue was that the expected result included a column <code>shift</code> where value throughout was <code>5pm</code>. This was likely due to changing it at some point but not having re-run the whole script since, so I did that (and timed it!). I removed some of the model variants that aren’t to produce results from the paper (E.g. varying seeds)
+<ul>
+<li>It takes a while to run and, midway through, the R session encountered a fatal error and aborted. Tried again, and it failed again on <code>exclusive_f5 &lt;- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)</code>.</li>
+<li>I’m suspecting this might be due to the size of the dataframes produced? So tried removing them from the environment after saving and ran again - but it still crashed, this time on the next <code>run_model()</code> statement</li>
+<li>I considered trying again with parallelisation but, given I hadn’t had much luck with that before, and given that the issue here is with R crashing (and so parallelisation actually may not help), I decided to instead split up <code>reproduction.rmd</code> into a few smaller files.</li>
+<li>I re-ran each of these in full, recording the run times.</li>
+</ul></li>
+</ul>
 </section>
-<section id="timings" class="level2">
-<h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="152e2af8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Minutes used prior to today</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>used_to_date <span class="op">=</span> <span class="dv">1228</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Times from today</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'10.45'</span>, <span class="st">'11.00'</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'11.35'</span>, <span class="st">'11.45'</span>),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.00'</span>, <span class="st">'12.17'</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'12.20'</span>, <span class="st">'12.24'</span>),</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.13'</span>, <span class="st">'13.29'</span>),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.39'</span>, <span class="st">'13.44'</span>),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'13.45'</span>, <span class="st">'13.54'</span>),</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'14.00'</span>, <span class="st">'14.21'</span>),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'15.32'</span>, <span class="st">'16.31'</span>),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'16.35'</span>, <span class="st">'17.00'</span>)]</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>calculate_times(used_to_date, times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time spent today: 181m, or 3h 1m
-Total used to date: 1409m, or 23h 29m
-Time remaining: 991m, or 16h 31m
-Used 58.7% of 40 hours max</code></pre>
-</div>
-</div>
+<section id="docker" class="level3">
+<h3 class="anchored" data-anchor-id="docker">Docker</h3>
+<p>Used the <a href="https://rstudio.github.io/renv/articles/docker.html">RStudio documentation</a> and <a href="https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette">this tutorial</a> to write a Dockerfile.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -878,7 +754,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_11/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_16/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

@@ -222,9 +222,6 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="reproduction-readme" class="level1">
 <h1>Reproduction README</h1>
-<!-- TODO: Remove this warning once filled out README -->
-<p><strong>Please note: This is a template README and has not yet been completed</strong></p>
-<!-- TODO: Fill out the README -->
 <section id="model-summary" class="level2">
 <h2 class="anchored" data-anchor-id="model-summary">Model summary</h2>
 <blockquote class="blockquote">
@@ -249,21 +246,75 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="reproducing-these-results">Reproducing these results</h2>
 <section id="repository-overview" class="level3">
 <h3 class="anchored" data-anchor-id="repository-overview">Repository overview</h3>
-<p>TBC <!-- Add overview once tidied --></p>
+<pre><code>├── docker
+│   └──  ...
+├── outputs
+│   └──  ...
+├── renv
+│   └──  ...
+├── scripts
+│   └──  ...
+├── tests
+│   └──  ...
+├── .Rprofile
+├── DESCRIPTION
+├── README.md
+├── renv.lock
+└── reproduction.Rproj</code></pre>
+<ul>
+<li><code>docker/</code> - Instructions for creation of docker container.</li>
+<li><code>outputs/</code> - Outputs files from the scripts (e.g.&nbsp;<code>.csv.gz</code>, <code>.png</code>)</li>
+<li><code>renv/</code> - Instructions for creation of R environment</li>
+<li><code>scripts/</code> - Code for the model and for reproducing items from the scope</li>
+<li><code>tests/</code> - Test to check that the model produces consistent results with our reproduction</li>
+<li><code>.Rprofile</code> - Activates R environment</li>
+<li><code>DESCRIPTION</code> - Lists packages that we installed into environment (their dependencies will have also been installed)</li>
+<li><code>README.md</code> - This file!</li>
+<li><code>renv.lock</code> - Lists R version and all packages in the R environment</li>
+<li><code>reproduction.Rproj</code> - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)</li>
+</ul>
 </section>
 <section id="step-1.-set-up-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.-set-up-environment">Step 1. Set up environment</h3>
-<p>TBC <!-- Add steps --></p>
+<section id="option-a.-renv" class="level4">
+<h4 class="anchored" data-anchor-id="option-a.-renv">Option A. Renv</h4>
+<p>An <code>renv</code> environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run <code>renv::restore()</code>.</p>
+<p>In <code>renv.lock</code>, you will see the version of R listed. However, <code>renv</code> will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.</p>
+</section>
+<section id="option-b.-docker" class="level4">
+<h4 class="anchored" data-anchor-id="option-b.-docker">Option B. Docker</h4>
+<p>First, you’ll need to ensure that <code>docker</code> is installed on your machine. You then have two options for obtaining the image.</p>
+<!-- TODO: Finished adding instructions! -->
+</section>
 </section>
 <section id="step-2.-running-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="step-2.-running-the-model">Step 2. Running the model</h3>
-<p>TBC <!-- Add steps --></p>
+<section id="option-a-execute-the-notebooks" class="level4">
+<h4 class="anchored" data-anchor-id="option-a-execute-the-notebooks">Option A: Execute the notebooks</h4>
+<p>To run all the model scenarios, open and execute the provided <code>.qmd</code> files in <code>scripts/</code>. You can do so within your preferred IDE (e.g.&nbsp;RStudio).</p>
+</section>
+<section id="option-b-testthat" class="level4">
+<h4 class="anchored" data-anchor-id="option-b-testthat">Option B: Testthat</h4>
+<p>Three of the model scenarios have been included as tests within <code>tests/testthat</code>. You can run these tests by running the following command from your R console whilst in the <code>reproduction/</code> directory:</p>
+<p><code>testthat::test_dir("tests/testthat")</code></p>
+<p>This will run the three scenarios, save the results as temporary files, and compare the results against those we have saved. Although this will not produce any figures from the paper, and will not run all the scenarios, it will allow you to check if you are getting results consistent with our reproduction, on your own machine.</p>
+<p>As the tests run, you will see the counter increments on your screen (with the column indicating whether the test is successful). For example, if tests are successul, you will see it increment in the “OK” column:</p>
+<pre><code>✔ | F W  S  OK | Context
+⠏ |          0 | model                                               [1] ""
+⠋ |          1 | model                                               [1] ""</code></pre>
+<p>Each test will take about 2 minutes (for the machine specs given below). Once all three tests are complete, the run time and results will display:</p>
+<pre><code>══ Results ══════════════════════════════════════════════════════════
+Duration: 371.9 s
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]</code></pre>
+</section>
 </section>
 </section>
 <section id="reproduction-specs-and-runtime" class="level2">
 <h2 class="anchored" data-anchor-id="reproduction-specs-and-runtime">Reproduction specs and runtime</h2>
 <p>This reproduction was conducted on an Intel Core i7-12700H with 32GB RAM running Ubuntu 22.04.4 Linux.</p>
-<p>Expected model runtime is <!-- Add run time-->.</p>
+<p>On this machine, the reproduction run time was 29 minutes 10 seconds. This was the total time from executing all the <code>.qmd</code> files that run the model and attempt to produce the figures/results (18.024 + 6.165 + 4.975 minutes).</p>
+<p>The run time for the tests (which only include a few model scenarios) was 6 minutes 12 seconds.</p>
 </section>
 <section id="citation" class="level2">
 <h2 class="anchored" data-anchor-id="citation">Citation</h2>
