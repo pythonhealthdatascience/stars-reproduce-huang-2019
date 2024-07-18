@@ -27,8 +27,11 @@ COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 COPY renv/settings.json renv/settings.json
 
-# Install stringi seperately due to issue with libicu
+# Install stringi seperately due to issue with not detecting libicu
 RUN R -e "install.packages(\"stringi\")"
+
+# Install openssl seperately due to issue with not detecting libssl
+RUN R -e "install.packages(\"openssl\")"
 
 # Restore packages when image is created
 # (and hence, new containers created from this image will have R packages
