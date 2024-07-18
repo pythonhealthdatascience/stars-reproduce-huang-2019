@@ -30,7 +30,5 @@ test_scenario <- function(file, param=NULL) {
     paste0("expected_results/", file, ".csv.gz")))
 
   # Compare the dataframes
-  compare = all.equal(result, exp)
-  print(compare)
-  expect_true(is_true(compare))
+  expect_equal(result, exp)
 }
