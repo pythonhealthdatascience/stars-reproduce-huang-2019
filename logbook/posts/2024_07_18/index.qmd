@@ -173,6 +173,23 @@ RUN Rscript -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}'
 
 However, we now are getting the `libicui18n.so.66` issue, so it appears the problem is that I haven't installed this into the right place for `renv` to find it, when I installed it seperately.
 
+I moved the installation to after having copied over the renv files -
+
+```
+# Copy files (including renv.lock!) into the image
+# Thanks to .dockerignore, should not copy over renv/ (which is very large)
+COPY . .
+
+# Copy renv auto-loader tools
+RUN mkdir -p renv/library
+COPY .Rprofile .Rprofile
+COPY renv/activate.R renv/activate.R
+```
+
+- but we again get the first issue (`could not copy / move file`...).
+
+I tried moving it around a few different locations in the file to try and figure out what might be right. I also tried adding in an `renv::activate()`
+
 ### Fix Quarto GitHub action
 
 Returned to the broken Quarto render action (which fails to find `rmarkdown` despite it having been installed with `setup-renv`). Some ideas:
