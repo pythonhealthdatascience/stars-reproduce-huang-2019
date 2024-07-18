@@ -2,12 +2,13 @@
 FROM rocker/rstudio:4.4.1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-  libcurl4-openssl-dev \
-  libssl-dev \
-  libxml2-dev \
-  libglpk-dev \
-  libicu
+RUN apt-get update && \
+	apt-get install -y \
+	libcurl4-openssl-dev \
+	libssl-dev \
+	libxml2-dev \
+	libglpk-dev \
+	libicu-dev
 
 # Install the latest release of renv from CRAN
 RUN R -e "install.packages('renv', repos = c(CRAN = 'https://cloud.r-project.org'))"
@@ -25,6 +26,9 @@ RUN mkdir -p renv
 COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 COPY renv/settings.json renv/settings.json
+
+# Install stringi seperately due to issue with libicu
+RUN R -e "install.packages(\"stringi\")"
 
 # Restore packages when image is created
 # (and hence, new containers created from this image will have R packages
