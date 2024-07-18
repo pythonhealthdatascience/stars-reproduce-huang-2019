@@ -24,6 +24,8 @@ However, these were then all successful! Included instructions to run these test
 
 ### Docker
 
+#### Troubleshooting errors when attempting to build the image
+
 Ran `sudo docker build --tag huang2019 . -f ./docker/Dockerfile` from `reproduction/` (which is where the `renv` is located). Hit an error:
 
 ```
@@ -86,6 +88,16 @@ Error in dyn.load(file, DLLpath = DLLpath, ...) :
 ```
 
 `libssl` is in the list of system dependencies that were being installed. A quick google shows there are issues related to `libssl.so.1.1` on `Ubuntu 22.04`. I tried doing the simplest solution first - installing it seperately (as that worked for `stringi` above).
+
+The docker image then built successfully!
+
+#### Testing the image
+
+Having successfully built the image (`sudo docker build --tag huang2019 . -f ./docker/Dockerfile`), I then tried creating a container. After some trial and error with the command (and using `sudo docker rm huang2019_docker` to remove and recreate container)), I got to:
+
+`(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -rm -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019` (with `rm` to auto-remove when exit with `Ctrl+C`, and `it` to run in interactive mode).
+
+This opened up RStudio - although there were no files and none of the libraries I had added were listed in the packages (e.g. no simmer). I searched for suggestions on this issue, but struggled to find anything.
 
 ### Fix Quarto GitHub action
 
