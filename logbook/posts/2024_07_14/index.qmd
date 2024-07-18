@@ -8,21 +8,31 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-Working on research compendium stage
+Working on research compendium stage.
 
 :::
 
 ## Untimed: Research compendium
 
-* Tried adding parallel processing in `model.R` to speed it up
-  * Add `future.apply` to the environment
-  * `plan(multisession, workers=max(availableCores()-5, 1))`
-  * `future_lapply()`
-  * However, it took longer than usual! So I removed it
-* Reorganising
-  * Moved scripts into a `scripts/` folder
-  * Moved help functions from `reproduction.Rmd` into seperate R script (primarily so can reuse in tests more easily)
-* Set `ggsave()` image width as realised it otherwise varied with window size when running
+### Parallel processing
+
+Tried adding parallel processing in `model.R` to speed it up
+
+* Add `future.apply` to the environment
+* `plan(multisession, workers=max(availableCores()-5, 1))`
+* `future_lapply()`
+* However, it took longer than usual! So I removed it
+
+### Reorganising
+
+* Moved scripts into a `scripts/` folder
+* Moved help functions from `reproduction.Rmd` into seperate R script (primarily so can reuse in tests more easily)
+
+### Fix image size
+
+Set `ggsave()` image width as realised it otherwise varied with window size when running
+
+### Tests
 
 Create tests to check model results are consistent
 
@@ -64,7 +74,8 @@ result <- do.call(run_model, inputs)
   * It takes a while to run and, midway through, the R session encountered a fatal error and aborted. Tried again, and it failed again on `exclusive_f5 <- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)`.
   * I'm suspecting this might be due to the size of the dataframes produced? So tried removing them from the environment after saving and ran again - but it still crashed, this time on the next `run_model()` statement
   * I considered trying again with parallelisation but, given I hadn't had much luck with that before, and given that the issue here is with R crashing (and so parallelisation actually may not help), I decided to instead split up `reproduction.rmd` into a few smaller files.
+  * I re-ran each of these in full, recording the run times.
 
-Docker
+### Docker
 
-* Used the [RStudio documentation](https://rstudio.github.io/renv/articles/docker.html) and [this tutorial](https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette) to write a Dockerfile.
+Used the [RStudio documentation](https://rstudio.github.io/renv/articles/docker.html) and [this tutorial](https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette) to write a Dockerfile.
