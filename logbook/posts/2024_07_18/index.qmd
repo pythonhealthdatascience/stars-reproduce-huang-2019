@@ -11,3 +11,21 @@ bibliography: ../../../quarto_site/references.bib
 Finishing up with research compendium stage
 
 :::
+
+## Untimed: Research compendium
+
+### Tests
+
+Having re-ran all the scenarios from scratch, I replaced the files in `tests/testthat/expected_results/` and then ran `testthat::test_dir("tests/testthat")`.
+
+`is_true(compare)` returned error `Error in `is_true(compare)`: unused argument (compare)` so switched back to `expect_equal()`.
+
+However, these were then all successful! Included instructions to run these tests, run time, and what you might expect to see, to the reproduction `README`.
+
+### Fix Quarto GitHub action
+
+Returned to the broken Quarto render action (which fails to find `rmarkdown` despite it having been installed with `setup-renv`). Some ideas:
+
+* [Example GitHub action](https://github.com/pommevilla/quarto-action-tests/blob/main/.github/workflows/quarto-render.yml) for book with Python and R - although a few years old
+* [Example GitHub action](https://github.com/nrennie/wbs-summer-school-2024-data-viz/blob/main/.github/workflows/publish.yml) where they installed packages directly
+* [RStudio tutorial](https://rstudio.github.io/renv/articles/ci.html#using-the-github-actions-cache-with-renv) for custom GitHub action workflow
