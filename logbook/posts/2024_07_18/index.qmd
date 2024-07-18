@@ -1,0 +1,13 @@
+---
+title: "Day 11"
+author: "Amy Heather"
+date: "2024-07-18"
+categories: [compendium]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+Finishing up with research compendium stage
+
+:::
