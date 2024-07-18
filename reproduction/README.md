@@ -1,9 +1,5 @@
 # Reproduction README
 
-<!-- TODO: Remove this warning once filled out README -->
-**Please note: This is a template README and has not yet been completed**
-
-<!-- TODO: Fill out the README -->
 ## Model summary
 
 > Huang S, Maingard J, Kok HK, Barras CD, Thijs V, Chandra RV, Brooks DM and Asadi H. **Optimizing Resources for Endovascular Clot Retrieval for Acute Ischemic Stroke, a Discrete Event Simulation**. *Frontiers in Neurology* 10, 653 (2019). <https://doi.org/10.3389/fneur.2019.00653>.
@@ -26,21 +22,64 @@ In this assessment, we attempted to reproduce 8 items: 5 figures and 3 in-text r
 
 ### Repository overview
 
-TBC <!-- Add overview once tidied -->
+```
+├── docker
+│   └──  ...
+├── outputs
+│   └──  ...
+├── renv
+│   └──  ...
+├── scripts
+│   └──  ...
+├── tests
+│   └──  ...
+├── .Rprofile
+├── DESCRIPTION
+├── README.md
+├── renv.lock
+└── reproduction.Rproj
+```
+
+* `docker/` - Instructions for creation of docker container.
+* `outputs/` - Outputs files from the scripts (e.g. `.csv.gz`, `.png`)
+* `renv/` - Instructions for creation of R environment
+* `scripts/` - Code for the model and for reproducing items from the scope
+* `tests/` - Test to check that the model produces consistent results with our reproduction
+* `.Rprofile` - Activates R environment
+* `DESCRIPTION` - Lists packages that we installed into environment (their dependencies will have also been installed)
+* `README.md` - This file!
+* `renv.lock` - Lists R version and all packages in the R environment
+* `reproduction.Rproj` - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)
 
 ### Step 1. Set up environment
 
-TBC <!-- Add steps -->
+#### Option A. Renv
+
+An `renv` environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run `renv::restore()`.
+
+In `renv.lock`, you will see the version of R listed. However, `renv` will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.
+
+#### Option B. Docker
+
+First, you'll need to ensure that `docker` is installed on your machine. You then have two options for obtaining the image.
+
+<!-- TODO: Finished adding instructions! -->
 
 ### Step 2. Running the model
 
-TBC <!-- Add steps -->
+#### Option A: Execute the notebooks
+
+To run all the model scenarios, open and execute the provided `.qmd` files in `scripts/`. You can do so within your preferred IDE (e.g. RStudio).
+
+#### Option B: Testthat
+
+A few of the model configurations have been included as tests within `tests/testthat`
+
+<!-- TODO: Finished adding instructions! -->
 
 ## Reproduction specs and runtime
 
-This reproduction was conducted on an Intel Core i7-12700H with 32GB RAM running Ubuntu 22.04.4 Linux.
-
-Expected model runtime is <!-- Add run time-->.
+This reproduction was conducted on an Intel Core i7-12700H with 32GB RAM running Ubuntu 22.04.4 Linux. On this machine, the reproduction run time was 29 minutes 10 seconds (18.024 + 6.165 + 4.975 minutes).
 
 ## Citation
 
