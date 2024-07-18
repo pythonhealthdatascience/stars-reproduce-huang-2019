@@ -2,7 +2,12 @@
 FROM rocker/rstudio:4.4.1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y libcairo2-dev libssl-dev make libcurl4-openssl-dev libmysqlclient-dev unixodbc-dev libnode-dev default-jdk libxml2-dev git libfontconfig1-dev libfreetype6-dev libssh2-1-dev zlib1g-dev libglpk-dev libjpeg-dev imagemagick libmagick++-dev gsfonts cmake libpng-dev libtiff-dev python3 libglu1-mesa-dev libgl1-mesa-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libsodium-dev libicu-dev tcl tk tk-dev tk-table libfribidi-dev libharfbuzz-dev libudunits2-dev
+RUN apt-get update && apt-get install -y \
+  libcurl4-openssl-dev \
+  libssl-dev \
+  libxml2-dev \
+  libglpk-dev \
+  libicu
 
 # Install the latest release of renv from CRAN
 RUN R -e "install.packages('renv', repos = c(CRAN = 'https://cloud.r-project.org'))"
