@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-Finishing up with research compendium stage
+Finishing up with research compendium stage (tests, docker).
 
 :::
 
@@ -121,11 +121,57 @@ Check that the 'rstudio' user has read / write access to this directory.
 Do you want to proceed? [Y/n]
 ```
 
-Selecting to proceed, it installs the packages from CRAN.
+I spent a while googling and tried a few things including -
 
-I tried making another container without disabling authentication - `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e PASSWORD=password --name  huang2019_docker huang2019`, then login with username `rstudio` password `password` - but had the same issue.
+* Selecting to proceed, it installs the packages from CRAN.
+* I tried making another container without disabling authentication - `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e PASSWORD=password --name  huang2019_docker huang2019`, then login with username `rstudio` password `password` - but had the same issue.
+* Looking in the `renv/` folder, it appears to only contain the package `renv`.
+* I tried changing the server to `8787:8787` but this made no difference.
+* Looking at the installed packages, it appears to not include anything we add (including `stringi` and `openssl`, which were installed seperately from the rest).
 
-Looking in the `renv/` folder, it appears to only contain the package `renv`.
+Based on [this issue](https://github.com/rocker-org/rocker/issues/50), it appears that `/home/rstudio/` is owned by the user `docker` rather than by us (the user `rstudio`).
+
+* Tried `(sleep 2 && xdg-open http://localhost:8787) & sudo docker run --rm -it --user docker -v $(pwd)/home/$USER/foo -e USER=$USER -e USERID=$UID  -p 8787:8787 --name  huang2019_docker huang2019` but got error `docker: Error response from daemon: unable to find user docker: no matching entries in passwd file.`
+* Based on [this issue](https://github.com/rstudio/renv/issues/980), tried changing ownership of `renv` directory when created in Dockerfile using `RUN mkdir -p /renv/ && chown -c rstudio /renv/`, but the same error message remained
+
+Based on [this issue](https://github.com/rstudio/renv/issues/1602), tried changing user in Dockerfile for the `renv::restore()`. I realised whilst doing this that, when I'd made the renv folder, I hadn't set it to `/home/rstudio/` like I'd done for the rest of them! This might have been the issue. This produced an error while building the image:
+
+```
+7.633 # Installing packages --------------------------------------------------------
+7.888 - Installing stringi ...                        OK [built from source and cached in 1.3m]
+83.54 Error: could not copy / move file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/stringi' to '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-backup-7-stringi73f0bb75'
+83.54 move: cannot rename file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/stringi' to '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-backup-7-stringi73f0bb75', reason 'Permission denied'
+83.54 copy: source file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-copy-7606940ba' does not exist
+```
+
+I tried temporarily removing the seperate installations of `stringi` and `openssl`, to see if `renv::restore()` would be successful. This was successful - up until `stringi`, which had the error from before re: `libicui18n.so.66`.
+
+I reintroduced the seperate installations, but tried switching `install.packages("stringi")` to `renv::install("stringi")`, but this had the issue from above.
+
+I then tried to make it more similar to the line installing `renv`, which does work, so did `RUN R -e "install.packages('stringi', repos = c(CRAN = 'https://cloud.r-project.org'))"`, but no change.
+
+I then tried following the structure used to install `renv` in  [the aforementioned GitHub issue](https://github.com/rstudio/renv/issues/1602) - so:
+
+```
+# Set version of packages installed outside the lockfile
+ENV RENV_VERSION 'v1.0.7'
+ENV STRINGI_VERSION '1.8.4'
+ENV OPENSSL_VERSION '2.2.0'
+
+# Install remotes (which we will use to install packages)
+RUN Rscript -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
+
+# Install renv from GitHub
+RUN Rscript -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
+
+# Install stringi seperately due to issue with not detecting libicu
+RUN Rscript -e "remotes::install_version('stringi', version='${STRINGI_VERSION}')"
+
+# Install openssl seperately due to issue with not detecting libssl
+RUN Rscript -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
+```
+
+However, we now are getting the `libicui18n.so.66` issue, so it appears the problem is that I haven't installed this into the right place for `renv` to find it, when I installed it seperately.
 
 ### Fix Quarto GitHub action
 
