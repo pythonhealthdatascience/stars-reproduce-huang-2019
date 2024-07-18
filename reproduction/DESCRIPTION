@@ -14,4 +14,7 @@ Imports:
     rmarkdown,
     ggpubr,
     R.utils,
-    testthat
+    testthat,
+    containerit
+Remotes:
+    o2r-project/containerit
