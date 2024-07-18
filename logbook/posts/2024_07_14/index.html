@@ -108,7 +108,15 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../../../reproduction/scripts/reproduction.html">
- <span class="dropdown-text">Reproduction</span></a>
+ <span class="dropdown-text">Reproduce Figures 2-4 and in-text results 1-3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../reproduction/scripts/reproduction_fig5.html">
+ <span class="dropdown-text">Reproduce Figure 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../reproduction/scripts/reproduction_supp.html">
+ <span class="dropdown-text">Reproduce supplementary figure</span></a>
   </li>  
     </ul>
   </li>
@@ -245,6 +253,51 @@ Note
 <li>Moved help functions from <code>reproduction.Rmd</code> into seperate R script (primarily so can reuse in tests more easily)</li>
 </ul></li>
 <li>Set <code>ggsave()</code> image width as realised it otherwise varied with window size when running</li>
+</ul>
+<p>Create tests to check model results are consistent</p>
+<ul>
+<li>Started with creating a basic test saving tempfile csv and loading it to compare to another dataframe</li>
+<li>Then made a test with two example models being run for 3 replications and comparing results</li>
+<li>Then, set up with two files, as testthat can run files in parallel, and configured parallel processing. This involved:
+<ul>
+<li>Adding <code>Config/testthat/parallel: true</code> to DESCRIPTION</li>
+<li>Create project-specific environment file with <code>nano reproduction/.Renviron</code> and setting <code>TESTTHAT_CPUS=4</code></li>
+</ul></li>
+<li>Ran <code>testthat::test_dir("tests")</code>, although seemed to just run sequentially. Confirmed by checking <code>testthat::isparallel()</code> which returned <code>FALSE</code>.</li>
+<li>Tried adding <code>Config/testthat/start-first: shifts, model</code> to <code>DESCRIPTION</code> and it ignored the order, so it appears the issue is it is not using info from the <code>DESCRIPTION</code> file</li>
+<li>Checked version and it is correct for running in parallel (testthat&gt;=3.0.0)</li>
+<li>Tried instead running <code>testthat::test_local()</code>, and moving tests into a folder <code>testthat/</code>, and this returned an error <code>Could not find a root 'DESCRIPTION' file that starts with '^Package' in /home/amy/Documents/stars/stars-reproduce-huang-2019/reproduction.</code></li>
+<li>Changed <code>DESCRIPTION</code> to add <code>Package</code> and re-run - but this had error that <code>installation of renv failed</code>. Same error occurs if run <code>testthat::test_dir()</code>. It says to <code>Try removing ‘/home/amy/.cache/R/renv/library/reproduction-0912b448/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/00LOCK-renv’</code>. I deleted this file (navigated there than <code>rm -r 00LOCK-renv</code>) then re-ran. However, this kept getting the same error message with that same file being created.</li>
+<li>Tried removing <code>Package</code> from <code>DESCRIPTION</code> and running <code>testthat::test_dir("tests/testthat", load_package="none")</code> - but that ignores the order in <code>DESCRIPTION</code></li>
+<li>Tried <code>testthat::test_dir("tests/testthat", load_package="source")</code> which had error that <code>Field 'Version' not found</code>. Once I had this and re-ran, it ran the tests in the specified order! From <code>Config/testthat/start-first: shifts, model</code></li>
+<li>I then add in <code>Config/testthat/parallel: true</code> and <code>Config/testthat/edition: 3</code> but it had the same <code>renv</code> error as before</li>
+<li>Then decided to just run without parallel for now, so removed those lines from <code>DESCRIPTION</code>, deleted the <code>.Renviron</code> file, and put tests in a single file</li>
+</ul>
+<pre><code>Package: huang2019
+Version: 0.1
+Config/testthat/start-first: shifts, model
+Config/testthat/parallel: true
+Config/testthat/edition: 3</code></pre>
+<ul>
+<li>Created function to simplify testing, then wrote tests fora selection of scenarios (not all scenarios, to minimise run time).</li>
+<li>Test was failing with error of <code>Length mismatch: comparison on first 2 components</code>. I tried changing from <code>expect_equal</code> to using <code>all.equal()</code> and then <code>expect_true(is_true())</code> on result. But this returned the same error!</li>
+<li>I tried running everything manually in the console so I could inspect the dataframes myself.</li>
+</ul>
+<pre><code>file = "tests/testthat/expected_results/fig2_baseline.csv.gz"
+exp &lt;- as.data.frame(data.table::fread(file))
+inputs=list(seed=200)
+result &lt;- do.call(run_model, inputs)</code></pre>
+<ul>
+<li>I realised the issue was that the expected result included a column <code>shift</code> where value throughout was <code>5pm</code>. This was likely due to changing it at some point but not having re-run the whole script since, so I did that (and timed it!). I removed some of the model variants that aren’t to produce results from the paper (E.g. varying seeds)
+<ul>
+<li>It takes a while to run and, midway through, the R session encountered a fatal error and aborted. Tried again, and it failed again on <code>exclusive_f5 &lt;- run_model(exclusive_use = TRUE, seed = SEED, fig5=TRUE)</code>.</li>
+<li>I’m suspecting this might be due to the size of the dataframes produced? So tried removing them from the environment after saving and ran again - but it still crashed, this time on the next <code>run_model()</code> statement</li>
+<li>I considered trying again with parallelisation but, given I hadn’t had much luck with that before, and given that the issue here is with R crashing (and so parallelisation actually may not help), I decided to instead split up <code>reproduction.rmd</code> into a few smaller files.</li>
+</ul></li>
+</ul>
+<p>Docker</p>
+<ul>
+<li>Used the <a href="https://rstudio.github.io/renv/articles/docker.html">RStudio documentation</a> and <a href="https://www.r-bloggers.com/2021/08/setting-up-a-transparent-reproducible-r-environment-with-docker-renv/#google_vignette">this tutorial</a> to write a Dockerfile.</li>
 </ul>
 
 

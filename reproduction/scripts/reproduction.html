@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Reproducing Huang et al.&nbsp;2019 - Reproduction</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Reproduce Figures 2-4 and in-text results 1-3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -140,7 +140,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="../../reproduction/scripts/reproduction.html">
- <span class="dropdown-text">Reproduction</span></a>
+ <span class="dropdown-text">Reproduce Figures 2-4 and in-text results 1-3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../reproduction/scripts/reproduction_fig5.html">
+ <span class="dropdown-text">Reproduce Figure 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../reproduction/scripts/reproduction_supp.html">
+ <span class="dropdown-text">Reproduce supplementary figure</span></a>
   </li>  
     </ul>
   </li>
@@ -209,19 +217,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set up</a></li>
   <li><a href="#run-models" id="toc-run-models" class="nav-link" data-scroll-target="#run-models">Run models</a></li>
   <li><a href="#import-results" id="toc-import-results" class="nav-link" data-scroll-target="#import-results">Import results</a></li>
-  <li><a href="#in-text-results" id="toc-in-text-results" class="nav-link" data-scroll-target="#in-text-results">In-text results</a>
-  <ul class="collapse">
-  <li><a href="#demonstrate-variation-between-model-runs" id="toc-demonstrate-variation-between-model-runs" class="nav-link" data-scroll-target="#demonstrate-variation-between-model-runs">Demonstrate variation between model runs</a></li>
-  </ul></li>
+  <li><a href="#in-text-results" id="toc-in-text-results" class="nav-link" data-scroll-target="#in-text-results">In-text results</a></li>
   <li><a href="#figure-2" id="toc-figure-2" class="nav-link" data-scroll-target="#figure-2">Figure 2</a>
   <ul class="collapse">
   <li><a href="#demonstrate-that-geom_density-scaled-is-scaling-against-density-of-0-wait-time" id="toc-demonstrate-that-geom_density-scaled-is-scaling-against-density-of-0-wait-time" class="nav-link" data-scroll-target="#demonstrate-that-geom_density-scaled-is-scaling-against-density-of-0-wait-time">Demonstrate that geom_density scaled is scaling against density of 0 wait time</a></li>
-  <li><a href="#figure-2-baseline-only-with-various-different-seeds" id="toc-figure-2-baseline-only-with-various-different-seeds" class="nav-link" data-scroll-target="#figure-2-baseline-only-with-various-different-seeds">Figure 2 (baseline only) with various different seeds</a></li>
   </ul></li>
   <li><a href="#figure-3" id="toc-figure-3" class="nav-link" data-scroll-target="#figure-3">Figure 3</a></li>
   <li><a href="#figure-4" id="toc-figure-4" class="nav-link" data-scroll-target="#figure-4">Figure 4</a></li>
-  <li><a href="#figure-5" id="toc-figure-5" class="nav-link" data-scroll-target="#figure-5">Figure 5</a></li>
-  <li><a href="#supplementary-figure" id="toc-supplementary-figure" class="nav-link" data-scroll-target="#supplementary-figure">Supplementary figure</a></li>
   <li><a href="#time-elapsed" id="toc-time-elapsed" class="nav-link" data-scroll-target="#time-elapsed">Time elapsed</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/reproduction/scripts/reproduction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -231,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Reproduction</h1>
+<h1 class="title">Reproduce Figures 2-4 and in-text results 1-3</h1>
 </div>
 
 
@@ -248,6 +250,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>The majority of the items in the model scope are reproduced in this file, but Figure 5 and the supplementary figure are created in seperate <code>.qmd</code> files.</p>
+<p>This decision was primarily due to issues with RStudio crashing when running all scenarios from a single <code>.Rmd file</code>.</p>
+<p>Run time: 18.024 minutes (will vary between machines)</p>
 <section id="set-up" class="level2">
 <h2 class="anchored" data-anchor-id="set-up">Set up</h2>
 <div class="cell">
@@ -260,229 +265,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable scientific notation</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required libraries (if not otherwise import in model.R)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr, <span class="at">include.only =</span> <span class="fu">c</span>(<span class="st">"pivot_wider"</span>))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the model and helper functiosn (but hide loading warnings for each package)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">source</span>(<span class="st">"model.R"</span>))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"helpers.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required libraries (if not otherwise import in R scripts below)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr, <span class="at">include.only =</span> <span class="fu">c</span>(<span class="st">"pivot_wider"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the model and helper functions (but hide loading warnings for each package)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">source</span>(<span class="st">"model.R"</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">source</span>(<span class="st">"helpers.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="ot">=</span> <span class="dv">200</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set default dimensions for figures</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DEFAULT_WIDTH <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>DEFAULT_HEIGHT <span class="ot">=</span> <span class="dv">4</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set file paths to save results</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>folder <span class="ot">=</span> <span class="st">"../outputs"</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>path_baseline_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_baseline.csv.gz"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>path_exclusive_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_exclusive.csv.gz"</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>path_twoangio_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_twoangio.csv.gz"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>path_baseline_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_baseline.csv.gz"</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>path_exclusive_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_exclusive.csv.gz"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>path_twoangio_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_twoangio.csv.gz"</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>path_baseline_f3_seed500 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_baseline_seed500.csv.gz"</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>path_baseline_f3_seed700 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_baseline_seed700.csv.gz"</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>path_twoangio_f3_seed500 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_twoangio_seed500.csv.gz"</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>path_twoangio_f3_seed700 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_twoangio_seed700.csv.gz"</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>path_baseline_f5 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig5_baseline.csv.gz"</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>path_exclusive_f5 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig5_exclusive.csv.gz"</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>path_twoangio_f5 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig5_twoangio.csv.gz"</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>path_double_sup <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"sup_baseline_double.csv.gz"</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>path_triple_sup <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"sup_baseline_triple.csv.gz"</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>path_txt2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"txt2.csv"</span>)</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>path_txt3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"txt3.csv"</span>)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>path_txt3_seeds <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"txt3_seeds.csv"</span>)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>path_fig2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2.png"</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>path_fig2a_seeds <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2a_seeds.png"</span>)</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>path_fig3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3.png"</span>)</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>path_fig4 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig4.png"</span>)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>path_fig5 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig5.png"</span>)</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>path_supfig <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"supplementary_figure.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed and default dimensions for figures</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="ot">=</span> <span class="dv">200</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>DEFAULT_WIDTH <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>DEFAULT_HEIGHT <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set file paths to save results</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>folder <span class="ot">=</span> <span class="st">"../outputs"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>path_baseline_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_baseline.csv.gz"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>path_exclusive_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_exclusive.csv.gz"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>path_twoangio_f2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2_twoangio.csv.gz"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>path_baseline_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_baseline.csv.gz"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>path_exclusive_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_exclusive.csv.gz"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>path_twoangio_f3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3_twoangio.csv.gz"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>path_txt2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"txt2.csv"</span>) <span class="co"># Used for results 1 and 2</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>path_txt3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"txt3.csv"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>path_fig2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig2.png"</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>path_fig3 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig3.png"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>path_fig4 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="st">"fig4.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="run-models" class="level2">
 <h2 class="anchored" data-anchor-id="run-models">Run models</h2>
+<p>Set to true or false, depending on whether you want to run everything.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>run <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Run model scenarios.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  baseline <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  baseline_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">seed =</span> SEED)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  baseline_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">seed =</span> SEED)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  exclusive <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  exclusive_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  exclusive_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  twoangio <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  twoangio_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  twoangio_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (in seperate cell to above as otherwise seemed to crash)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save results for Figure 2</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(baseline, path_baseline_f2)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(exclusive, path_exclusive_f2)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(twoangio, path_twoangio_f2)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process and save results for Figure 3</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(baseline, baseline_6pm, baseline_7pm, path_baseline_f3)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(exclusive, exclusive_6pm, exclusive_7pm, path_exclusive_f3)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(twoangio, twoangio_6pm, twoangio_7pm, path_twoangio_f3)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Re-run models but return different output from standard hours for use in Figure 5</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  baseline_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  exclusive_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  twoangio_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(baseline_f5, path_baseline_f5)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(exclusive_f5, path_exclusive_f5)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(twoangio_f5, path_twoangio_f5)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Run baseline with double and triple the number of ECR patients, for the supplementary figure.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  baseline_sup2 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED, <span class="at">ecr_pt =</span> <span class="dv">58</span><span class="sc">*</span><span class="dv">2</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  baseline_sup3 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED, <span class="at">ecr_pt =</span> <span class="dv">58</span><span class="sc">*</span><span class="dv">3</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(baseline_sup2, path_double_sup)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(baseline_sup3, path_triple_sup)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Run baseline and double angioINR with varying hours and seeds.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Baseline with varying hours and seed 500</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  s500_baseline <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  s500_baseline_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  s500_baseline_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Baseline with varying hours and seed 700</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  s700_baseline <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  s700_baseline_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  s700_baseline_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Double AngioINR with varying hours and seed 500</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  s500_twoangio <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  s500_twoangio_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  s500_twoangio_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">500</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Double AngioINR with varying hours and seed 700</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  s700_twoangio <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  s700_twoangio_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  s700_twoangio_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">700</span>)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run model</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  baseline <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  baseline_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">seed =</span> SEED)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  baseline_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">seed =</span> SEED)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  exclusive <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  exclusive_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  exclusive_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  twoangio <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  twoangio_6pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">18</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  twoangio_7pm <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">shifts =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">19</span>), <span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save results (in seperate cell to above as otherwise seemed to crash)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(s500_baseline, s500_baseline_6pm, s500_baseline_7pm,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  path_baseline_f3_seed500)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(s700_baseline, s700_baseline_6pm, s700_baseline_7pm,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                  path_baseline_f3_seed700)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(s500_twoangio, s500_twoangio_6pm, s500_twoangio_7pm,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                  path_twoangio_f3_seed500)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(s700_twoangio, s700_twoangio_6pm, s700_twoangio_7pm,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                  path_twoangio_f3_seed700)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Run baseline with several different seeds</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>baseline_seeds <span class="ot">&lt;-</span> <span class="cf">function</span>(seed, run, folder) {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' Run baseline model with different seeds</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' </span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' @param seed integer, starting seed for replications</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' @param run boolean, whether to run model</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' @param folder string, folder to store results in</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    seed_baseline <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> seed)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    seed_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="fu">paste</span>(</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fig2_baseline_seed"</span>, seed, <span class="st">".csv.gz"</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    data.table<span class="sc">::</span><span class="fu">fwrite</span>(seed_baseline, seed_path)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">0</span>, run, folder)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">50</span>, run, folder)</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">100</span>, run, folder)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">150</span>, run, folder)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">450</span>, run, folder)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">700</span>, run, folder)</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="fu">baseline_seeds</span>(<span class="dv">750</span>, run, folder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (in seperate cell to above as otherwise seemed to crash)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save results for Figure 2</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(baseline, path_baseline_f2)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(exclusive, path_exclusive_f2)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">fwrite</span>(twoangio, path_twoangio_f2)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process and save results for Figure 3</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(baseline, baseline_6pm, baseline_7pm, path_baseline_f3)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(exclusive, exclusive_6pm, exclusive_7pm, path_exclusive_f3)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">process_f3_data</span>(twoangio, twoangio_6pm, twoangio_7pm, path_twoangio_f3)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove the dataframes from environment</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(baseline, baseline_6pm, baseline_7pm,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>     exclusive, exclusive_6pm, exclusive_7pm,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>     twoangio, twoangio_6pm, twoangio_7pm)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="import-results" class="level2">
 <h2 class="anchored" data-anchor-id="import-results">Import results</h2>
 <p>Import the results, adding a column to each to indicate the scenario.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>base_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f2,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Baseline"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>exc_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_exclusive_f2,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Exclusive use"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>two_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f2,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Two AngioINRs"</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>base_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f3,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Baseline"</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>exc_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_exclusive_f3,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Exclusive use"</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>two_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f3,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Two AngioINRs"</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>base_f3_s500  <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f3_seed500,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Baseline (seed 500)"</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>base_f3_s700  <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f3_seed700,</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Baseline (seed 700)"</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>two_f3_s500 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f3_seed500,</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Two AngioINRs (seed 500)"</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>two_f3_s700  <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f3_seed700,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Two AngioINRs (seed 700)"</span>)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>base_f5 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(path_baseline_f5)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>exc_f5 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(path_exclusive_f5)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>two_f5 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(path_twoangio_f5)</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>base_sup_double <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_double_sup, <span class="st">"Baseline (double)"</span>)</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>base_sup_triple <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_triple_sup, <span class="st">"Baseline (triple)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>base_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f2,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Baseline"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>exc_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_exclusive_f2,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Exclusive use"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>two_f2 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f2,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Two AngioINRs"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>base_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_baseline_f3,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Baseline"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>exc_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_exclusive_f3,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Exclusive use"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>two_f3 <span class="ot">&lt;-</span> <span class="fu">import_results</span>(path_twoangio_f3,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Two AngioINRs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="in-text-results" class="level2">
 <h2 class="anchored" data-anchor-id="in-text-results">In-text results</h2>
 <p>In-text results 1 and 2</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>txt2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(base_f2, exc_f2, two_f2) <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resource<span class="sc">==</span><span class="st">"angio_inr"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wait_time)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_from_baseline =</span> <span class="fu">round</span>(mean <span class="sc">-</span> mean[<span class="dv">1</span>], <span class="dv">2</span>))</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and display result</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(txt2, path_txt2)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>txt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>txt2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(base_f2, exc_f2, two_f2) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resource<span class="sc">==</span><span class="st">"angio_inr"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wait_time)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_from_baseline =</span> <span class="fu">round</span>(mean <span class="sc">-</span> mean[<span class="dv">1</span>], <span class="dv">2</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and display result</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(txt2, path_txt2)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>txt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   scenario       mean diff_from_baseline
@@ -494,18 +387,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>In-text result 3</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>txt3 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(base_f3, exc_f3, two_f3) <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resource<span class="sc">==</span><span class="st">"angio_inr"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario, shift) <span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wait_time)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_from_5pm =</span> <span class="fu">round</span>(mean <span class="sc">-</span> mean[<span class="dv">1</span>], <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>txt3 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(base_f3, exc_f3, two_f3) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resource<span class="sc">==</span><span class="st">"angio_inr"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario, shift) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wait_time)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_from_5pm =</span> <span class="fu">round</span>(mean <span class="sc">-</span> mean[<span class="dv">1</span>], <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'scenario'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and display result</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(txt3, path_txt3)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>txt3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and display result</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(txt3, path_txt3)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>txt3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 4
 # Groups:   scenario [3]
@@ -522,86 +415,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 9 Two AngioINRs 7pm    8.70         -0.92</code></pre>
 </div>
 </div>
-<section id="demonstrate-variation-between-model-runs" class="level3">
-<h3 class="anchored" data-anchor-id="demonstrate-variation-between-model-runs">Demonstrate variation between model runs</h3>
-<p>We can see the importance of seed control here. For example, with seed 700, we see a broader range of results, with the result for 6pm (13.32) is much higher than for the other two seeds and, compared with their 5pm results, we would’ve seen less of a reduction. Similarly, if we compared the 5pm seed 700 result with the 6pm seed 500 result, we would see a much greater reduction.</p>
-<p>The same applies to the prior scenarios for Figure 2. I’ve held the seeds still between them, so the only change is the scenario.</p>
-<p>However, as we are not sure, it is also reasonable to assume that a seed might have been used for the paper, but just not mentioned in the article or included in the code.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dataframes to analyse</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>var_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">list</span>(base_f3, base_f3_s500, base_f3_s700),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">list</span>(two_f3, two_f3_s500, two_f3_s700))</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For loop through those two lists</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>df_seeds_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> var_list) {</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process results</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  df_seeds <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(l) <span class="sc">%&gt;%</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(resource<span class="sc">==</span><span class="st">"angio_inr"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(scenario, shift) <span class="sc">%&gt;%</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(wait_time),<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to wide format and display</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  df_seeds_list[[i]] <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(df_seeds, <span class="at">id_cols=</span><span class="st">"scenario"</span>,</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values_from=</span><span class="fu">c</span>(<span class="st">"mean"</span>), <span class="at">names_from=</span><span class="st">"shift"</span>)</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.
-`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.
-`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.
-`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.
-`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.
-`summarise()` has grouped output by 'scenario'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine into single dataframe, save and display</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>combined_seeds <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(df_seeds_list)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(combined_seeds, path_txt3_seeds)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>combined_seeds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  scenario                 `5pm` `6pm` `7pm`
-  &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 Baseline                 14.0  12.5  12.5 
-2 Baseline (seed 500)      14.0  12.2  12.2 
-3 Baseline (seed 700)      15.5  13.3  12.3 
-4 Two AngioINRs             9.62  9.22  8.7 
-5 Two AngioINRs (seed 500) 11.2  10.6  10.1 
-6 Two AngioINRs (seed 700) 10.4   9.96  9.63</code></pre>
-</div>
-</div>
-</section>
 </section>
 <section id="figure-2" class="level2">
 <h2 class="anchored" data-anchor-id="figure-2">Figure 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sub-plots</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f2,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(exc_f2,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Exclusive-use"</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab=</span><span class="st">"Patient wait time (min)"</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>))</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(two_f2,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Double angio INRs"</span>)</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange in a single figure</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">nrow=</span><span class="dv">1</span>,</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sub-plots</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f2,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(exc_f2,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Exclusive-use"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab=</span><span class="st">"Patient wait time (min)"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>))</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(two_f2,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Double angio INRs"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange in a single figure</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">nrow=</span><span class="dv">1</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1 row containing non-finite outside the scale range (`stat_density()`).
 Removed 1 row containing non-finite outside the scale range (`stat_density()`).
@@ -619,41 +454,41 @@ Removed 1 row containing non-finite outside the scale range (`stat_density()`).<
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig2, <span class="at">width=</span>DEFAULT_WIDTH, <span class="at">height=</span>DEFAULT_HEIGHT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig2, <span class="at">width=</span>DEFAULT_WIDTH, <span class="at">height=</span>DEFAULT_HEIGHT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="demonstrate-that-geom_density-scaled-is-scaling-against-density-of-0-wait-time" class="level3">
 <h3 class="anchored" data-anchor-id="demonstrate-that-geom_density-scaled-is-scaling-against-density-of-0-wait-time">Demonstrate that geom_density scaled is scaling against density of 0 wait time</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure as usual</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f2,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from the plot</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure as usual</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f2,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="st">"resource"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from the plot</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">ggplot_build</span>(p)<span class="sc">$</span>data[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1 row containing non-finite outside the scale range (`stat_density()`).
 Removed 1 row containing non-finite outside the scale range (`stat_density()`).</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataframe with the densities for when the waitimes are 0</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>no_wait <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(colour, density, scaled)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each of the colours (which reflect the resource groups)</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (c <span class="cf">in</span> no_wait<span class="sc">$</span>colour) {</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter the plot data to that resource group, then divide the densities by</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the density from wait time 0</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(colour <span class="sc">==</span> c) <span class="sc">%&gt;%</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">scaled2 =</span> density <span class="sc">/</span> no_wait[no_wait<span class="sc">$</span>colour<span class="sc">==</span>c, <span class="st">"density"</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(scaled, scaled2)</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the number of rows where these values match the scaled values</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  n_match <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">apply</span>(d, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)) <span class="sc">==</span> <span class="dv">1</span>))</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  n_total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">sprintf</span>(<span class="st">"%s out of %s results match"</span>, n_match, n_total))</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataframe with the densities for when the waitimes are 0</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>no_wait <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(colour, density, scaled)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each of the colours (which reflect the resource groups)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (c <span class="cf">in</span> no_wait<span class="sc">$</span>colour) {</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter the plot data to that resource group, then divide the densities by</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the density from wait time 0</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(colour <span class="sc">==</span> c) <span class="sc">%&gt;%</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">scaled2 =</span> density <span class="sc">/</span> no_wait[no_wait<span class="sc">$</span>colour<span class="sc">==</span>c, <span class="st">"density"</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(scaled, scaled2)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find the number of rows where these values match the scaled values</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  n_match <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">apply</span>(d, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)) <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  n_total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(d)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">sprintf</span>(<span class="st">"%s out of %s results match"</span>, n_match, n_total))</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "512 out of 512 results match"
 [1] "512 out of 512 results match"
@@ -663,85 +498,30 @@ Removed 1 row containing non-finite outside the scale range (`stat_density()`).<
 </div>
 </div>
 </section>
-<section id="figure-2-baseline-only-with-various-different-seeds" class="level3">
-<h3 class="anchored" data-anchor-id="figure-2-baseline-only-with-various-different-seeds">Figure 2 (baseline only) with various different seeds</h3>
-<p>This imports the files too (as several files)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>seeds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">450</span>, <span class="dv">700</span>, <span class="dv">750</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> seeds) {</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  seed_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(folder, <span class="fu">paste</span>(</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"fig2_baseline_seed"</span>, s, <span class="st">".csv.gz"</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  seed_baseline <span class="ot">&lt;-</span> <span class="fu">import_results</span>(seed_path, <span class="st">"Baseline"</span>)</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  plot_list[[i]] <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(seed_baseline, <span class="at">group=</span><span class="st">"resource"</span>, <span class="at">title=</span>s)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(<span class="at">plotlist=</span>plot_list, <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 5 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 5 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="reproduction_files/figure-html/fig2a_seeds_arrange-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig2a_seeds, <span class="at">width=</span><span class="dv">13</span>, <span class="at">height=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 </section>
 <section id="figure-3" class="level2">
 <h2 class="anchored" data-anchor-id="figure-3">Figure 3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sub-plots</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f3,</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(exc_f3,</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Exclusive-use"</span>,</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab=</span><span class="st">"Patient wait time (min)"</span>,</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">breaks_width=</span><span class="dv">100</span>)</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(two_f3,</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Double angio INRs"</span>,</span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>))</span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange in a single figure</span></span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">nrow=</span><span class="dv">1</span>,</span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>,</span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sub-plots</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f3,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(exc_f3,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Exclusive-use"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab=</span><span class="st">"Patient wait time (min)"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">breaks_width=</span><span class="dv">100</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(two_f3,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"shift"</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Double angio INRs"</span>,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>))</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange in a single figure</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">nrow=</span><span class="dv">1</span>,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 5 rows containing non-finite outside the scale range
 (`stat_density()`).
@@ -769,34 +549,34 @@ Removed 2 rows containing non-finite outside the scale range
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig3, <span class="at">width=</span>DEFAULT_WIDTH, <span class="at">height=</span>DEFAULT_HEIGHT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig3, <span class="at">width=</span>DEFAULT_WIDTH, <span class="at">height=</span>DEFAULT_HEIGHT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="figure-4" class="level2">
 <h2 class="anchored" data-anchor-id="figure-4">Figure 4</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the relevant results from in-text results 1, 2 and 3</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Then calculate difference from baseline</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>fig4 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(txt2 <span class="sc">%&gt;%</span> <span class="fu">select</span>(scenario, mean),</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                         txt3 <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">filter</span>(scenario<span class="sc">==</span><span class="st">"Exclusive use"</span>, shift<span class="sc">==</span><span class="st">"6pm"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="at">scenario=</span><span class="st">"Exclusive use (+1h)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">select</span>(scenario, mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> mean <span class="sc">-</span> mean[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(scenario<span class="sc">!=</span><span class="st">"Baseline"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dis_free_gain =</span> <span class="fu">abs</span>(diff)<span class="sc">*</span><span class="fl">4.2</span>)</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set order of the bars, and give full labels</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>fig4_col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exclusive use"</span>, <span class="st">"Two AngioINRs"</span>, <span class="st">"Exclusive use (+1h)"</span>)</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>fig4_col_l <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exclusive-use"</span>, <span class="st">"Two angio INRs"</span>, <span class="st">"Exclusive-use and +1hr work"</span>)</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>fig4<span class="sc">$</span>scenario <span class="ot">&lt;-</span> <span class="fu">factor</span>(fig4<span class="sc">$</span>scenario, <span class="at">levels=</span>fig4_col)</span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>fig4<span class="sc">$</span>scenario_lab <span class="ot">&lt;-</span> plyr<span class="sc">::</span><span class="fu">mapvalues</span>(fig4<span class="sc">$</span>scenario, <span class="at">from=</span>fig4_col, <span class="at">to=</span>fig4_col_l)</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fig4, <span class="fu">aes</span>(<span class="at">x=</span>scenario_lab, <span class="at">y=</span>dis_free_gain)) <span class="sc">+</span></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">32</span>) <span class="sc">+</span></span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Scenarios"</span>) <span class="sc">+</span></span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Mean disability-free life added (days)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the relevant results from in-text results 1, 2 and 3</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Then calculate difference from baseline</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>fig4 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(txt2 <span class="sc">%&gt;%</span> <span class="fu">select</span>(scenario, mean),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                         txt3 <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">filter</span>(scenario<span class="sc">==</span><span class="st">"Exclusive use"</span>, shift<span class="sc">==</span><span class="st">"6pm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">mutate</span>(<span class="at">scenario=</span><span class="st">"Exclusive use (+1h)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">select</span>(scenario, mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> mean <span class="sc">-</span> mean[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(scenario<span class="sc">!=</span><span class="st">"Baseline"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dis_free_gain =</span> <span class="fu">abs</span>(diff)<span class="sc">*</span><span class="fl">4.2</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set order of the bars, and give full labels</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>fig4_col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exclusive use"</span>, <span class="st">"Two AngioINRs"</span>, <span class="st">"Exclusive use (+1h)"</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>fig4_col_l <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exclusive-use"</span>, <span class="st">"Two angio INRs"</span>, <span class="st">"Exclusive-use and +1hr work"</span>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>fig4<span class="sc">$</span>scenario <span class="ot">&lt;-</span> <span class="fu">factor</span>(fig4<span class="sc">$</span>scenario, <span class="at">levels=</span>fig4_col)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>fig4<span class="sc">$</span>scenario_lab <span class="ot">&lt;-</span> plyr<span class="sc">::</span><span class="fu">mapvalues</span>(fig4<span class="sc">$</span>scenario, <span class="at">from=</span>fig4_col, <span class="at">to=</span>fig4_col_l)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fig4, <span class="fu">aes</span>(<span class="at">x=</span>scenario_lab, <span class="at">y=</span>dis_free_gain)) <span class="sc">+</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">32</span>) <span class="sc">+</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Scenarios"</span>) <span class="sc">+</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Mean disability-free life added (days)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -804,99 +584,17 @@ Removed 2 rows containing non-finite outside the scale range
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig4, <span class="at">width=</span><span class="dv">5</span>, <span class="at">height=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="figure-5" class="level2">
-<h2 class="anchored" data-anchor-id="figure-5">Figure 5</h2>
-<p>Currently depends on simmer.plot() function that doesn’t work on the imported results from the csv file, so need to allow to run model to produce this plot.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  baseline_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  exclusive_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">exclusive_use =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  twoangio_f5 <span class="ot">&lt;-</span> <span class="fu">run_model</span>(<span class="at">angio_inr =</span> <span class="dv">2</span>, <span class="at">angio_ir=</span><span class="dv">0</span>, <span class="at">seed =</span> SEED, <span class="at">fig5=</span><span class="cn">TRUE</span>)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace resource (which has been filtered to angioINR) with scenario</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  baseline_f5<span class="sc">$</span>resource <span class="ot">&lt;-</span> <span class="st">"Baseline"</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  exclusive_f5<span class="sc">$</span>resource <span class="ot">&lt;-</span><span class="st">"Exclusive-use"</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  twoangio_f5<span class="sc">$</span>resource <span class="ot">&lt;-</span> <span class="st">"Two angio INRs"</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine into single object</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  fig5_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(baseline_f5, exclusive_f5, twoangio_f5)</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create figure using simmer's plot</span></span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">plot</span>(fig5_df, <span class="at">metric=</span><span class="st">"utilization"</span>) <span class="sc">+</span></span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Scenarios"</span>) <span class="sc">+</span></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Utilisation"</span>) <span class="sc">+</span></span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>)) <span class="sc">+</span></span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(.data<span class="sc">$</span>Q50<span class="sc">*</span><span class="dv">100</span>)), <span class="at">vjust=</span><span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  p</span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save to provided path</span></span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(path_fig5, <span class="at">width=</span><span class="dv">5</span>, <span class="at">height=</span><span class="fl">2.5</span>)</span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="supplementary-figure" class="level2">
-<h2 class="anchored" data-anchor-id="supplementary-figure">Supplementary figure</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sub-plots</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_f2,</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Baseline"</span>,</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylab=</span><span class="st">"Standardised density of patient in queue"</span>)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_sup_double,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Doubling ECR patients"</span>,</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlab=</span><span class="st">"Patient wait time (min)"</span>,</span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">breaks_width=</span><span class="dv">100</span>)</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(base_sup_triple,</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group=</span><span class="st">"resource"</span>,</span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">title=</span><span class="st">"Tripling ECR patients"</span>,</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>))</span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange in a single figure</span></span>
-<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(p1, p2, p3, <span class="at">nrow=</span><span class="dv">1</span>,</span>
-<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">common.legend=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="st">"bottom"</span>,</span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).
-Removed 1 row containing non-finite outside the scale range (`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 4 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range
-(`stat_density()`).
-Removed 3 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="reproduction_files/figure-html/supplementary_figure-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_supfig, <span class="at">width=</span>DEFAULT_WIDTH, <span class="at">height=</span>DEFAULT_HEIGHT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(path_fig4, <span class="at">width=</span><span class="dv">5</span>, <span class="at">height=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="time-elapsed" class="level2">
 <h2 class="anchored" data-anchor-id="time-elapsed">Time elapsed</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  end.time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  elapsed.time <span class="ot">&lt;-</span> <span class="fu">round</span>((end.time <span class="sc">-</span> start.time), <span class="dv">3</span>)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  elapsed.time</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">isTRUE</span>(run)) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  end.time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  elapsed.time <span class="ot">&lt;-</span> <span class="fu">round</span>((end.time <span class="sc">-</span> start.time), <span class="dv">3</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  elapsed.time</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
