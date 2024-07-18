@@ -4,6 +4,8 @@ title: Reproduce Figure 5
 
 This is run in a separate script from the other figures due to issues with RStudio crashing when all scenarios were run from a single script.
 
+Currently depends on simmer.plot() function that doesn't work on the imported results from the csv file, so need to allow to run model to produce this plot! Hence, you will only see results if `run <- TRUE`. Ordinarily, we leave as `FALSE` so that quarto site is still built quickly.
+
 Run time: 6.165 minutes (will vary between machines)
 
 ## Set up
@@ -47,8 +49,6 @@ if (isTRUE(run)) {
 ```
 
 ## Create figure
-
-Currently depends on simmer.plot() function that doesn't work on the imported results from the csv file, so need to allow to run model to produce this plot!
 
 ```{r fig}
 if (isTRUE(run)) {
