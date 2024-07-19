@@ -116,7 +116,6 @@ Versions required (tried to use same versions of R and packages as they might ha
 
 ### Seeds
 
-* Results could vary quite a lot between seeds. Original paper does not have any control of seeds, but when I re-ran several times, could see alot of change in mean waiting times (4+5) - but not much for other outputs like FI=igure 2 (5)
+* Results could vary quite a lot between seeds. Original paper does not have any control of seeds, but when I re-ran several times, could see alot of change in mean waiting times (4+5) - but not much for other outputs like Figure 2 (5)
 * Add seeds (initially tried with simEd, but too slow, so switched to simpler option of just setting a single seed without controlling seeds) (4)
-
 :::
