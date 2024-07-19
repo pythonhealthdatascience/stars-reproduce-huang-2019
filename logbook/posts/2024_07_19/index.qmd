@@ -50,6 +50,91 @@ Error in dyn.load(file, DLLpath = DLLpath, ...) :
   libicui18n.so.66: cannot open shared object file: No such file or directory
 ```
 
-I tried running all the renv installation whilst being the `USER root`. The image built succesfully, but it did not open as an active project, and the `renv/` folder only contained `renv`.
+I tried running all the renv installation whilst being the `USER root`. The image built successfully, but it did not open as an active project, and the `renv/` folder only contained `renv`.
 
-Based on [this GitHub issue]()
+I tried just running `renv::install()` (and not specific installs or restore), but this had errors of:
+
+* `renv appears to be unable to access the requested library path: /home/rstudio/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu. Check that the 'rstudio' user has read / write access to this directory.`
+* `Error: error downloading 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz']`
+
+I tried temporarily replacing my lockfile with a simple one with only my packages markdown and mime, and `renv::restore()` under user `rstudio` (similar to the [GitHub issue from yesterday](https://github.com/rstudio/renv/issues/1602)).
+
+* When running `renv::restore()`, it seemed to install its own copy of `renv` (and didn't use the one I'd installed above) - and indeed, I found I could remove that from the Dockerfile with no impact on the outcome
+* The library was successfully installed and accessible when I opened the container!
+
+```
+{
+  "R": {
+    "Version": "4.4.1",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+      }
+    ]
+  },
+  "Packages": {
+    "markdown": {
+      "Package": "markdown",
+      "Version": "1.13",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "commonmark",
+        "utils",
+        "xfun"
+      ],
+      "Hash": "074efab766a9d6360865ad39512f2a7e"
+    },
+    "markdown": {
+      "Package": "markdown",
+      "Version": "1.13",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "commonmark",
+        "utils",
+        "xfun"
+      ],
+      "Hash": "074efab766a9d6360865ad39512f2a7e"
+    }
+  }
+}
+```
+
+When I did that successful run, I'd only copied over a few essential / example files
+
+```
+COPY renv.lock renv.lock
+COPY reproduction.Rproj reproduction.Rproj
+COPY scripts scripts
+```
+
+Instead of 
+
+```
+COPY . .
+```
+
+However, when I switched back to just copying everything, I get issues that it cannot copy and move files and that permission is denied.
+
+I tried manually specifying everything from the folder (exc. .Rhistory and .Rproj.user)...
+
+```
+COPY DESCRIPTION DESCRIPTION
+COPY docker docker
+COPY outputs outputs
+COPY README.md README.md
+COPY renv.lock renv.lock
+COPY reproduction.Rproj reproduction.Rproj
+COPY scripts scripts
+COPY tests tests
+```
+
+...And that built fine.
+
+So I tried again with `COPY . .`, but adding `.Rhistory` and `.Rproj.user` to the `.dockerignore` - but this failed like before. Hence, I decided to stick with specifying the files being copied (and regardless, I guess that has the benefit of being specific about what we include). It appears I must be copying over something undesirable when running `COPY . .` which is causing us issues, although I can't spot what this might be.
+
+I ran `renv::snapshot()` to restore the lock file back to being complete, and then tried to build the image again. This failed with the `libicui18n.so.66` error from before.
