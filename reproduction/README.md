@@ -36,8 +36,8 @@ In this assessment, we attempted to reproduce 8 items: 5 figures and 3 in-text r
 ├── .Rprofile
 ├── DESCRIPTION
 ├── README.md
-├── renv.lock
-└── reproduction.Rproj
+├── reproduction.Rproj
+└── renv.lock
 ```
 
 * `docker/` - Instructions for creation of docker container.
@@ -48,8 +48,8 @@ In this assessment, we attempted to reproduce 8 items: 5 figures and 3 in-text r
 * `.Rprofile` - Activates R environment
 * `DESCRIPTION` - Lists packages that we installed into environment (their dependencies will have also been installed)
 * `README.md` - This file!
+* `huang2019.Rproj` - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)
 * `renv.lock` - Lists R version and all packages in the R environment
-* `reproduction.Rproj` - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)
 
 ### Step 1. Set up environment
 
