@@ -259,8 +259,8 @@ ul.task-list li input[type="checkbox"] {
 ├── .Rprofile
 ├── DESCRIPTION
 ├── README.md
-├── renv.lock
-└── reproduction.Rproj</code></pre>
+├── reproduction.Rproj
+└── renv.lock</code></pre>
 <ul>
 <li><code>docker/</code> - Instructions for creation of docker container.</li>
 <li><code>outputs/</code> - Outputs files from the scripts (e.g.&nbsp;<code>.csv.gz</code>, <code>.png</code>)</li>
@@ -270,23 +270,24 @@ ul.task-list li input[type="checkbox"] {
 <li><code>.Rprofile</code> - Activates R environment</li>
 <li><code>DESCRIPTION</code> - Lists packages that we installed into environment (their dependencies will have also been installed)</li>
 <li><code>README.md</code> - This file!</li>
+<li><code>huang2019.Rproj</code> - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)</li>
 <li><code>renv.lock</code> - Lists R version and all packages in the R environment</li>
-<li><code>reproduction.Rproj</code> - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)</li>
 </ul>
 </section>
 <section id="step-1.-set-up-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.-set-up-environment">Step 1. Set up environment</h3>
+<p>Before you can run the model, you will need to create an R environment with the correct version of R and the specified packages.</p>
 <section id="option-a.-renv" class="level4">
 <h4 class="anchored" data-anchor-id="option-a.-renv">Option A. Renv</h4>
 <p>An <code>renv</code> environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run <code>renv::restore()</code>.</p>
-<p>In <code>renv.lock</code>, you will see the version of R listed. However, <code>renv</code> will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.</p>
+<p>In <code>renv.lock</code>, you will see the version of R listed. However, <code>renv</code> will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R. This reproduction has been run in R 4.4.1, and it is possible (although not definite) that later versions of R may not be compatible, or that you may encounter difficulties installing the specified package versions in later versions of R.</p>
 </section>
 <section id="option-b.-build-local-docker-image" class="level4">
 <h4 class="anchored" data-anchor-id="option-b.-build-local-docker-image">Option B. Build local docker image</h4>
-<p>A Dockerfile is provided, which you can use to build the Docker image. For this option and option C, you’ll need to ensure that <code>docker</code> is installed on your machine.</p>
-<p>To create the docker image and then open up RStudio, you’ll need to:</p>
+<p>A Dockerfile is provided, which you can use to build the Docker image. The docker image will include the correct version of R, the required packages and their versions, and an installation of RStudio which you can run from your browser. It will also include the scripts and outputs from this directory. For this option and option C, you’ll need to ensure that <code>docker</code> is installed on your machine.</p>
+<p>To create the docker image and then open up RStudio:</p>
 <ol type="1">
-<li>In ther terminal, navigate to the parent directory of your <code>reproduction/</code> folder</li>
+<li>In the terminal, navigate to the parent directory of your <code>reproduction/</code> folder</li>
 <li>Build the image: <code>docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile</code></li>
 <li>Create container and open RStudio: <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019</code></li>
 </ol>
