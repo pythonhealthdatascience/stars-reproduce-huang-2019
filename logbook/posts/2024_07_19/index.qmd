@@ -174,3 +174,7 @@ ERROR: failed to solve: failed to compute cache key: failed to calculate checksu
 Checking on GitHub, the `activate.R` file is included. However, in my prior example of this (Shoaib et al. 2022), I ran the dockerfile from the main folder rather than the reproduction folder. Hence, I tried updating the Dockerfile so that the file paths are relative to reproduction's parent, which fixed the issue.
 
 I then tested downloading the image from GHCR and ran one of the scripts within that, and it all worked fine. Add instructions for this to the README.
+
+### Summary report
+
+Filled out the summary report template.
