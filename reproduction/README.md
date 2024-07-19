@@ -59,11 +59,24 @@ An `renv` environment has been provided. To create this environment locally on y
 
 In `renv.lock`, you will see the version of R listed. However, `renv` will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.
 
-#### Option B. Docker
+#### Option B. Build local docker image
 
-First, you'll need to ensure that `docker` is installed on your machine. You then have two options for obtaining the image.
+A Dockerfile is provided, which you can use to build the Docker image. For this option and option C, you'll need to ensure that `docker` is installed on your machine.
 
-<!-- TODO: Finished adding instructions! -->
+To create the docker image and then open up RStudio, you'll need to:
+
+1. In ther terminal, navigate to the parent directory of your `reproduction/` folder
+2. Build the image: `docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile`
+3. Create container and open RStudio: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019`
+
+#### Option C. Pull pre-built docker image
+
+A pre-built image is available on the GitHub container registry. To use it:
+
+1. Create a Personal Access Token (Classic) for your GitHub account with `write:packages` and `delete:packages` access
+2. On terminal, run `sudo docker login ghcr.io -u githubusername` and enter your sudo password (if prompted), followed by the token just generated (which acts as your GitHub password)
+3. Download the image: `sudo docker pull ghcr.io/pythonhealthdatascience/huang2019`
+4. Create container and open RStudio: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker ghcr.io/pythonhealthdatascience/huang2019:latest`
 
 ### Step 2. Running the model
 
