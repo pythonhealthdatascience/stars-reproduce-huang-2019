@@ -39,6 +39,8 @@ RUN mkdir -p renv/library
 COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 
+RUN R -e "renv::install('stringi')"
+
 # Install packages (this will also install renv when this command runs)
 RUN R -e "renv::restore(lockfile='${PROJDIRECTORY}/renv.lock', repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest'))"
 
