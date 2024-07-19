@@ -25,19 +25,19 @@ WORKDIR ${PROJDIRECTORY}
 # Copy desired files (inc. renv.lock)
 # (run individually rather than with COPY all and .dockerignore, as that was
 # inadvertently copying over something that was causing issues)
-COPY --chown=rstudio DESCRIPTION DESCRIPTION
-COPY --chown=rstudio docker docker
-COPY --chown=rstudio outputs outputs
-COPY --chown=rstudio README.md README.md
-COPY --chown=rstudio renv.lock renv.lock
-COPY --chown=rstudio reproduction.Rproj reproduction.Rproj
-COPY --chown=rstudio scripts scripts
-COPY --chown=rstudio tests tests
+COPY --chown=rstudio ./reproduction/DESCRIPTION DESCRIPTION
+COPY --chown=rstudio ./reproduction/docker docker
+COPY --chown=rstudio ./reproduction/outputs outputs
+COPY --chown=rstudio ./reproduction/README.md README.md
+COPY --chown=rstudio ./reproduction/renv.lock renv.lock
+COPY --chown=rstudio ./reproduction/reproduction.Rproj reproduction.Rproj
+COPY --chown=rstudio ./reproduction/scripts scripts
+COPY --chown=rstudio ./reproduction/tests tests
 
 # Copy renv auto-loader tools
 RUN mkdir -p renv/library
-COPY .Rprofile .Rprofile
-COPY renv/activate.R renv/activate.R
+COPY ./reproduction/.Rprofile .Rprofile
+COPY ./reproduction/renv/activate.R renv/activate.R
 
 # Install seperately before restore (due to issues with finding system dependencies)
 # Running the `renv::` commands will automatically install renv for us
