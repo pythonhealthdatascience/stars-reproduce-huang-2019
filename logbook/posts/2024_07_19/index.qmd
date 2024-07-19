@@ -24,3 +24,32 @@ Resuming where I left off yesterday. Reminder of key commands:
 * **Delete container**: `sudo docker rm huang2019_docker`
 
 Current challenge is to try and install `stringi` and `openssl` into the `renv`, so the later `renv::restore()` doesn't fail.
+
+I tried variants of:
+
+* Permissions (`USER root`, `USER rstudio`)
+* Installation instructions (`remotes`, `renv`, `install.packages`). 
+
+I seemed to be getting success with:
+
+```
+RUN R -e "renv::activate()"
+USER root
+RUN R -e "renv::install('stringi@${STRINGI_VERSION}')"
+RUN R -e "renv::install('openssl@${OPENSSL_VERSION}')"
+USER rstudio
+#RUN R -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
+RUN R -e "renv::restore(lockfile=\"${PROJDIRECTORY}/renv.lock\", repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"
+```
+
+This installed `stringi` and `openssl` into the renv successfully, although I seemed to need to have `USER root` permissions. For `renv::restore()`, it installed fine without needing to be `USER root`, but it then failed when installing `stringi`, so it appears to not have resolved the issue.
+
+```
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+    unable to load shared object '/tmp/Rtmp8ogTfT/renv-staging-7b6bc3cd/stringi/libs/stringi.so':
+  libicui18n.so.66: cannot open shared object file: No such file or directory
+```
+
+I tried running all the renv installation whilst being the `USER root`. The image built succesfully, but it did not open as an active project, and the `renv/` folder only contained `renv`.
+
+Based on [this GitHub issue]()
