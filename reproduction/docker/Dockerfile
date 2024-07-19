@@ -22,23 +22,24 @@ USER rstudio
 ENV PROJDIRECTORY "/home/rstudio/"
 WORKDIR ${PROJDIRECTORY}
 
-# Install remotes, which we can use to install a specific version of renv
-RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
-RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
-
-# Copy files (including renv.lock!) into the image
-# Thanks to .dockerignore, should not copy over renv/ (which is very large)
-#COPY . .
+# Copy desired files (inc. renv.lock)
+# (run individually rather than with COPY all and .dockerignore, as that was
+# inadvertently copying over something that was causing issues)
+COPY DESCRIPTION DESCRIPTION
+COPY docker docker
+COPY outputs outputs
+COPY README.md README.md
 COPY renv.lock renv.lock
 COPY reproduction.Rproj reproduction.Rproj
 COPY scripts scripts
+COPY tests tests
 
 # Copy renv auto-loader tools
 RUN mkdir -p renv/library
 COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 
-# Install packages
+# Install packages (this will also install renv when this command runs)
 RUN R -e "renv::restore(lockfile='${PROJDIRECTORY}/renv.lock', repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest'))"
 
 # Set user back to root
