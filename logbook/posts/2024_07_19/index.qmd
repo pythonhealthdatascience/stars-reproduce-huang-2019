@@ -16,14 +16,20 @@ Finishing up research compendium: final bit of troubleshooting docker.
 
 ### Docker
 
-Resuming where I left off yesterday. Reminder of key commands:
+Resuming where I left off yesterday.
+
+Current challenge is to try and install `stringi` and `openssl` into the `renv`, so the later `renv::restore()` doesn't fail.
+
+#### Important commands when troubleshooting
+
+Reminder of key commands:
 
 * **Build image**: `sudo docker build --tag huang2019 . -f ./docker/Dockerfile`
 * **Delete image**: `sudo docker image rm huang2019`
 * **Create container and open RStudio**: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019`
 * **Delete container**: `sudo docker rm huang2019_docker`
 
-Current challenge is to try and install `stringi` and `openssl` into the `renv`, so the later `renv::restore()` doesn't fail.
+#### Unsuccessful attempts
 
 I tried variants of:
 
@@ -56,6 +62,8 @@ I tried just running `renv::install()` (and not specific installs or restore), b
 
 * `renv appears to be unable to access the requested library path: /home/rstudio/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu. Check that the 'rstudio' user has read / write access to this directory.`
 * `Error: error downloading 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz']`
+
+#### Minimal example (small .lock and specific files) succeeds
 
 I tried temporarily replacing my lockfile with a simple one with only my packages markdown and mime, and `renv::restore()` under user `rstudio` (similar to the [GitHub issue from yesterday](https://github.com/rstudio/renv/issues/1602)).
 
@@ -137,4 +145,20 @@ COPY tests tests
 
 So I tried again with `COPY . .`, but adding `.Rhistory` and `.Rproj.user` to the `.dockerignore` - but this failed like before. Hence, I decided to stick with specifying the files being copied (and regardless, I guess that has the benefit of being specific about what we include). It appears I must be copying over something undesirable when running `COPY . .` which is causing us issues, although I can't spot what this might be.
 
-I ran `renv::snapshot()` to restore the lock file back to being complete, and then tried to build the image again. This failed with the `libicui18n.so.66` error from before.
+#### Troubleshooting stringi
+
+I ran `renv::snapshot()` to restore the lock file back to being complete, and then tried to build the image again. This failed with the `libicui18n.so.66` error from before. I reverted the lockfile back to the simple version (so the various test runs are quicker), but adding stringi, getting the same error.
+
+Tried adding install before restore - `RUN R -e "renv::install('stringi')"` (which automatically installs `renv` for us before running).... and it was successfull....! The library contained stringi and the other packages from the lockfile.
+
+So, I then, again, restored the full lockfile, add an install for openssl, and tried once more.
+
+This was successful!
+
+#### Giving read, write and save access to folders
+
+All the files are present and can be run, and the renv is active with all the required files. However, if we want to save anything (e.g. modifying `qmd`, or saving output from model with `ggsave`), we don't currently have permissions.
+
+Based on the [docker documentation](https://docs.docker.com/reference/dockerfile/#copy---chown---chmod), I tried using `--chown` with the COPY statements to specifically give permissions to the user `rstudio`. I also modified `stringi` and `openssl` so they have the specific versions.
+
+This worked!
