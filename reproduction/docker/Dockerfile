@@ -2,7 +2,6 @@
 FROM rocker/rstudio:4.4.1
 
 # Set version of packages installed outside the lockfile
-ENV RENV_VERSION 'v1.0.7'
 ENV STRINGI_VERSION '1.8.4'
 ENV OPENSSL_VERSION '2.2.0'
 
@@ -26,14 +25,14 @@ WORKDIR ${PROJDIRECTORY}
 # Copy desired files (inc. renv.lock)
 # (run individually rather than with COPY all and .dockerignore, as that was
 # inadvertently copying over something that was causing issues)
-COPY DESCRIPTION DESCRIPTION
-COPY docker docker
-COPY outputs outputs
-COPY README.md README.md
-COPY renv.lock renv.lock
-COPY reproduction.Rproj reproduction.Rproj
-COPY scripts scripts
-COPY tests tests
+COPY --chown=rstudio DESCRIPTION DESCRIPTION
+COPY --chown=rstudio docker docker
+COPY --chown=rstudio outputs outputs
+COPY --chown=rstudio README.md README.md
+COPY --chown=rstudio renv.lock renv.lock
+COPY --chown=rstudio reproduction.Rproj reproduction.Rproj
+COPY --chown=rstudio scripts scripts
+COPY --chown=rstudio tests tests
 
 # Copy renv auto-loader tools
 RUN mkdir -p renv/library
@@ -42,8 +41,8 @@ COPY renv/activate.R renv/activate.R
 
 # Install seperately before restore (due to issues with finding system dependencies)
 # Running the `renv::` commands will automatically install renv for us
-RUN R -e "renv::install('stringi')"
-RUN R -e "renv::install('openssl')"
+RUN R -e "renv::install('stringi@${STRINGI_VERSION}')"
+RUN R -e "renv::install('openssl@${OPENSSL_VERSION}')"
 
 # Install remaining packages
 RUN R -e "renv::restore(lockfile='${PROJDIRECTORY}/renv.lock', repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest'))"
