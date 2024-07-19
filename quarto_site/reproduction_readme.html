@@ -281,10 +281,25 @@ ul.task-list li input[type="checkbox"] {
 <p>An <code>renv</code> environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run <code>renv::restore()</code>.</p>
 <p>In <code>renv.lock</code>, you will see the version of R listed. However, <code>renv</code> will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.</p>
 </section>
-<section id="option-b.-docker" class="level4">
-<h4 class="anchored" data-anchor-id="option-b.-docker">Option B. Docker</h4>
-<p>First, you’ll need to ensure that <code>docker</code> is installed on your machine. You then have two options for obtaining the image.</p>
-<!-- TODO: Finished adding instructions! -->
+<section id="option-b.-build-local-docker-image" class="level4">
+<h4 class="anchored" data-anchor-id="option-b.-build-local-docker-image">Option B. Build local docker image</h4>
+<p>A Dockerfile is provided, which you can use to build the Docker image. For this option and option C, you’ll need to ensure that <code>docker</code> is installed on your machine.</p>
+<p>To create the docker image and then open up RStudio, you’ll need to:</p>
+<ol type="1">
+<li>In ther terminal, navigate to the parent directory of your <code>reproduction/</code> folder</li>
+<li>Build the image: <code>docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile</code></li>
+<li>Create container and open RStudio: <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019</code></li>
+</ol>
+</section>
+<section id="option-c.-pull-pre-built-docker-image" class="level4">
+<h4 class="anchored" data-anchor-id="option-c.-pull-pre-built-docker-image">Option C. Pull pre-built docker image</h4>
+<p>A pre-built image is available on the GitHub container registry. To use it:</p>
+<ol type="1">
+<li>Create a Personal Access Token (Classic) for your GitHub account with <code>write:packages</code> and <code>delete:packages</code> access</li>
+<li>On terminal, run <code>sudo docker login ghcr.io -u githubusername</code> and enter your sudo password (if prompted), followed by the token just generated (which acts as your GitHub password)</li>
+<li>Download the image: <code>sudo docker pull ghcr.io/pythonhealthdatascience/huang2019</code></li>
+<li>Create container and open RStudio: <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker ghcr.io/pythonhealthdatascience/huang2019:latest</code></li>
+</ol>
 </section>
 </section>
 <section id="step-2.-running-the-model" class="level3">
