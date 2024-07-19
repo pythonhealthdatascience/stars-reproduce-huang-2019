@@ -18,7 +18,8 @@ RUN apt-get update && \
 # Set user to rstudio, so we have access to the renv/ and files
 USER rstudio
 
-# Set project directory
+# Set project directory (otherwise files will copy into an inaccessible location,
+# as the rstudio rocker image home is this path)
 ENV PROJDIRECTORY "/home/rstudio/"
 WORKDIR ${PROJDIRECTORY}
 
@@ -39,9 +40,12 @@ RUN mkdir -p renv/library
 COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 
+# Install seperately before restore (due to issues with finding system dependencies)
+# Running the `renv::` commands will automatically install renv for us
 RUN R -e "renv::install('stringi')"
+RUN R -e "renv::install('openssl')"
 
-# Install packages (this will also install renv when this command runs)
+# Install remaining packages
 RUN R -e "renv::restore(lockfile='${PROJDIRECTORY}/renv.lock', repos = c(CRAN = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest'))"
 
 # Set user back to root
