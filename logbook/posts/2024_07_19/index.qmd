@@ -1,0 +1,26 @@
+---
+title: "Day 12"
+author: "Amy Heather"
+date: "2024-07-19"
+categories: [compendium]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+Finishing up research compendium: final bit of troubleshooting docker.
+
+:::
+
+## Untimed: Research compendium
+
+### Docker
+
+Resuming where I left off yesterday. Reminder of key commands:
+
+* **Build image**: `sudo docker build --tag huang2019 . -f ./docker/Dockerfile`
+* **Delete image**: `sudo docker image rm huang2019`
+* **Create container and open RStudio**: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019`
+* **Delete container**: `sudo docker rm huang2019_docker`
+
+Current challenge is to try and install `stringi` and `openssl` into the `renv`, so the later `renv::restore()` doesn't fail.
