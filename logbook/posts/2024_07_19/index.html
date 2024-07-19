@@ -217,6 +217,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
   <li><a href="#github-container-registry" id="toc-github-container-registry" class="nav-link" data-scroll-target="#github-container-registry">GitHub Container Registry</a></li>
+  <li><a href="#summary-report" id="toc-summary-report" class="nav-link" data-scroll-target="#summary-report">Summary report</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_19/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -368,6 +369,10 @@ COPY tests tests</code></pre>
 <pre><code>ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 70b54bab-f7c4-4333-a94b-def3ee959db6::iqqrpwic0590fua1x3sv0utsd: "/renv/activate.R": not found</code></pre>
 <p>Checking on GitHub, the <code>activate.R</code> file is included. However, in my prior example of this (Shoaib et al.&nbsp;2022), I ran the dockerfile from the main folder rather than the reproduction folder. Hence, I tried updating the Dockerfile so that the file paths are relative to reproduction’s parent, which fixed the issue.</p>
 <p>I then tested downloading the image from GHCR and ran one of the scripts within that, and it all worked fine. Add instructions for this to the README.</p>
+</section>
+<section id="summary-report" class="level3">
+<h3 class="anchored" data-anchor-id="summary-report">Summary report</h3>
+<p>Filled out the summary report template.</p>
 
 
 </section>
