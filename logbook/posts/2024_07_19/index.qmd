@@ -8,7 +8,7 @@ bibliography: ../../../quarto_site/references.bib
 
 ::: {.callout-note}
 
-Finishing up research compendium: final bit of troubleshooting docker.
+Finishing up research compendium: final bit of troubleshooting docker, then GHCR.
 
 :::
 
@@ -162,3 +162,15 @@ All the files are present and can be run, and the renv is active with all the re
 Based on the [docker documentation](https://docs.docker.com/reference/dockerfile/#copy---chown---chmod), I tried using `--chown` with the COPY statements to specifically give permissions to the user `rstudio`. I also modified `stringi` and `openssl` so they have the specific versions.
 
 This worked!
+
+### GitHub Container Registry
+
+Activated and ran but hit issue on `COPY renv/activate.R renv/activate.R`. It cannot find the file - although the previous commands with relative file paths all ran without issue.
+
+```
+ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 70b54bab-f7c4-4333-a94b-def3ee959db6::iqqrpwic0590fua1x3sv0utsd: "/renv/activate.R": not found
+```
+
+Checking on GitHub, the `activate.R` file is included. However, in my prior example of this (Shoaib et al. 2022), I ran the dockerfile from the main folder rather than the reproduction folder. Hence, I tried updating the Dockerfile so that the file paths are relative to reproduction's parent, which fixed the issue.
+
+I then tested downloading the image from GHCR and ran one of the scripts within that, and it all worked fine. Add instructions for this to the README.
