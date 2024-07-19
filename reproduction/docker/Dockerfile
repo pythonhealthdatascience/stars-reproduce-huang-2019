@@ -30,7 +30,7 @@ COPY --chown=rstudio ./reproduction/docker docker
 COPY --chown=rstudio ./reproduction/outputs outputs
 COPY --chown=rstudio ./reproduction/README.md README.md
 COPY --chown=rstudio ./reproduction/renv.lock renv.lock
-COPY --chown=rstudio ./reproduction/reproduction.Rproj reproduction.Rproj
+COPY --chown=rstudio ./reproduction/huang2019.Rproj huang2019.Rproj
 COPY --chown=rstudio ./reproduction/scripts scripts
 COPY --chown=rstudio ./reproduction/tests tests
 
