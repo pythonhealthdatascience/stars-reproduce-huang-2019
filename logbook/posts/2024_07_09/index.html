@@ -412,7 +412,7 @@ for (c in no_wait$colour) {
 <p>For this scenario analysis, the “day time working hours of all human resources are extended by up to 2h, extending resource access to all patients” (<span class="citation" data-cites="huang_optimizing_2019">Huang et al. (<a href="#ref-huang_optimizing_2019" role="doc-biblioref">2019</a>)</span>). Given how the model scheduling is set-up, it is assumed that this means we simply adjust the schedule to end at 5, 6 or 7pm (and that that would simply shortern the night staff time).</p>
 <p>I ran these scenarios, processing and saving the relevant model results.</p>
 <p>For in-text result 3, I can see that the results do not match up to the paper. I am not surprised by this though - as the model had no seed control, as it is not mentioned in the paper, we can assume that it might not have been used by the original study, and so variation between the scenarios could (in part) reflect model stochasticity.</p>
-<div id="4893f856" class="cell" data-execution_count="1">
+<div id="bdce6319" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">"txt3.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -503,7 +503,7 @@ for (c in no_wait$colour) {
 </div>
 </div>
 <p>To test this assumption, I ran the model again for baseline with two further seeds. We can see the importance of seed control here. For example, with seed 700, we see a broader range of results, with the result for 6pm (13.32) is much higher than for the other two seeds and, compared with their 5pm results, we would’ve seen less of a reduction. Similarly, if we compared the 5pm seed 700 result with the 6pm seed 500 result, we would see a much greater reduction.</p>
-<div id="8fccd32f" class="cell" data-execution_count="2">
+<div id="701023c1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">"txt3_seeds.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -559,7 +559,7 @@ for (c in no_wait$colour) {
 </section>
 <section id="timings" class="level2">
 <h2 class="anchored" data-anchor-id="timings">Timings</h2>
-<div id="2953f33d" class="cell" data-execution_count="3">
+<div id="d578fdcd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'../'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timings <span class="im">import</span> calculate_times</span>

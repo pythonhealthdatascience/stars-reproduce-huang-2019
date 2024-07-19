@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Amy Heather">
-<meta name="dcterms.date" content="2024-07-18">
+<meta name="dcterms.date" content="2024-07-19">
 
-<title>Reproducing Huang et al.&nbsp;2019 - Day 11</title>
+<title>Reproducing Huang et al.&nbsp;2019 - Day 12</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -177,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Day 11</h1>
+      <h1 class="title">Day 12</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">compendium</div>
               </div>
@@ -197,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 18, 2024</p>
+        <p class="date">July 19, 2024</p>
       </div>
     </div>
     
@@ -215,12 +215,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#untimed-research-compendium" id="toc-untimed-research-compendium" class="nav-link active" data-scroll-target="#untimed-research-compendium">Untimed: Research compendium</a>
   <ul class="collapse">
-  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
   <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker">Docker</a></li>
-  <li><a href="#fix-quarto-github-action" id="toc-fix-quarto-github-action" class="nav-link" data-scroll-target="#fix-quarto-github-action">Fix Quarto GitHub action</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_18/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_19/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -239,147 +237,72 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Working on research compendium: Finishing up tests, and lots of troubleshooting docker.</p>
+<p>Finishing up research compendium: final bit of troubleshooting docker.</p>
 </div>
 </div>
 <section id="untimed-research-compendium" class="level2">
 <h2 class="anchored" data-anchor-id="untimed-research-compendium">Untimed: Research compendium</h2>
-<section id="tests" class="level3">
-<h3 class="anchored" data-anchor-id="tests">Tests</h3>
-<p>Having re-ran all the scenarios from scratch, I replaced the files in <code>tests/testthat/expected_results/</code> and then ran <code>testthat::test_dir("tests/testthat")</code>.</p>
-<p><code>is_true(compare)</code> returned error <code>Error in</code>is_true(compare)<code>: unused argument (compare)</code> so switched back to <code>expect_equal()</code>.</p>
-<p>However, these were then all successful! Included instructions to run these tests, run time, and what you might expect to see, to the reproduction <code>README</code>.</p>
-</section>
 <section id="docker" class="level3">
 <h3 class="anchored" data-anchor-id="docker">Docker</h3>
-<section id="troubleshooting-installation-of-packages-when-building-images" class="level4">
-<h4 class="anchored" data-anchor-id="troubleshooting-installation-of-packages-when-building-images">Troubleshooting installation of packages when building images</h4>
-<p>Ran <code>sudo docker build --tag huang2019 . -f ./docker/Dockerfile</code> from <code>reproduction/</code> (which is where the <code>renv</code> is located). Hit an error:</p>
-<pre><code>15.45 Warning: failed to find source for 'Matrix 1.7-0' in package repositories
-15.45 Warning: error downloading 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.7-0.tar.gz']
-15.45 Error: failed to retrieve package 'Matrix@1.7-0'
-
-...
-
-ERROR: failed to solve: process "/bin/sh -c R -e \"renv::restore()\"" did not complete successfully: exit code: 1</code></pre>
-<p>I looked to the address, and found that 1.7-0 was indeed not in the Archive, but it is the latest version of the package. It is available at <a href="https://cran.r-project.org/src/contrib/Matrix_1.7-0.tar.gz" class="uri">https://cran.r-project.org/src/contrib/Matrix_1.7-0.tar.gz</a> or at <a href="https://cloud.r-project.org/src/contrib/Matrix_1.7-0.tar.gz" class="uri">https://cloud.r-project.org/src/contrib/Matrix_1.7-0.tar.gz</a>. This was only the second package it tried to install - the first was MASS 7.3-60.2, and that wasn’t the latest version. Looking at other packages, it seems common that the latest version is not on CRAN archive.</p>
-<p>I tried out a bunch of things, but the same issue persisted throughout:</p>
+<p>Resuming where I left off yesterday. Reminder of key commands:</p>
 <ul>
-<li>I <a href="https://github.com/rstudio/renv/issues/209">found a post</a> with the same issue - that renv() only looks in CRAN archive in a Docker image. They suggested <code>renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))</code>.
-<ul>
-<li>I changed the Dockerfie (but used single quotes for URL) and re-ran - <code>RUN R -e "renv::restore(repos = c(CRAN = 'https://cloud.r-project.org'))"</code></li>
-<li>I tried with double quotes as above, but including <code>\</code> to escape the inner quotes - <code>RUN R -e "renv::restore(repos = c(CRAN = \"https://cloud.r-project.org\"))"</code></li>
-</ul></li>
-<li>Based on some online posts, I wondered if this might be to do with system dependencies. Based on <a href="https://mdneuzerling.com/post/determining-system-dependencies-for-r-projects/">this post</a>, I opened a fresh R session (so not in renv) and tried to install <code>getsysreqs</code> although it was not available for my version of R. The RStudio Package Manager (RSPM) was recommended. I also stumbled across <code>containerit</code> which can make a Dockerfile for you and would include the system dependencies. However, I decided first to try the simplest option, which is to just install a fairly standard list of some linux libraries that R packages need, <a href="http://haines-lab.com/post/2022-01-23-automating-computational-reproducibility-with-r-using-renv-docker-and-github-actions/">like here</a>.</li>
-<li>Based on <a href="https://github.com/rstudio/renv/issues/1767">this issue</a>, I add <code>ENV RENV_WATCHDOG_ENABLED FALSE</code> to disable the renv watchdog.</li>
+<li><strong>Build image</strong>: <code>sudo docker build --tag huang2019 . -f ./docker/Dockerfile</code></li>
+<li><strong>Delete image</strong>: <code>sudo docker image rm huang2019</code></li>
+<li><strong>Create container and open RStudio</strong>: <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019</code></li>
+<li><strong>Delete container</strong>: <code>sudo docker rm huang2019_docker</code></li>
 </ul>
-<p>Based on <a href="https://github.com/TomMonks/reproducible_r_docker/blob/main/Dockerfile">Tom’s Dockerfile</a> which is from Peter Solymos, I tried changing the CRAN source <code>RUN R -e "renv::restore(repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"</code>. This resolved the issue, as it was able to download Matrix from CRAN. <strong>All packages successfully downloaded</strong>, but I then hit an issue <strong>installing</strong> the packages:</p>
-<pre><code>ERROR: this R is version 4.1.1, package 'MASS' requires R &gt;= 4.4.0
-install of package 'MASS' failed [error code 1]`.</code></pre>
-<p>I then realised I had accidentally put R 4.1.1, when I meant to put R 4.4.1! I changed this and re-ran. This was successful until attempting to install <code>igraph</code>, at which it hit an error:</p>
+<p>Current challenge is to try and install <code>stringi</code> and <code>openssl</code> into the <code>renv</code>, so the later <code>renv::restore()</code> doesn’t fail.</p>
+<p>I tried variants of:</p>
+<ul>
+<li>Permissions (<code>USER root</code>, <code>USER rstudio</code>)</li>
+<li>Installation instructions (<code>remotes</code>, <code>renv</code>, <code>install.packages</code>).</li>
+</ul>
+<p>I seemed to be getting success with:</p>
+<pre><code>RUN R -e "renv::activate()"
+USER root
+RUN R -e "renv::install('stringi@${STRINGI_VERSION}')"
+RUN R -e "renv::install('openssl@${OPENSSL_VERSION}')"
+USER rstudio
+#RUN R -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
+RUN R -e "renv::restore(lockfile=\"${PROJDIRECTORY}/renv.lock\", repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"</code></pre>
+<p>This installed <code>stringi</code> and <code>openssl</code> into the renv successfully, although I seemed to need to have <code>USER root</code> permissions. For <code>renv::restore()</code>, it installed fine without needing to be <code>USER root</code>, but it then failed when installing <code>stringi</code>, so it appears to not have resolved the issue.</p>
 <pre><code>Error in dyn.load(file, DLLpath = DLLpath, ...) : 
-  unable to load shared object '/home/code/renv/staging/2/igraph/libs/igraph.so':
-  libglpk.so.40: cannot open shared object file: No such file or directory</code></pre>
-<p>I add <code>libglpk-dev</code> to the list of system dependencies to install then tried again. It did eventually failed again with another similar issue.</p>
-<pre><code>Error in dyn.load(file, DLLpath = DLLpath, ...) : 
-  unable to load shared object '/home/code/renv/staging/2/stringi/libs/stringi.so':
+    unable to load shared object '/tmp/Rtmp8ogTfT/renv-staging-7b6bc3cd/stringi/libs/stringi.so':
   libicui18n.so.66: cannot open shared object file: No such file or directory</code></pre>
-<p>I briefly tried adding <code>containerit</code> to my <code>renv</code> to try that and see if it was simpler, although decided to pause on that and remove it and keep trying as before, as I kept getting errors and it wasn’t a quick-fix. I removed it from <code>DESCRIPTION</code> then ran <code>renv::clean()</code>, <code>renv::snapshot()</code>.</p>
-<p>I add <code>libicu-dev</code> and tried again. This failed with the same error as before.</p>
-<p>Looking at the <a href="https://hub.docker.com/layers/rocker/rstudio/4.4/images/sha256-853bc686c132b6f07ec024142612d7d01ea4d2a0716fe269d36adf4d4487c19c?context=explore">rocker rstudio image</a>, it runs on <code>ubunutu 22.04</code>. <a href="https://docs.posit.co/connect/admin/r/dependencies/">Posit</a> lists system dependencies for ubunutu 22.04 as <code>apt install -y libcairo2-dev libssl-dev make libcurl4-openssl-dev libmysqlclient-dev unixodbc-dev libnode-dev default-jdk libxml2-dev git libfontconfig1-dev libfreetype6-dev libssh2-1-dev zlib1g-dev libglpk-dev libjpeg-dev imagemagick libmagick++-dev gsfonts cmake libpng-dev libtiff-dev python3 libglu1-mesa-dev libgl1-mesa-dev libgdal-dev gdal-bin libgeos-dev libproj-dev libsqlite3-dev libsodium-dev libicu-dev tcl tk tk-dev tk-table libfribidi-dev libharfbuzz-dev libudunits2-dev</code>. I replaced the line in my Dockerfile and tried again. This failed with the same error as before (so returned it to the simpler list).</p>
-<p>I found <a href="https://github.com/Bioconductor/bioconductor_docker/issues/59">this issue</a> with the same error, where it appears there is an issue with the stringi binary being built for the wrong Ubunutu since <code>libicui18n.so.66</code> is for 20.04, although the fix appeared to be that they fixed the bioconductor container, and it wasn’t super clear to me what I should do.</p>
-<p>Based on <a href="https://gist.github.com/aforsythe/b588c950965d5a6b4810bed4cf85873b">this example</a> linked from <a href="https://forum.posit.co/t/restore-renv-lock-file-without-redownloading-packages/102690/9">this issue</a>, I tried switching <code>libicu-dev</code> to <code>libicu</code>. However, this returned error <code>Unable to locate package libicu</code>. I then instead tried adding <code>RUN R -e "install.packages('stringi')"</code> before <code>renv::restore()</code>. That ran successfully, but hit a new error:</p>
-<pre><code>Error in dyn.load(file, DLLpath = DLLpath, ...) : 
-  unable to load shared object '/home/code/renv/staging/2/openssl/libs/openssl.so':
-  libssl.so.1.1: cannot open shared object file: No such file or directory</code></pre>
-<p><code>libssl</code> is in the list of system dependencies that were being installed. A quick google shows there are issues related to <code>libssl.so.1.1</code> on <code>Ubuntu 22.04</code>. I tried doing the simplest solution first - installing it seperately (as that worked for <code>stringi</code> above).</p>
-<p>The docker image then <strong>built successfully</strong>!</p>
-</section>
-<section id="troubleshooting-empty-container" class="level4">
-<h4 class="anchored" data-anchor-id="troubleshooting-empty-container">Troubleshooting empty container</h4>
-<p>Having successfully built the image (<code>sudo docker build --tag huang2019 . -f ./docker/Dockerfile</code>), I then tried creating a container. After some trial and error with the command (and using <code>sudo docker rm huang2019_docker</code> to remove and recreate container)), I got to:</p>
-<p><code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name  huang2019_docker huang2019</code></p>
-<p>This opened up RStudio - although there were no files and none of the libraries I had added were listed in the packages (e.g.&nbsp;no simmer)</p>
-<p>I spent quite a while searching for and trying suggestions on this issue, with little success. E.g.</p>
+<p>I tried running all the renv installation whilst being the <code>USER root</code>. The image built successfully, but it did not open as an active project, and the <code>renv/</code> folder only contained <code>renv</code>.</p>
+<p>I tried just running <code>renv::install()</code> (and not specific installs or restore), but this had errors of:</p>
 <ul>
-<li>I tried running <code>sudo docker inspect huang2019</code> but couldn’t spot anything amiss.</li>
-<li>Based on <a href="https://stackoverflow.com/questions/32997269/copying-a-file-in-a-dockerfile-no-such-file-or-directory">this post</a>, I checked my <code>.dockerignore</code>, which has <code>**/renv/</code>, which should just be preventing upload of <code>renv</code>.</li>
+<li><code>renv appears to be unable to access the requested library path: /home/rstudio/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu. Check that the 'rstudio' user has read / write access to this directory.</code></li>
+<li><code>Error: error downloading 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz' [cannot open URL 'https://cloud.r-project.org/src/contrib/mime_0.12.tar.gz']</code></li>
 </ul>
-<p>I then tried copying everything into <code>/home/rstudio</code> rather than making a new directory in the <code>Dockerfile</code> and remaking the image. Got error <code>This project does not contain a lockfile</code>, so add path to <code>renv::restore()</code>. This built successfully, so I used the command above to create a container and open RStudio. This <strong>successfully included all the files</strong>!</p>
-</section>
-<section id="troubleshooting-renv-in-the-container" class="level4">
-<h4 class="anchored" data-anchor-id="troubleshooting-renv-in-the-container">Troubleshooting renv in the container</h4>
-<p>On opening RStudio, the console now showed a long list of packages that <code>are missing entries in the cache</code>, saying <code>These packages will need to be reinstalled</code>. It then says <code>Project '~/' loaded. [renv 1.0.7]</code> and <code>The following package(s) have broken symlinks into the cache</code>, with the same list of packages again, and <code>Use renv::repair() to try and reinstall these packages.</code>.</p>
-<p>Running <code>renv::repair()</code>, we get the following message:</p>
-<pre><code># Library cache links ---------------------------------------------
-renv appears to be unable to access the requested library path:
-- /home/rstudio/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu
-Check that the 'rstudio' user has read / write access to this directory.
-
-Do you want to proceed? [Y/n]</code></pre>
-<p>I spent a while googling and tried a few things including -</p>
-<ul>
-<li>Selecting to proceed, it installs the packages from CRAN.</li>
-<li>I tried making another container without disabling authentication - <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8888) &amp; sudo docker run -it -p 8888:8787 -e PASSWORD=password --name  huang2019_docker huang2019</code>, then login with username <code>rstudio</code> password <code>password</code> - but had the same issue.</li>
-<li>Looking in the <code>renv/</code> folder, it appears to only contain the package <code>renv</code>.</li>
-<li>I tried changing the server to <code>8787:8787</code> but this made no difference.</li>
-<li>Looking at the installed packages, it appears to not include anything we add (including <code>stringi</code> and <code>openssl</code>, which were installed seperately from the rest).</li>
-</ul>
-<p>Based on <a href="https://github.com/rocker-org/rocker/issues/50">this issue</a>, it appears that <code>/home/rstudio/</code> is owned by the user <code>docker</code> rather than by us (the user <code>rstudio</code>).</p>
-<ul>
-<li>Tried <code>(sleep 2 &amp;&amp; xdg-open http://localhost:8787) &amp; sudo docker run --rm -it --user docker -v $(pwd)/home/$USER/foo -e USER=$USER -e USERID=$UID  -p 8787:8787 --name  huang2019_docker huang2019</code> but got error <code>docker: Error response from daemon: unable to find user docker: no matching entries in passwd file.</code></li>
-<li>Based on <a href="https://github.com/rstudio/renv/issues/980">this issue</a>, tried changing ownership of <code>renv</code> directory when created in Dockerfile using <code>RUN mkdir -p /renv/ &amp;&amp; chown -c rstudio /renv/</code>, but the same error message remained</li>
-</ul>
-<p>Based on <a href="https://github.com/rstudio/renv/issues/1602">this issue</a>, tried changing user in Dockerfile for the <code>renv::restore()</code>. I realised whilst doing this that, when I’d made the renv folder, I hadn’t set it to <code>/home/rstudio/</code> like I’d done for the rest of them! This might have been the issue. This produced an error while building the image:</p>
-<pre><code>7.633 # Installing packages --------------------------------------------------------
-7.888 - Installing stringi ...                        OK [built from source and cached in 1.3m]
-83.54 Error: could not copy / move file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/stringi' to '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-backup-7-stringi73f0bb75'
-83.54 move: cannot rename file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/stringi' to '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-backup-7-stringi73f0bb75', reason 'Permission denied'
-83.54 copy: source file '/home/rstudio/Documents/RStudio/PROJECT/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu/.renv-copy-7606940ba' does not exist</code></pre>
-<p>I tried temporarily removing the seperate installations of <code>stringi</code> and <code>openssl</code>, to see if <code>renv::restore()</code> would be successful. This was successful - up until <code>stringi</code>, which had the error from before re: <code>libicui18n.so.66</code>.</p>
-<p>I reintroduced the seperate installations, but tried switching <code>install.packages("stringi")</code> to <code>renv::install("stringi")</code>, but this had the issue from above.</p>
-<p>I then tried to make it more similar to the line installing <code>renv</code>, which does work, so did <code>RUN R -e "install.packages('stringi', repos = c(CRAN = 'https://cloud.r-project.org'))"</code>, but no change.</p>
-<p>I then tried following the structure used to install <code>renv</code> in <a href="https://github.com/rstudio/renv/issues/1602">the aforementioned GitHub issue</a> - so:</p>
-<pre><code># Set version of packages installed outside the lockfile
-ENV RENV_VERSION 'v1.0.7'
-ENV STRINGI_VERSION '1.8.4'
-ENV OPENSSL_VERSION '2.2.0'
-
-# Install remotes (which we will use to install packages)
-RUN Rscript -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
-
-# Install renv from GitHub
-RUN Rscript -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
-
-# Install stringi seperately due to issue with not detecting libicu
-RUN Rscript -e "remotes::install_version('stringi', version='${STRINGI_VERSION}')"
-
-# Install openssl seperately due to issue with not detecting libssl
-RUN Rscript -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"</code></pre>
-<p>However, we now are getting the <code>libicui18n.so.66</code> issue, so it appears the problem is that I haven’t installed this into the right place for <code>renv</code> to find it, when I installed it seperately.</p>
-<p>I moved the installation to after having copied over the renv files -</p>
-<pre><code># Copy files (including renv.lock!) into the image
-# Thanks to .dockerignore, should not copy over renv/ (which is very large)
-COPY . .
-
-# Copy renv auto-loader tools
-RUN mkdir -p renv/library
-COPY .Rprofile .Rprofile
-COPY renv/activate.R renv/activate.R</code></pre>
-<ul>
-<li>but we again get the first issue (<code>could not copy / move file</code>…).</li>
-</ul>
-<p>I tried moving it around a few different locations in the file to try and figure out what might be right. I also tried adding in an <code>renv::activate()</code></p>
-</section>
-</section>
-<section id="fix-quarto-github-action" class="level3">
-<h3 class="anchored" data-anchor-id="fix-quarto-github-action">Fix Quarto GitHub action</h3>
-<p>Returned to the broken Quarto render action (which fails to find <code>rmarkdown</code> despite it having been installed with <code>setup-renv</code>). Some ideas:</p>
-<ul>
-<li><a href="https://github.com/pommevilla/quarto-action-tests/blob/main/.github/workflows/quarto-render.yml">Example GitHub action</a> for book with Python and R - although a few years old</li>
-<li><a href="https://github.com/nrennie/wbs-summer-school-2024-data-viz/blob/main/.github/workflows/publish.yml">Example GitHub action</a> where they installed packages directly</li>
-<li><a href="https://rstudio.github.io/renv/articles/ci.html#using-the-github-actions-cache-with-renv">RStudio tutorial</a> for custom GitHub action workflow</li>
-</ul>
+<p>I tried temporarily replacing my lockfile with a simple one:</p>
+<pre><code>{
+  "R": {
+    "Version": "4.2.3",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+      }
+    ]
+  },
+  "Packages": {
+    "markdown": {
+      "Package": "markdown",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4584a57f565dd7987d59dda3a02cfb41"
+    },
+    "mime": {
+      "Package": "mime",
+      "Version": "0.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "908d95ccbfd1dd274073ef07a7c93934"
+    }
+  }
+}</code></pre>
 
 
 </section>
@@ -819,7 +742,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_18/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/edit/main/logbook/posts/2024_07_19/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/pythonhealthdatascience/stars-reproduce-huang-2019/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
