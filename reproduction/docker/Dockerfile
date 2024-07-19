@@ -22,10 +22,8 @@ USER rstudio
 ENV PROJDIRECTORY "/home/rstudio/Documents/RStudio/PROJECT"
 WORKDIR ${PROJDIRECTORY}
 
-# Install remotes (which we will use to install packages)
+# Install remotes, which we can use to install a specific version of renv
 RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
-
-# Install renv from GitHub
 RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
 
 # Copy files (including renv.lock!) into the image
@@ -37,14 +35,29 @@ RUN mkdir -p renv/library
 COPY .Rprofile .Rprofile
 COPY renv/activate.R renv/activate.R
 
+# Set user back to root
+USER root
+
 # Activate renv
 RUN R -e "renv::activate()"
 
+# Install remotes into the renv too (so we can use it to install specific
+# versions of stringi and openssl)
+#RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
+#USER root
+#RUN R -e "renv::install('remotes')"
+#RUN R -e "renv::status()"
+#USER rstudio
+
 # Install stringi seperately due to issue with not detecting libicu
-RUN R -e "remotes::install_version('stringi', version='${STRINGI_VERSION}')"
+#RUN R -e "remotes::install_version('stringi', version='${STRINGI_VERSION}')"
+#USER root
+RUN R -e "renv::install('stringi@${STRINGI_VERSION}')"
+RUN R -e "renv::install('openssl@${OPENSSL_VERSION}')"
+#USER rstudio
 
 # Install openssl seperately due to issue with not detecting libssl
-RUN R -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
+#RUN R -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
 
 # Restore packages when image is created
 # (and hence, new containers created from this image will have R packages
@@ -52,4 +65,4 @@ RUN R -e "remotes::install_version('openssl', version='${OPENSSL_VERSION}')"
 RUN R -e "renv::restore(lockfile=\"${PROJDIRECTORY}/renv.lock\", repos = c(CRAN = \"https://packagemanager.rstudio.com/all/__linux__/focal/latest\"))"
 
 # Set user back to root
-USER root
+#USER root
