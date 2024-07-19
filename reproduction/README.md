@@ -53,19 +53,21 @@ In this assessment, we attempted to reproduce 8 items: 5 figures and 3 in-text r
 
 ### Step 1. Set up environment
 
+Before you can run the model, you will need to create an R environment with the correct version of R and the specified packages.
+
 #### Option A. Renv
 
 An `renv` environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run `renv::restore()`.
 
-In `renv.lock`, you will see the version of R listed. However, `renv` will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R.
+In `renv.lock`, you will see the version of R listed. However, `renv` will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R. This reproduction has been run in R 4.4.1, and it is possible (although not definite) that later versions of R may not be compatible, or that you may encounter difficulties installing the specified package versions in later versions of R.
 
 #### Option B. Build local docker image
 
-A Dockerfile is provided, which you can use to build the Docker image. For this option and option C, you'll need to ensure that `docker` is installed on your machine.
+A Dockerfile is provided, which you can use to build the Docker image. The docker image will include the correct version of R, the required packages and their versions, and an installation of RStudio which you can run from your browser. It will also include the scripts and outputs from this directory. For this option and option C, you'll need to ensure that `docker` is installed on your machine.
 
-To create the docker image and then open up RStudio, you'll need to:
+To create the docker image and then open up RStudio:
 
-1. In ther terminal, navigate to the parent directory of your `reproduction/` folder
+1. In the terminal, navigate to the parent directory of your `reproduction/` folder
 2. Build the image: `docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile`
 3. Create container and open RStudio: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019`
 
