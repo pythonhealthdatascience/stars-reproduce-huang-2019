@@ -187,6 +187,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#reproducing-these-results" id="toc-reproducing-these-results" class="nav-link" data-scroll-target="#reproducing-these-results">Reproducing these results</a>
   <ul class="collapse">
   <li><a href="#repository-overview" id="toc-repository-overview" class="nav-link" data-scroll-target="#repository-overview">Repository overview</a></li>
+  <li><a href="#memory-usage" id="toc-memory-usage" class="nav-link" data-scroll-target="#memory-usage">Memory usage</a></li>
   <li><a href="#step-1.-set-up-environment" id="toc-step-1.-set-up-environment" class="nav-link" data-scroll-target="#step-1.-set-up-environment">Step 1. Set up environment</a></li>
   <li><a href="#step-2.-running-the-model" id="toc-step-2.-running-the-model" class="nav-link" data-scroll-target="#step-2.-running-the-model">Step 2. Running the model</a></li>
   </ul></li>
@@ -273,6 +274,10 @@ ul.task-list li input[type="checkbox"] {
 <li><code>huang2019.Rproj</code> - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)</li>
 <li><code>renv.lock</code> - Lists R version and all packages in the R environment</li>
 </ul>
+</section>
+<section id="memory-usage" class="level3">
+<h3 class="anchored" data-anchor-id="memory-usage">Memory usage</h3>
+<p><strong>Note:</strong> We have found this model to have high memory usage. When running in RStudio, we found it was using about 8GB RAM. Hence, will require a machine with sufficient memory (e.g.&nbsp;we weren’t able to run on virtual machine as that only allocates 4GB RAM).</p>
 </section>
 <section id="step-1.-set-up-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-1.-set-up-environment">Step 1. Set up environment</h3>
