@@ -51,6 +51,10 @@ In this assessment, we attempted to reproduce 8 items: 5 figures and 3 in-text r
 * `huang2019.Rproj` - Project settings, which specify the Python virtual environment to use when building pages from the Quarto site that include Python. If you choose to build the Quarto site (and not just run the reproduction files in this folder), you will want to update this to a path on your machine (which you can do easily by opening this file in RStudio)
 * `renv.lock` - Lists R version and all packages in the R environment
 
+### Memory usage
+
+**Note:** We have found this model to have high memory usage. When running in RStudio, we found it was using about 8GB RAM. Hence, will require a machine with sufficient memory (e.g. we weren't able to run on virtual machine as that only allocates 4GB RAM).
+
 ### Step 1. Set up environment
 
 Before you can run the model, you will need to create an R environment with the correct version of R and the specified packages.
