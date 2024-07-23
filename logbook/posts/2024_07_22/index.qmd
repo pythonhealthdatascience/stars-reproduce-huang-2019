@@ -1,0 +1,27 @@
+---
+title: "Day 13"
+author: "Amy Heather"
+date: "2024-07-22"
+categories: [compendium]
+bibliography: ../../../quarto_site/references.bib
+---
+
+::: {.callout-note}
+
+Tom's test run of the model.
+
+:::
+
+## Untimed: Test run by second member of STARS team
+
+Tom attempted to run the model from my `reproduction/` folder.
+
+Was able to run the tests fine, and also ran some of the scripts.
+
+The `renv` install okay - just needed to install some operating system dependencies via `apt`, but likely as that was the first time he'd used R on that machine.
+
+The local build of the docker image worked fine first time. Launched RStudio server and ran testthat without an issue.
+
+Noted that in both cases RStudio was using 8GB RAM.
+
+Wasn't able to run it on his virtual machine (by default, that only allocates 4GB RAM, so that would be why).
