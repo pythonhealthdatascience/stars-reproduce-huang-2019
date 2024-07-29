@@ -61,7 +61,11 @@ Before you can run the model, you will need to create an R environment with the 
 
 #### Option A. Renv
 
-An `renv` environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run `renv::restore()`.
+An `renv` environment has been provided. To create this environment locally on your machine, you should open the R project with the R environment loaded, and then run:
+
+```
+renv::restore()
+```
 
 In `renv.lock`, you will see the version of R listed. However, `renv` will not install this for you, so you will need to switch to this yourself if you wish to also use the same version of R. This reproduction has been run in R 4.4.1, and it is possible (although not definite) that later versions of R may not be compatible, or that you may encounter difficulties installing the specified package versions in later versions of R.
 
@@ -72,17 +76,40 @@ A Dockerfile is provided, which you can use to build the Docker image. The docke
 To create the docker image and then open up RStudio:
 
 1. In the terminal, navigate to the parent directory of your `reproduction/` folder
-2. Build the image: `docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile`
-3. Create container and open RStudio: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019`
+2. Build the image:
+
+```
+docker build --tag huang2019 . -f ./reproduction/docker/Dockerfile
+```
+
+3. Create container and open RStudio:
+
+```
+(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker huang2019
+```
 
 #### Option C. Pull pre-built docker image
 
 A pre-built image is available on the GitHub container registry. To use it:
 
 1. Create a Personal Access Token (Classic) for your GitHub account with `write:packages` and `delete:packages` access
-2. On terminal, run `sudo docker login ghcr.io -u githubusername` and enter your sudo password (if prompted), followed by the token just generated (which acts as your GitHub password)
-3. Download the image: `sudo docker pull ghcr.io/pythonhealthdatascience/huang2019`
-4. Create container and open RStudio: `(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker ghcr.io/pythonhealthdatascience/huang2019:latest`
+2. On terminal, run the following command and then enter your sudo password (if prompted), followed by the token just generated (which acts as your GitHub password)
+
+```
+sudo docker login ghcr.io -u githubusername
+```
+
+3. Download the image:
+
+```
+sudo docker pull ghcr.io/pythonhealthdatascience/huang2019
+```
+
+4. Create container and open RStudio:
+
+```
+(sleep 2 && xdg-open http://localhost:8888) & sudo docker run -it -p 8888:8787 -e DISABLE_AUTH=true --name huang2019_docker ghcr.io/pythonhealthdatascience/huang2019:latest
+```
 
 ### Step 2. Running the model
 
@@ -94,7 +121,9 @@ To run all the model scenarios, open and execute the provided `.qmd` files in `s
 
 Three of the model scenarios have been included as tests within `tests/testthat`. You can run these tests by running the following command from your R console whilst in the `reproduction/` directory:
 
-`testthat::test_dir("tests/testthat")`
+```
+testthat::test_dir("tests/testthat")
+```
 
 This will run the three scenarios, save the results as temporary files, and compare the results against those we have saved. Although this will not produce any figures from the paper, and will not run all the scenarios, it will allow you to check if you are getting results consistent with our reproduction, on your own machine.
 
