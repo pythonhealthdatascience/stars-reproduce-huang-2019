@@ -1,0 +1,11 @@
+---
+title: "Day 14"
+author: "Amy Heather"
+date: "2024-08-12"
+categories: [reproduction]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## Untimed: Emails to author
+
+Sent emails on 12th July and 26th July. There was no requirement for responses to these and, as per protocol, since there were no responses within 4 weeks, we will consider the reproduction stage complete (with no further work intended on troubleshooting the remaining discrepancies).
