@@ -240,8 +240,8 @@ div.csl-indent {
 <p>Of the <strong>24</strong> items in the checklist:</p>
 <ul>
 <li><strong>14</strong> were met fully (✅)</li>
-<li><strong>5</strong> were partially met (🟡)</li>
-<li><strong>4</strong> were not met (❌)</li>
+<li><strong>6</strong> were partially met (🟡)</li>
+<li><strong>3</strong> were not met (❌)</li>
 <li><strong>1</strong> was not applicable (N/A)</li>
 </ul>
 <table class="table">
@@ -419,8 +419,8 @@ div.csl-indent {
 <tr class="odd">
 <td>5.3 Model execution</td>
 <td>State the event processing mechanism used e.g.&nbsp;three phase, event, activity, process interaction.<br><em>Note that in some commercial software the event processing mechanism may not be published. In these cases authors should adhere to item 5.1 software recommendations.</em><br>State all priority rules included if entities/activities compete for resources.<br>If the model is parallel, distributed and/or use grid or cloud computing, etc., state and preferably reference the technology used. For parallel and distributed simulations the time management algorithms used. If the HLA is used then state the version of the standard, which run-time infrastructure (and version), and any supporting documents (FOMs, etc.)</td>
-<td>❌ Not met</td>
-<td>-</td>
+<td>🟡 Partially</td>
+<td>Does not state event processing mechanism. Does describe priority rules - <code>Methods: Model Properties: Queueing</code> - e.g.&nbsp;“n our model, emergency IR and stroke patients have higher priority than elective patients for resources. Specifically, angioINRs are capable of both INR and IR procedures, although all patient types…</td>
 </tr>
 <tr class="even">
 <td>5.4 System specification</td>
@@ -1064,7 +1064,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
