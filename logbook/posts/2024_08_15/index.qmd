@@ -1,0 +1,17 @@
+---
+title: "Day 15"
+author: "Amy Heather"
+date: "2024-08-15"
+categories: [evaluation]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## Untimed: Amendment to evaluation
+
+Revisiting the evaluation from each study, I spotted a change to make to the evaluation against STRESS-DES.
+
+**Criteria:** "5.3 Model execution	State the event processing mechanism used e.g. three phase, event, activity, process interaction. Note that in some commercial software the event processing mechanism may not be published. In these cases authors should adhere to item 5.1 software recommendations. State all priority rules included if entities/activities compete for resources. If the model is parallel, distributed and/or use grid or cloud computing, etc., state and preferably reference the technology used. For parallel and distributed simulations the time management algorithms used. If the HLA is used then state the version of the standard, which run-time infrastructure (and version), and any supporting documents (FOMs, etc.)" @monks_strengthening_2019
+
+**Original decision:** ❌ Not met
+
+**New decision:** 🟡 Partially. Does not state event processing mechanism. Does describe priority rules - `Methods: Model Properties: Queueing` - e.g. "n our model, emergency IR and stroke patients have higher priority than elective patients for resources. Specifically, angioINRs are capable of both INR and IR procedures, although all patient types..."
