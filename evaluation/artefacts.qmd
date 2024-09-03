@@ -7,8 +7,8 @@ This page evaluates the extent to which the original study meets the recommendat
 
 Of the **8** essential STARS components:
 
-* **2** were met fully (✅)
-* **6** were not met (❌)
+* **3** were met fully (✅)
+* **5** were not met (❌)
 
 Of the **5** optional STARS components:
 
@@ -24,7 +24,7 @@ Of the **5** optional STARS components:
 | Minimum documentation | Minimal instructions (e.g. in README) that overview (a) what model does, (b) how to install and run model to obtain results, and (c) how to vary parameters to run new experiments | ❌ Not met | No documentation provided |
 | ORCID | ORCID for each study author | ❌ Not met | - |
 | Citation information | Instructions on how to cite the research artefact (e.g. CITATION.cff file) | ❌ Not met | - |
-| Remote code repository | Code available in a remote code repository (e.g. GitHub, GitLab, BitBucket) | ❌ Not met | - |
+| Remote code repository | Code available in a remote code repository (e.g. GitHub, GitLab, BitBucket) | ✅ Fully | <https://github.com/shiweih/desECR> |
 | Open science archive | Code stored in an open science archive with FORCE11 compliant citation and guaranteed persistance of digital artefacts (e.g. Figshare, Zenodo, the Open Science Framework (OSF), and the Computational Modeling in the Social and Ecological Sciences Network (CoMSES Net)) | ❌ Not met | - |
 | **Optional components** |
 | Enhanced documentation | Open and high quality documentation on how the model is implemented and works  (e.g. via notebooks and markdown files, brought together using software like Quarto and Jupyter Book). Suggested content includes:<br>• Plain english summary of project and model<br>• Clarifying license<br>• Citation instructions<br>• Contribution instructions<br>• Model installation instructions<br>• Structured code walk through of model<br>• Documentation of modelling cycle using TRACE<br>• Annotated simulation reporting guidelines<br>• Clear description of model validation including its intended purpose | ❌ Not met | - |

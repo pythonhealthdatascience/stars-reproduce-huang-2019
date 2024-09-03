@@ -1,0 +1,19 @@
+---
+title: "Day 16"
+author: "Amy Heather"
+date: "2024-09-03"
+categories: [evaluation]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## Untimed: Amendment to evaluation
+
+I noticed a mistake in my evaluation of the repository against the STARS framework
+
+**Criteria:** Code available in a remote code repository (e.g. GitHub, GitLab, BitBucket)
+
+**Original decision:** ❌ Not met
+
+**New decision:** ✅ Fully - <https://github.com/shiweih/desECR>
+
+I amended `artefacts.qmd`, `reproduction_report.qmd` and [stars_wp1_summary](https://github.com/pythonhealthdatascience/stars_wp1_summary) accordingly.
