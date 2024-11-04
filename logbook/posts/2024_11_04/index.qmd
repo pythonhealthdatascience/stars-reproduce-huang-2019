@@ -1,0 +1,19 @@
+---
+title: "Day 18"
+author: "Amy Heather"
+date: "2024-11-04"
+categories: [evaluation]
+bibliography: ../../../quarto_site/references.bib
+---
+
+## Untimed: Amendment to evaluation
+
+I noticed a mistake in my evaluation of the repository against STRESS-DES.
+
+**Criteria:** 5.2 Random sampling
+
+**Original decision:** 🟡 Partially met - no seeds but describes sampling of arrivals
+
+**New decision:** ❌ Not met - as sampling of arrivals wasn't relevant to this criteria (I had misunderstood)
+
+I amended `reporting.qmd`, `reproduction_report.qmd` and [stars_wp1_summary](https://github.com/pythonhealthdatascience/stars_wp1_summary) accordingly.
