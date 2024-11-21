@@ -1,0 +1,23 @@
+---
+title: "Day 19"
+author: "Amy Heather"
+date: "2024-10-21"
+categories: [evaluation]
+---
+
+::: {.callout-note}
+
+Redid badge evaluation.
+
+:::
+
+## 09.53-09.57: Revisit evaluation
+
+Revisited and revised the badge criteria to (a) make them up-to-date, and (b) make sure they are *specific* to the descriptions from each badge. Hence, redoing evaluations for all eight studies.
+
+Notes:
+
+* Relevant - yes, as its the model needed, even if it is within an app
+* Executes - yes, although required significant troubleshooting, as I had to extract it from app code
+
+Ran this by Tom who agreed. Results remain the same (3 criteria, 0 badge).
