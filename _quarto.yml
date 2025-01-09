@@ -22,9 +22,6 @@ website:
         menu:
           - text: README
             href: quarto_site/reproduction_readme.qmd
-          - href: reproduction/scripts/reproduction.qmd
-          - href: reproduction/scripts/reproduction_fig5.qmd
-          - href: reproduction/scripts/reproduction_supp.qmd
       - text: Evaluation
         menu:
           - evaluation/scope.qmd

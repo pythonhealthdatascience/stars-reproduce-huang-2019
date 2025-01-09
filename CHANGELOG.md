@@ -7,17 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.0.0 - 2025-01-09
 
-Corrected evaluation, README updates, and removal of broken GitHub action.
+Corrected evaluation, README updates, and modifying GitHub actions.
 
 ## Changed
 
 * Redid badge evaluation (using more accurate/specific criteria for each badge).
 * Corrected STRESS-DES 5.2 Random Sampling evaluation.
 * Altered README title, add Zenodo citation text and updated workflow image.
+* Activated `quarto_publish.yaml`, modifying pages so no R code needs to be built when generate site.
 
 ## Removed
 
-* Broekn `cff_validation.yaml` action.
+* Broken `cff_validation.yaml` action.
 
 ## v0.2.0 - 2024-10-02
 

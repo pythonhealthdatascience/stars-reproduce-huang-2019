@@ -51,11 +51,11 @@ Felt could then move into evaluation against guidelines - in protocol, had menti
 
 ## 10.31-10.36: Check the inter-arrival times
 
-```{r}
+```{python}
 # Set in reproduction.qmd
 ed_pt = 107700
 inr_pt = 104
-eir_pt= 468
+eir_pt = 468
 ir_pt = 3805
 
 # Set in model.R
@@ -65,16 +65,16 @@ ecr_pt = 58
 
 # Calculate inter-arrival times (as from model.R)
 year2min = 525600
-I_ED  = round(year2min/ed_pt)
-I_ST  = round(year2min/st_pt)
-I_AIS = round(year2min/ais_pt)
-I_ECR = round(year2min/ecr_pt)
-I_INR = round(year2min/inr_pt)
-I_EIR = round(year2min/eir_pt)
-I_IR  = round(year2min/ir_pt)
+I_ED  = round(year2min / ed_pt)
+I_ST  = round(year2min / st_pt)
+I_AIS = round(year2min / ais_pt)
+I_ECR = round(year2min / ecr_pt)
+I_INR = round(year2min / inr_pt)
+I_EIR = round(year2min / eir_pt)
+I_IR  = round(year2min / ir_pt)
 
 # View calculated inter-arrival times
-print(c(I_ED, I_ST, I_AIS, I_ECR, I_INR, I_EIR, I_IR))
+print([I_ED, I_ST, I_AIS, I_ECR, I_INR, I_EIR, I_IR])
 ```
 
 These match up with the times from the paper, as in the image below from @huang_optimizing_2019.
