@@ -2,13 +2,11 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 
 cff-version: 1.2.0
-title: 'STARS: Computational reproducibility of Huang et al. 2019'
+title: 'Huang et al. 2019 computational reproducibility assessment'
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
 type: software
-# TODO: Amend to list of authors involved in reproduction - first, the primary
-# researcher, followed by those providing advice/feedback on the reproduction.
 authors:
   - given-names: Amy
     family-names: Heather
@@ -37,5 +35,5 @@ abstract: >-
   https://doi.org/10.3389/fneur.2019.00653.
 license: GPL-3.0
 # TODO: Manually update with each GitHub release (start with 0.1.0)
-version: '0.2.0'
-date-released: '2024-10-02'
+version: '1.0.0'
+date-released: '2025-01-09'
