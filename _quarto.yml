@@ -2,6 +2,11 @@ project:
   type: website
   preview:
     browser: true
+  # Include & exclude certain files when rendering
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "!./reproduction/scripts/*.qmd"
 
 website:
   # Name of site in navbar
